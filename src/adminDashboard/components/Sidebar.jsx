@@ -2,7 +2,7 @@ import {
   LayoutDashboard, Users, Package, Users2, MoreVertical, Database, Menu, X, Grid, ChevronDown, ChevronRight, Bell
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 const menuItems = [
   {
@@ -196,22 +196,21 @@ export default function Sidebar() {
                     <div className="ml-4 mt-1 space-y-1 border-l-2 border-sidebar-border/30 pl-4">
                       {item.submenu.map((subItem) => {
                         const SubIcon = subItem.icon;
+                        const isSubItemActive = location.pathname === `/admin/${subItem.key}`;
                         return (
-                          <NavLink
+                          <Link
                             key={subItem.key}
                             to={`/admin/${subItem.key}`}
                             onClick={() => setIsOpen(false)}
-                            className={({ isActive }) => {
-                              return `w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
-                                isActive
-                                  ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium shadow-md"
-                                  : "text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/20"
-                              }`;
-                            }}
+                            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+                              isSubItemActive
+                                ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium shadow-md"
+                                : "text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/20"
+                            }`}
                           >
                             <SubIcon className="w-4 h-4 flex-shrink-0" />
                             <span className="font-medium">{subItem.label}</span>
-                          </NavLink>
+                          </Link>
                         );
                       })}
                     </div>

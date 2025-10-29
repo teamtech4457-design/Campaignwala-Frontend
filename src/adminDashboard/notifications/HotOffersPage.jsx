@@ -8,7 +8,7 @@ import userService from "../../services/userService"
 const Button = ({ children, className = "", onClick, variant = "default", disabled, ...props }) => {
   const baseClasses = "px-4 py-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
   const variants = {
-    default: "bg-orange-500 hover:bg-orange-600 text-white disabled:opacity-50"
+    default: "bg-[#4406CB] hover:bg-[#4406CB]/90 text-white disabled:opacity-50"
   }
   
   return (
@@ -246,14 +246,14 @@ export default function HotOffersPage() {
         <div className="mx-auto max-w-6xl px-6 py-6">
           <button 
             onClick={() => navigate("/admin/notifications")} 
-            className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 mb-4"
+            className="inline-flex items-center gap-2 text-[#4406CB] hover:text-[#4406CB]/80 mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Back to Dashboard</span>
           </button>
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-orange-500/10 p-3">
-              <Zap className="h-6 w-6 text-orange-500" />
+            <div className="rounded-lg bg-[#4406CB]/10 p-3">
+              <Zap className="h-6 w-6 text-[#4406CB]" />
             </div>
             <div>
               <h1 className="text-3xl font-bold">Hot Offers Notifications</h1>
@@ -326,8 +326,8 @@ export default function HotOffersPage() {
                     <Target className="h-4 w-4" />
                     Target User Segments - Bulk Notification
                   </label>
-                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 mb-4">
-                    <p className="text-sm text-blue-700 dark:text-blue-400 font-medium">
+                  <div className="bg-[#4406CB]/10 border border-[#4406CB]/20 rounded-lg p-4 mb-4">
+                    <p className="text-sm text-[#4406CB] font-medium">
                       📱 Bulk Hot Offers - Select multiple segments to send offers to thousands of users simultaneously
                     </p>
                   </div>
@@ -338,14 +338,14 @@ export default function HotOffersPage() {
                         onClick={() => toggleSegment(segment.id)}
                         className={`rounded-lg border-2 p-4 text-left transition-all hover:shadow-md ${
                           selectedSegments.includes(segment.id)
-                            ? "border-orange-500 bg-orange-500/10 shadow-lg"
-                            : "border-border bg-card hover:border-orange-500/50"
+                            ? "border-[#4406CB] bg-[#4406CB]/10 shadow-lg"
+                            : "border-border bg-card hover:border-[#4406CB]/50"
                         }`}
                       >
                         <div className="flex items-start justify-between mb-2">
                           <p className="font-medium text-sm">{segment.label}</p>
                           <span className={`text-lg font-bold ${
-                            selectedSegments.includes(segment.id) ? "text-orange-500" : "text-muted-foreground"
+                            selectedSegments.includes(segment.id) ? "text-[#4406CB]" : "text-muted-foreground"
                           }`}>
                             {segment.count.toLocaleString()}
                           </span>
@@ -353,8 +353,8 @@ export default function HotOffersPage() {
                         <p className="text-xs text-muted-foreground leading-relaxed">{segment.description}</p>
                         {selectedSegments.includes(segment.id) && (
                           <div className="mt-2 flex items-center gap-1">
-                            <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                            <span className="text-xs text-orange-600 font-medium">Selected for bulk notification</span>
+                            <div className="w-2 h-2 bg-[#4406CB] rounded-full"></div>
+                            <span className="text-xs text-[#4406CB] font-medium">Selected for bulk notification</span>
                           </div>
                         )}
                       </button>
@@ -365,7 +365,7 @@ export default function HotOffersPage() {
                   <div className="flex gap-2 mt-4 flex-wrap">
                     <button
                       onClick={() => setSelectedSegments(segments.map(s => s.id))}
-                      className="px-3 py-1 bg-orange-500 text-white rounded-full text-xs font-medium hover:bg-orange-600 transition-colors"
+                      className="px-3 py-1 bg-[#4406CB] text-white rounded-full text-xs font-medium hover:bg-[#4406CB]/90 transition-colors"
                     >
                       Select All ({segments.reduce((sum, s) => sum + s.count, 0).toLocaleString()} users)
                     </button>
@@ -410,8 +410,8 @@ export default function HotOffersPage() {
                             key={user.id}
                             className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${
                               selectedUsers.includes(user.id)
-                                ? 'border-orange-500 bg-orange-500/5'
-                                : 'border-border hover:border-orange-300'
+                                ? 'border-[#4406CB] bg-[#4406CB]/5'
+                                : 'border-border hover:border-[#4406CB]/30'
                             }`}
                             onClick={() => toggleUserSelection(user.id)}
                           >
@@ -420,7 +420,7 @@ export default function HotOffersPage() {
                                 <h4 className="font-medium text-sm">{user.name}</h4>
                                 <p className="text-xs text-muted-foreground">{user.email} • {user.phone}</p>
                                 <div className="flex items-center gap-2 mt-1">
-                                  <span className="text-xs bg-blue-500/10 text-blue-600 px-2 py-1 rounded">
+                                  <span className="text-xs bg-[#4406CB]/10 text-[#4406CB] px-2 py-1 rounded">
                                     {user.category.replace('-', ' ')}
                                   </span>
                                   <span className="text-xs text-muted-foreground">
@@ -433,7 +433,7 @@ export default function HotOffersPage() {
                               </div>
                               <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
                                 selectedUsers.includes(user.id) 
-                                  ? 'bg-orange-500 border-orange-500' 
+                                  ? 'bg-[#4406CB] border-[#4406CB]' 
                                   : 'border-gray-300'
                               }`}>
                                 {selectedUsers.includes(user.id) && (
@@ -456,7 +456,7 @@ export default function HotOffersPage() {
                     <div className="flex items-center gap-3 mt-4">
                       <button
                         onClick={() => setSelectedUsers(getFilteredUsers().map(u => u.id))}
-                        className="px-3 py-1 bg-orange-500 text-white rounded text-xs font-medium hover:bg-orange-600"
+                        className="px-3 py-1 bg-[#4406CB] text-white rounded text-xs font-medium hover:bg-[#4406CB]/90"
                       >
                         Select All Visible ({getFilteredUsers().length})
                       </button>

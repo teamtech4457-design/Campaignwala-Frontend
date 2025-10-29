@@ -7,7 +7,7 @@ import notificationService from "../../services/notificationService"
 const Button = ({ children, className = "", onClick, variant = "default", ...props }) => {
   const baseClasses = "px-4 py-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring"
   const variants = {
-    default: "bg-blue-500 hover:bg-blue-600 text-white",
+    default: "bg-[#4406CB] hover:bg-[#4406CB]/90 text-white",
     outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground"
   }
   
@@ -157,11 +157,11 @@ export default function HistoryPage() {
   const getTypeColor = (type) => {
     switch (type) {
       case "profile":
-        return "bg-blue-500/10 text-blue-700 border-blue-500/30"
+        return "bg-[#4406CB]/10 text-[#4406CB] border-[#4406CB]/30"
       case "offer":
-        return "bg-orange-500/10 text-orange-700 border-orange-500/30"
+        return "bg-[#4406CB]/10 text-[#4406CB] border-[#4406CB]/30"
       case "announcement":
-        return "bg-purple-500/10 text-purple-700 border-purple-500/30"
+        return "bg-[#4406CB]/10 text-[#4406CB] border-[#4406CB]/30"
       default:
         return "bg-gray-500/10 text-gray-700 border-gray-500/30"
     }
@@ -187,14 +187,14 @@ export default function HistoryPage() {
         <div className="mx-auto max-w-6xl px-6 py-6">
           <button 
             onClick={() => navigate("/admin/notifications")} 
-            className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 mb-4"
+            className="inline-flex items-center gap-2 text-[#4406CB] hover:text-[#4406CB]/80 mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Back to Dashboard</span>
           </button>
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-blue-500/10 p-3">
-              <Clock className="h-6 w-6 text-blue-500" />
+            <div className="rounded-lg bg-[#4406CB]/10 p-3">
+              <Clock className="h-6 w-6 text-[#4406CB]" />
             </div>
             <div>
               <h1 className="text-3xl font-bold">Notification History</h1>
@@ -231,7 +231,7 @@ export default function HistoryPage() {
                     onClick={() => setFilterType("all")}
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
                       filterType === "all"
-                        ? "bg-blue-500 text-white"
+                        ? "bg-[#4406CB] text-white"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
                     }`}
                   >
@@ -241,7 +241,7 @@ export default function HistoryPage() {
                     onClick={() => setFilterType("profile")}
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
                       filterType === "profile"
-                        ? "bg-blue-500 text-white"
+                        ? "bg-[#4406CB] text-white"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
                     }`}
                   >
@@ -251,7 +251,7 @@ export default function HistoryPage() {
                     onClick={() => setFilterType("offer")}
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
                       filterType === "offer"
-                        ? "bg-orange-500 text-white"
+                        ? "bg-[#4406CB] text-white"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
                     }`}
                   >
@@ -261,7 +261,7 @@ export default function HistoryPage() {
                     onClick={() => setFilterType("announcement")}
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
                       filterType === "announcement"
-                        ? "bg-purple-500 text-white"
+                        ? "bg-[#4406CB] text-white"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
                     }`}
                   >
@@ -274,7 +274,7 @@ export default function HistoryPage() {
               <div className="space-y-3 max-h-96 overflow-y-auto">
                 {loading ? (
                   <div className="text-center text-muted-foreground py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4406CB] mx-auto"></div>
                     <p className="mt-2">Loading notifications...</p>
                   </div>
                 ) : error ? (
@@ -282,7 +282,7 @@ export default function HistoryPage() {
                     <p>Error: {error}</p>
                     <button 
                       onClick={fetchNotifications}
-                      className="mt-2 text-blue-500 hover:text-blue-600 underline"
+                      className="mt-2 text-[#4406CB] hover:text-[#4406CB]/80 underline"
                     >
                       Retry
                     </button>
@@ -294,8 +294,8 @@ export default function HistoryPage() {
                       onClick={() => setSelectedNotification(notif)}
                       className={`w-full text-left rounded-lg border-2 p-4 transition-all ${
                         selectedNotification?.id === notif.id
-                          ? "border-blue-500 bg-blue-500/5"
-                          : "border-border hover:border-blue-500/50"
+                          ? "border-[#4406CB] bg-[#4406CB]/5"
+                          : "border-border hover:border-[#4406CB]/50"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-2 mb-2">
