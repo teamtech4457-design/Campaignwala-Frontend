@@ -7,7 +7,7 @@ import userService from "../../services/userService"
 
 const Button = ({ children, className = "", onClick, disabled, ...props }) => {
   const baseClasses = "px-4 py-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring flex items-center gap-2"
-  const variants = "bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-50"
+  const variants = "bg-[#4406CB] hover:bg-[#4406CB]/90 text-white disabled:opacity-50"
   
   return (
     <button 
@@ -262,7 +262,7 @@ export default function IncompleteProfilePage() {
                 <h2 className="text-xl font-bold">Incomplete Profile Users ({incompleteUsers.length})</h2>
                 <div className="flex items-center gap-2">
                   {selectedUsers.length > 0 && (
-                    <span className="text-sm text-muted-foreground bg-blue-500/10 px-3 py-1 rounded-full">
+                    <span className="text-sm text-muted-foreground bg-[#4406CB]/10 px-3 py-1 rounded-full">
                       {selectedUsers.length} selected
                     </span>
                   )}
@@ -313,8 +313,8 @@ export default function IncompleteProfilePage() {
                     key={user.id}
                     className={`p-4 border-2 rounded-lg transition-all cursor-pointer ${
                       selectedUsers.includes(user.id)
-                        ? 'border-blue-500 bg-blue-500/5'
-                        : 'border-border hover:border-blue-300'
+                        ? 'border-[#4406CB] bg-[#4406CB]/5'
+                        : 'border-border hover:border-[#4406CB]/50'
                     }`}
                     onClick={() => toggleUserSelection(user.id)}
                   >
@@ -322,7 +322,7 @@ export default function IncompleteProfilePage() {
                       {/* Checkbox */}
                       <div className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center ${
                         selectedUsers.includes(user.id) 
-                          ? 'bg-blue-500 border-blue-500' 
+                          ? 'bg-[#4406CB] border-[#4406CB]' 
                           : 'border-gray-300'
                       }`}>
                         {selectedUsers.includes(user.id) && (
@@ -388,9 +388,9 @@ export default function IncompleteProfilePage() {
 
               <div className="space-y-4">
                 {/* Selected Users Count */}
-                <div className="rounded-lg bg-blue-500/10 p-4 border border-blue-500/20">
+                <div className="rounded-lg bg-[#4406CB]/10 p-4 border border-[#4406CB]/20">
                   <p className="text-sm text-muted-foreground mb-1">Selected Users</p>
-                  <p className="text-2xl font-bold text-blue-500">{selectedUsers.length}</p>
+                  <p className="text-2xl font-bold text-[#4406CB]">{selectedUsers.length}</p>
                   <p className="text-xs text-muted-foreground mt-1">
                     {selectedUsers.length === 0 ? "No users selected" : "users will receive notification"}
                   </p>
