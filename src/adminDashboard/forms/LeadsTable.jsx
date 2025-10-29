@@ -49,8 +49,8 @@ export default function LeadsTable({ status }) {
           date: new Date(lead.createdAt).toISOString().split('T')[0],
           offerName: lead.offerName,
           category: lead.category,
-          hrName: lead.hrName,
-          hrContact: lead.hrContact,
+          userName: lead.hrName,
+          userContact: lead.hrContact,
           customerName: lead.customerName,
           customerContact: lead.customerContact,
           commission1: lead.commission1 || 'N/A',
@@ -87,8 +87,8 @@ export default function LeadsTable({ status }) {
         date: "2024-10-15", 
         offerName: "Brand Awareness Campaign",
         category: "Digital Marketing", 
-        hrName: "Rajesh Kumar", 
-        hrContact: "+91 9876543210", 
+        userName: "Rajesh Kumar", 
+        userContact: "+91 9876543210", 
         customerName: "Amit Enterprises", 
         customerContact: "+91 9876543220", 
         offer: "₹50,000",
@@ -99,8 +99,8 @@ export default function LeadsTable({ status }) {
         date: "2024-10-16", 
         offerName: "Website Optimization",
         category: "SEO Campaign", 
-        hrName: "Priya Sharma", 
-        hrContact: "+91 9876543211", 
+        userName: "Priya Sharma", 
+        userContact: "+91 9876543211", 
         customerName: "Tech Solutions Ltd", 
         customerContact: "+91 9876543221", 
         offer: "₹75,000",
@@ -111,8 +111,8 @@ export default function LeadsTable({ status }) {
         date: "2024-10-17", 
         offerName: "Instagram Growth Package",
         category: "Social Media", 
-        hrName: "Amit Patel", 
-        hrContact: "+91 9876543212", 
+        userName: "Amit Patel", 
+        userContact: "+91 9876543212", 
         customerName: "Fashion Hub", 
         customerContact: "+91 9876543222", 
         offer: "₹30,000",
@@ -125,8 +125,8 @@ export default function LeadsTable({ status }) {
         date: "2024-10-14", 
         offerName: "Email Newsletter Campaign",
         category: "Email Marketing", 
-        hrName: "Sneha Reddy", 
-        hrContact: "+91 9876543213", 
+        userName: "Sneha Reddy", 
+        userContact: "+91 9876543213", 
         customerName: "Global Corp", 
         customerContact: "+91 9876543223", 
         offer: "₹1,20,000",
@@ -137,8 +137,8 @@ export default function LeadsTable({ status }) {
         date: "2024-10-13", 
         offerName: "Blog Content Package",
         category: "Content Creation", 
-        hrName: "Vikram Singh", 
-        hrContact: "+91 9876543214", 
+        userName: "Vikram Singh", 
+        userContact: "+91 9876543214", 
         customerName: "StartUp Inc", 
         customerContact: "+91 9876543224", 
         offer: "₹85,000",
@@ -151,8 +151,8 @@ export default function LeadsTable({ status }) {
         date: "2024-10-10", 
         offerName: "Brand Identity Campaign",
         category: "Brand Awareness", 
-        hrName: "Anita Desai", 
-        hrContact: "+91 9876543215", 
+        userName: "Anita Desai", 
+        userContact: "+91 9876543215", 
         customerName: "Retail Chain", 
         customerContact: "+91 9876543225", 
         offer: "₹2,50,000",
@@ -163,8 +163,8 @@ export default function LeadsTable({ status }) {
         date: "2024-10-08", 
         offerName: "New Product Marketing",
         category: "Product Launch", 
-        hrName: "Rohit Mehta", 
-        hrContact: "+91 9876543216", 
+        userName: "Rohit Mehta", 
+        userContact: "+91 9876543216", 
         customerName: "Innovation Labs", 
         customerContact: "+91 9876543226", 
         offer: "₹1,80,000",
@@ -177,8 +177,8 @@ export default function LeadsTable({ status }) {
         date: "2024-10-12", 
         offerName: "Basic SEO Package",
         category: "SEO Services", 
-        hrName: "Kavita Joshi", 
-        hrContact: "+91 9876543217", 
+        userName: "Kavita Joshi", 
+        userContact: "+91 9876543217", 
         customerName: "Local Business", 
         customerContact: "+91 9876543227", 
         offer: "₹25,000",
@@ -298,8 +298,8 @@ export default function LeadsTable({ status }) {
               <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Lead ID</th>
               <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Offer Name</th>
               <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Category</th>
-              <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">HR Name</th>
-              <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">HR Contact</th>
+              <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">USER Name</th>
+              <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">USER Contact</th>
               <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Customer Name</th>
               <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Customer Contact</th>
               <th className="px-3 sm:px-4 md:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">Commission 1</th>
@@ -322,8 +322,8 @@ export default function LeadsTable({ status }) {
                   <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm font-medium text-foreground whitespace-nowrap">{lead.leadId}</td>
                   <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm font-medium text-foreground whitespace-nowrap">{lead.offerName}</td>
                   <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-foreground whitespace-nowrap">{lead.category}</td>
-                  <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-foreground whitespace-nowrap">{lead.hrName}</td>
-                  <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-foreground whitespace-nowrap">{lead.hrContact}</td>
+                  <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-foreground whitespace-nowrap">{lead.userName}</td>
+                  <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-foreground whitespace-nowrap">{lead.userContact}</td>
                   <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-foreground whitespace-nowrap">{lead.customerName}</td>
                   <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-foreground whitespace-nowrap">{lead.customerContact}</td>
                   <td className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm font-semibold text-foreground whitespace-nowrap">
@@ -395,12 +395,12 @@ export default function LeadsTable({ status }) {
                 <p className="text-sm text-muted-foreground">{selectedLead.category}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1">HR Name</label>
-                <p className="text-sm text-muted-foreground">{selectedLead.hrName}</p>
+                <label className="block text-sm font-medium text-foreground mb-1">USER Name</label>
+                <p className="text-sm text-muted-foreground">{selectedLead.userName}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1">HR Contact</label>
-                <p className="text-sm text-muted-foreground">{selectedLead.hrContact}</p>
+                <label className="block text-sm font-medium text-foreground mb-1">USER Contact</label>
+                <p className="text-sm text-muted-foreground">{selectedLead.userContact}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1">Customer Name</label>

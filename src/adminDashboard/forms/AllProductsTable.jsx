@@ -13,7 +13,6 @@ export default function AllOffersTable() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [deleting, setDeleting] = useState(false);
@@ -23,7 +22,7 @@ export default function AllOffersTable() {
   useEffect(() => {
     fetchOffers();
     fetchCategories();
-  }, [searchTerm, filterStatus]);
+  }, [searchTerm]);
 
   const fetchCategories = async () => {
     try {
@@ -54,10 +53,6 @@ export default function AllOffersTable() {
         sortBy: 'createdAt',
         order: 'desc'
       };
-
-      if (filterStatus !== 'all') {
-        params.isApproved = filterStatus;
-      }
 
       const response = await getAllOffers(params);
       
@@ -143,7 +138,7 @@ export default function AllOffersTable() {
         'Latest Stage': offer.latestStage,
         'Commission 1': offer.commission1,
         'Commission 2': offer.commission2,
-        'Approved': offer.isApproved ? 'Yes' : 'No',
+
         Created: new Date(offer.createdAt).toLocaleDateString()
       }));
 
@@ -203,19 +198,6 @@ export default function AllOffersTable() {
           />
         </div>
 
-        <div className="relative">
-          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-          <select
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-            className="pl-9 pr-8 py-2 text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer"
-          >
-            <option value="all">All Offers</option>
-            <option value="true">Approved</option>
-            <option value="false">Pending Approval</option>
-          </select>
-        </div>
-
         <button
           onClick={handleExport}
           className="flex items-center gap-2 px-4 py-2 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-semibold whitespace-nowrap"
@@ -265,7 +247,6 @@ export default function AllOffersTable() {
                 <th className="px-3 py-2 text-left font-semibold">Latest Stage</th>
                 <th className="px-3 py-2 text-left font-semibold">Commission 1</th>
                 <th className="px-3 py-2 text-left font-semibold">Commission 2</th>
-                <th className="px-3 py-2 text-left font-semibold">Approved</th>
                 <th className="px-3 py-2 text-left font-semibold">Link</th>
                 <th className="px-3 py-2 text-left font-semibold">Video</th>
                 <th className="px-3 py-2 text-left font-semibold">Actions</th>
@@ -303,13 +284,6 @@ export default function AllOffersTable() {
                 </td>
                 <td className="px-3 py-2 text-green-600 font-semibold">{product.commission1}</td>
                 <td className="px-3 py-2 text-blue-600 font-semibold">{product.commission2}</td>
-                <td className="px-3 py-2">
-                  <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                    product.isApproved ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {product.isApproved ? 'Approved' : 'Pending'}
-                  </span>
-                </td>
                 <td className="px-3 py-2">
                   {product.link ? (
                     <button
