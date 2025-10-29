@@ -208,7 +208,7 @@ export default function AllOffersTable() {
       </div>
 
       {/* Table Container */}
-      <div className="flex-1 overflow-auto scrollbar-custom min-h-0">
+      <div className="flex-1 overflow-x-auto overflow-y-auto scrollbar-custom min-h-0">
         {loading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -237,19 +237,19 @@ export default function AllOffersTable() {
             </p>
           </div>
         ) : (
-          <table className="w-full border-collapse text-sm">
+          <table className="w-full min-w-max border-collapse text-sm">
             <thead className="bg-muted sticky top-0 z-10">
               <tr className="border-b border-border">
-                <th className="px-3 py-2 text-left font-semibold">Image</th>
-                <th className="px-3 py-2 text-left font-semibold">Date</th>
-                <th className="px-3 py-2 text-left font-semibold">Offers Name</th>
-                <th className="px-3 py-2 text-left font-semibold">Category</th>
-                <th className="px-3 py-2 text-left font-semibold">Latest Stage</th>
-                <th className="px-3 py-2 text-left font-semibold">Commission 1</th>
-                <th className="px-3 py-2 text-left font-semibold">Commission 2</th>
-                <th className="px-3 py-2 text-left font-semibold">Link</th>
-                <th className="px-3 py-2 text-left font-semibold">Video</th>
-                <th className="px-3 py-2 text-left font-semibold">Actions</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Image</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Date</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Offers Name</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Category</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Latest Stage</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Commission 1</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Commission 2</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Link</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Video</th>
+                <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Actions</th>
               </tr>
             </thead>
             <tbody>{filteredOffers.map((product, index) => {
@@ -277,14 +277,14 @@ export default function AllOffersTable() {
                 <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">
                   {new Date(product.createdAt).toLocaleDateString()}
                 </td>
-                <td className="px-3 py-2 font-medium max-w-[200px] truncate">{product.name}</td>
-                <td className="px-3 py-2 text-muted-foreground">{product.category}</td>
-                <td className="px-3 py-2">
-                  <span className="px-2 py-1 rounded text-xs bg-muted">{product.latestStage || 'Pending'}</span>
+                <td className="px-3 py-2 font-medium whitespace-nowrap">{product.name}</td>
+                <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{product.category}</td>
+                <td className="px-3 py-2 whitespace-nowrap">
+                  <span className="px-2 py-1 rounded text-xs bg-muted whitespace-nowrap">{product.latestStage || 'Pending'}</span>
                 </td>
-                <td className="px-3 py-2 text-green-600 font-semibold">{product.commission1}</td>
-                <td className="px-3 py-2 text-blue-600 font-semibold">{product.commission2}</td>
-                <td className="px-3 py-2">
+                <td className="px-3 py-2 text-green-600 font-semibold whitespace-nowrap">{product.commission1}</td>
+                <td className="px-3 py-2 text-blue-600 font-semibold whitespace-nowrap">{product.commission2}</td>
+                <td className="px-3 py-2 whitespace-nowrap">
                   {product.link ? (
                     <button
                       onClick={() => handleCopyLink(product.link)}
@@ -297,7 +297,7 @@ export default function AllOffersTable() {
                     <span className="text-muted-foreground text-xs">-</span>
                   )}
                 </td>
-                <td className="px-3 py-2">
+                <td className="px-3 py-2 whitespace-nowrap">
                   {product.video ? (
                     <a
                       href={product.video}
@@ -312,7 +312,7 @@ export default function AllOffersTable() {
                     <span className="text-muted-foreground text-xs">-</span>
                   )}
                 </td>
-                <td className="px-3 py-2">
+                <td className="px-3 py-2 whitespace-nowrap">
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleEdit(product)}
