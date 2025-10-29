@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Upload, X, Image as ImageIcon } from "lucide-react";
+import { Upload, X, Image as ImageIcon, ArrowLeft } from "lucide-react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import slideService from '../../services/slideService';
 import categoryService from '../../services/categoryService';
@@ -130,14 +130,14 @@ export default function AddSlideForm() {
         const response = await slideService.updateSlide(editSlide._id, slideData);
         if (response.success) {
           alert("Slide updated successfully!");
-          navigate('/admin/slides');
+          navigate('/admin/all-slides');
         }
       } else {
         // Create new slide
         const response = await slideService.createSlide(slideData);
         if (response.success) {
           alert("Slide added successfully!");
-          navigate('/admin/slides');
+          navigate('/admin/all-slides');
         }
       }
     } catch (error) {
@@ -232,9 +232,18 @@ export default function AddSlideForm() {
 
   return (
     <div className="h-full flex flex-col p-3 sm:p-4">
-      <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
-        {isEditMode ? 'Edit Slide' : 'Add New Slide'}
-      </h2>
+      <div className="flex items-center gap-3 mb-2">
+        <button
+          onClick={() => navigate('/admin/all-slides')}
+          className="flex items-center gap-2 px-3 py-2 text-sm bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to All Slides
+        </button>
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+          {isEditMode ? 'Edit Slide' : 'Add New Slide'}
+        </h2>
+      </div>
       
       <div className="flex-1 overflow-y-auto scrollbar-custom min-h-0">
         <form onSubmit={handleSubmit} className="bg-card rounded-lg border border-border p-4 sm:p-6 max-w-2xl">

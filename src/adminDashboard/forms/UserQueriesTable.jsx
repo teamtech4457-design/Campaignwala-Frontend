@@ -141,43 +141,43 @@ export default function UserQueriesTable() {
   const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6">
+    <div className="min-h-screen bg-background p-4 sm:p-6">
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800">QUERIES</h1>
+        <h1 className="text-4xl font-bold text-foreground">QUERIES</h1>
       </div>
 
       {/* Loading State */}
       {loading ? (
         <div className="max-w-4xl mx-auto text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading queries...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading queries...</p>
         </div>
       ) : error ? (
         <div className="max-w-4xl mx-auto text-center py-12">
-          <p className="text-red-500">Error: {error}</p>
+          <p className="text-destructive">Error: {error}</p>
           <button
             onClick={fetchQueries}
-            className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+            className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
           >
             Retry
           </button>
         </div>
       ) : queries.length === 0 ? (
         <div className="max-w-4xl mx-auto text-center py-12">
-          <p className="text-gray-600">No queries found</p>
+          <p className="text-muted-foreground">No queries found</p>
         </div>
       ) : (
         <>
           {/* Queries Cards */}
           <div className="max-w-4xl mx-auto space-y-6">
             {queries.map((query) => (
-          <div key={query.id} className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+          <div key={query.id} className="bg-card rounded-lg shadow-md border border-border p-6">
             {/* User Info Header */}
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-800">{query.user}</h3>
-                <p className="text-sm text-gray-600">{query.date}</p>
+                <h3 className="text-lg font-semibold text-foreground">{query.user}</h3>
+                <p className="text-sm text-muted-foreground">{query.date}</p>
               </div>
               {/* Reply button with custom purple color #561ED0 */}
               <button
@@ -196,18 +196,18 @@ export default function UserQueriesTable() {
             </div>
             
             {/* Query Subject */}
-            <h4 className={`text-base font-medium mb-2 ${query.hasReplied ? 'text-green-600' : 'text-gray-800'}`}>
+            <h4 className={`text-base font-medium mb-2 ${query.hasReplied ? 'text-green-600' : 'text-foreground'}`}>
               {query.subject}
             </h4>
             
             {/* Query Message */}
-            <p className={`text-sm leading-relaxed mb-3 ${query.hasReplied ? 'text-green-700' : 'text-gray-700'}`}>
+            <p className={`text-sm leading-relaxed mb-3 ${query.hasReplied ? 'text-green-700' : 'text-muted-foreground'}`}>
               {query.message}
             </p>
             
             {/* Email Info and Reply Count */}
             <div className="flex justify-between items-center">
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-muted-foreground">
                 Email: {query.email}
               </div>
               {query.hasReplied && query.replies && query.replies.length > 0 && (
@@ -224,14 +224,14 @@ export default function UserQueriesTable() {
 
       {/* Reply Modal */}
       {showReplyModal && selectedQuery && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-card rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-border">
             {/* Modal Header - Fixed */}
-            <div className="text-white px-6 py-4 flex items-center justify-between flex-shrink-0" style={{ backgroundColor: '#561ED0' }}>
+            <div className="bg-primary text-primary-foreground px-6 py-4 flex items-center justify-between flex-shrink-0 rounded-t-lg">
               <h2 className="text-xl font-semibold">Reply to Query</h2>
               <button 
                 onClick={handleCloseModal}
-                className="text-white hover:text-gray-200 transition-colors"
+                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -241,8 +241,8 @@ export default function UserQueriesTable() {
             <div className="flex-1 overflow-y-auto p-6">
               {/* Original Query Info */}
               <div className="mb-6">
-                <h3 className="text-sm font-semibold text-gray-600 mb-2">Original Query:</h3>
-                <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+                <h3 className="text-sm font-semibold text-muted-foreground mb-2">Original Query:</h3>
+                <div className="bg-muted rounded-lg p-4 space-y-2 text-foreground">
                   <div><span className="font-medium">From:</span> {selectedQuery.user} ({selectedQuery.email})</div>
                   <div><span className="font-medium">Date:</span> {selectedQuery.date}</div>
                   <div><span className="font-medium">Subject:</span> {selectedQuery.subject}</div>
@@ -253,8 +253,8 @@ export default function UserQueriesTable() {
               {/* Previous Replies */}
               {selectedQuery.replies && selectedQuery.replies.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-sm font-semibold text-gray-600 mb-2">Previous Replies:</h3>
-                  <div className="space-y-3 max-h-60 overflow-y-auto border rounded-lg p-3 bg-gray-50">
+                  <h3 className="text-sm font-semibold text-muted-foreground mb-2">Previous Replies:</h3>
+                  <div className="space-y-3 max-h-60 overflow-y-auto border border-border rounded-lg p-3 bg-muted">
                     {selectedQuery.replies.map((reply) => (
                       <div key={reply.id} className="bg-green-50 border-l-4 border-green-500 p-3 rounded-r-lg">
                         <div className="flex justify-between items-start mb-2">
@@ -270,14 +270,14 @@ export default function UserQueriesTable() {
 
               {/* Reply Input */}
               <div className="mb-6">
-                <h3 className="text-sm font-semibold text-gray-600 mb-2">
+                <h3 className="text-sm font-semibold text-muted-foreground mb-2">
                   {selectedQuery.hasReplied ? 'Send Another Reply:' : 'Your Reply:'}
                 </h3>
                 <textarea
                   value={replyMessage}
                   onChange={(e) => setReplyMessage(e.target.value)}
                   placeholder="Type your response here..."
-                  className="w-full h-32 p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full h-32 p-3 bg-background border border-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-foreground placeholder:text-muted-foreground"
                 />
               </div>
 
@@ -285,15 +285,14 @@ export default function UserQueriesTable() {
               <div className="flex gap-3 justify-end">
                 <button
                   onClick={handleCloseModal}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSendReply}
                   disabled={!replyMessage.trim()}
-                  className="px-6 py-2 text-white rounded-lg hover:opacity-90 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
-                  style={{ backgroundColor: !replyMessage.trim() ? undefined : '#561ED0' }}
+                  className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   <Send className="w-4 h-4" />
                   Send Reply
