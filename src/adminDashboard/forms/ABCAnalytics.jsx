@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -46,14 +46,21 @@ const CardContent = ({ className = "", children }) => (
 
 // Theme-aware chart colors that work in both light and dark themes
 const getChartColors = () => {
+  // Simplified dark mode detection - check background color
+  const computedStyle = getComputedStyle(document.documentElement);
+  const bgColor = computedStyle.getPropertyValue('--background').trim();
+  const isDarkMode = bgColor.includes('222') || bgColor.includes('4%') || document.body.classList.contains('dark');
+  
+  console.log('Dark mode detected:', isDarkMode, 'Background:', bgColor); // Debug log
+  
   return {
-    // For axis text - uses CSS variables that automatically adapt
-    axisText: 'hsl(var(--foreground))',
-    // For dots - white in dark, primary color in light
-    dotFill: 'hsl(var(--background))',
-    dotStroke: 'hsl(var(--primary))',
+    // For axis text 
+    axisText: isDarkMode ? '#ffffff' : '#374151',
+    // For dots - visible in both themes
+    dotFill: isDarkMode ? '#ffffff' : '#3b82f6',
+    dotStroke: isDarkMode ? '#ffffff' : '#3b82f6', 
     // Grid lines
-    gridStroke: 'hsl(var(--border))'
+    gridStroke: isDarkMode ? '#555555' : '#e5e7eb'
   };
 };
 
@@ -66,11 +73,16 @@ const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, p
 
   if (percent < 0.05) return null; // Don't show labels for very small segments
 
+  // Simplified dark mode detection for labels
+  const computedStyle = getComputedStyle(document.documentElement);
+  const bgColor = computedStyle.getPropertyValue('--background').trim();
+  const isDarkMode = bgColor.includes('222') || bgColor.includes('4%') || document.body.classList.contains('dark');
+
   return (
     <text 
       x={x} 
       y={y} 
-      fill="hsl(var(--background))" 
+      fill={isDarkMode ? "#ffffff" : "#374151"} 
       textAnchor={x > cx ? 'start' : 'end'} 
       dominantBaseline="central"
       fontSize={11}
@@ -312,6 +324,21 @@ export default function AnalyticsDashboard() {
   const [showCalendar, setShowCalendar] = useState(false)
   const [manualStartDate, setManualStartDate] = useState("2025-09-25")
   const [manualEndDate, setManualEndDate] = useState("2025-10-25")
+  const [chartKey, setChartKey] = useState(0) // Force re-render key
+
+  // Listen for theme changes and force chart re-render
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setChartKey(prev => prev + 1)
+    })
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class', 'data-theme']
+    })
+
+    return () => observer.disconnect()
+  }, [])
 
   const applyQuickFilter = (days) => {
     const end = new Date()
@@ -584,7 +611,7 @@ export default function AnalyticsDashboard() {
             </div>
             <div className="p-4">
               <ResponsiveContainer width="100%" height={350}>
-                <LineChart data={dateWiseData}>
+                <LineChart data={dateWiseData} key={chartKey}>
                   <CartesianGrid strokeDasharray="3 3" stroke={getChartColors().gridStroke} />
                   <XAxis 
                     dataKey="date" 
@@ -624,12 +651,12 @@ export default function AnalyticsDashboard() {
           {/* Pending Account Distribution */}
           <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-foreground">Pending Account 2586</CardTitle>
+              <CardTitle className="text-foreground">Pending By Account</CardTitle>
               <CardDescription className="text-muted-foreground">Distribution by account type</CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center">
               <ResponsiveContainer width="100%" height={350}>
-                <PieChart>
+                <PieChart key={`pie1-${chartKey}`}>
                   <Pie
                     data={pendingByAccount}
                     cx="50%"
@@ -662,7 +689,7 @@ export default function AnalyticsDashboard() {
             </CardHeader>
             <CardContent className="flex justify-center">
               <ResponsiveContainer width="100%" height={350}>
-                <PieChart>
+                <PieChart key={`pie2-${chartKey}`}>
                   <Pie
                     data={pendingByAccount}
                     cx="50%"
@@ -692,7 +719,7 @@ export default function AnalyticsDashboard() {
             </CardHeader>
             <CardContent className="flex justify-center">
               <ResponsiveContainer width="100%" height={350}>
-                <PieChart>
+                <PieChart key={`pie3-${chartKey}`}>
                   <Pie
                     data={approvedByAccount}
                     cx="50%"
