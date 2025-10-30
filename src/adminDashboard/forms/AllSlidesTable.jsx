@@ -113,11 +113,11 @@ export default function AllSlidesTable() {
       )}
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-foreground mb-1">Slide Board</h1>
+          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-1">Slide Board</h1>
           {searchQuery && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               {slides.length} result{slides.length !== 1 ? 's' : ''} found for "{searchQuery}"
             </p>
           )}
@@ -128,8 +128,8 @@ export default function AllSlidesTable() {
               type="text"
               value={searchQuery}
               onChange={handleSearchChange}
-              placeholder="Search by title, ID, or description..."
-              className="pl-10 pr-10 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary w-80"
+              placeholder="Search slides..."
+              className="pl-10 pr-10 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary w-full sm:w-80"
             />
             <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -153,12 +153,12 @@ export default function AllSlidesTable() {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
         ) : slides.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-64 text-muted-foreground">
-            <Upload className="w-16 h-16 mb-4" />
+          <div className="flex flex-col items-center justify-center h-64 text-muted-foreground px-4">
+            <Upload className="w-12 h-12 sm:w-16 sm:h-16 mb-4" />
             {searchQuery ? (
               <>
-                <p className="text-lg font-semibold">No slides found</p>
-                <p className="text-sm">No results for "{searchQuery}"</p>
+                <p className="text-base sm:text-lg font-semibold text-center">No slides found</p>
+                <p className="text-xs sm:text-sm text-center">No results for "{searchQuery}"</p>
                 <button
                   onClick={clearSearch}
                   className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-semibold"
@@ -168,13 +168,13 @@ export default function AllSlidesTable() {
               </>
             ) : (
               <>
-                <p className="text-lg font-semibold">No slides found</p>
-                <p className="text-sm">Create your first slide to get started</p>
+                <p className="text-base sm:text-lg font-semibold text-center">No slides found</p>
+                <p className="text-xs sm:text-sm text-center">Create your first slide to get started</p>
               </>
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
             {slides.map((slide) => (
               <div key={slide._id} className="bg-white dark:bg-card rounded-lg border border-gray-200 dark:border-border overflow-hidden hover:shadow-lg transition-all duration-200">
                 {/* Slide Image */}

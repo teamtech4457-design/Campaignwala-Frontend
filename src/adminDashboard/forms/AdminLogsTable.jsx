@@ -121,7 +121,7 @@ export default function AdminLogsTable() {
         <h2 className="text-2xl font-bold text-foreground">Admin Activity Logs</h2>
         <button 
           onClick={handleExportLogs}
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm"
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm whitespace-nowrap"
         >
           Export Logs
         </button>
@@ -178,7 +178,7 @@ export default function AdminLogsTable() {
                 <td className="px-6 py-4 text-sm whitespace-nowrap">
                   <button
                     onClick={() => handleViewDetails(log)}
-                    className="text-white hover:opacity-90 transition-colors px-3 py-1 rounded-lg text-xs font-medium flex items-center gap-1"
+                    className="text-white hover:opacity-90 transition-colors px-3 py-1 rounded-lg text-xs font-medium flex items-center gap-1 whitespace-nowrap"
                     style={{ backgroundColor: '#561ED0' }}
                   >
                     <Eye className="w-3 h-3" />

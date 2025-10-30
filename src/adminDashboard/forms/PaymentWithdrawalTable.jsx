@@ -180,60 +180,61 @@ export default function PaymentWithdrawalTable() {
   };
 
   return (
-    <div className="h-full flex flex-col p-2 sm:p-3 bg-background">
+    <div className="h-full flex flex-col p-2 sm:p-3 lg:p-4 bg-background">
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-2xl font-semibold text-foreground">Payment Withdrawal Requests</h1>
+        <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold text-foreground">Payment Withdrawal Requests</h1>
         <button
           onClick={handleExport}
-          className="flex items-center gap-2 px-4 py-2 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors whitespace-nowrap"
         >
           <Download className="w-4 h-4" />
-          Export Data
+          <span className="hidden sm:inline">Export Data</span>
+          <span className="sm:hidden">Export</span>
         </button>
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-2">
-        <div className="bg-card rounded-lg border border-border p-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-2">
+        <div className="bg-card rounded-lg border border-border p-2 sm:p-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Total Requests</p>
-              <p className="text-2xl font-bold text-foreground">{totalRequests}</p>
-              <p className="text-xs text-muted-foreground">Overall count of all withdrawal requests</p>
+              <p className="text-xs sm:text-sm text-muted-foreground mb-1">Total Requests</p>
+              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">{totalRequests}</p>
+              <p className="text-xs text-muted-foreground hidden sm:block">Overall count of all withdrawal requests</p>
             </div>
             <Info className="w-4 h-4 text-muted-foreground" />
           </div>
         </div>
         
-        <div className="bg-card rounded-lg border border-border p-3">
+        <div className="bg-card rounded-lg border border-border p-2 sm:p-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Approved Requests</p>
-              <p className="text-2xl font-bold text-foreground">{approvedRequests}</p>
-              <p className="text-xs text-muted-foreground">Requests successfully processed and approved</p>
+              <p className="text-xs sm:text-sm text-muted-foreground mb-1">Approved Requests</p>
+              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">{approvedRequests}</p>
+              <p className="text-xs text-muted-foreground hidden sm:block">Requests successfully processed and approved</p>
             </div>
             <Info className="w-4 h-4 text-muted-foreground" />
           </div>
         </div>
         
-        <div className="bg-card rounded-lg border border-border p-3">
+        <div className="bg-card rounded-lg border border-border p-2 sm:p-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Pending Requests</p>
-              <p className="text-2xl font-bold text-foreground">{pendingRequests}</p>
-              <p className="text-xs text-muted-foreground">Requests awaiting review or processing</p>
+              <p className="text-xs sm:text-sm text-muted-foreground mb-1">Pending Requests</p>
+              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">{pendingRequests}</p>
+              <p className="text-xs text-muted-foreground hidden sm:block">Requests awaiting review or processing</p>
             </div>
             <Info className="w-4 h-4 text-muted-foreground" />
           </div>
         </div>
         
-        <div className="bg-card rounded-lg border border-border p-3">
+        <div className="bg-card rounded-lg border border-border p-2 sm:p-3">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Denied Requests</p>
-              <p className="text-2xl font-bold text-foreground">{rejectedRequests}</p>
-              <p className="text-xs text-muted-foreground">Requests that were rejected or cancelled</p>
+              <p className="text-xs sm:text-sm text-muted-foreground mb-1">Denied Requests</p>
+              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">{rejectedRequests}</p>
+              <p className="text-xs text-muted-foreground hidden sm:block">Requests that were rejected or cancelled</p>
             </div>
             <Info className="w-4 h-4 text-muted-foreground" />
           </div>
@@ -242,8 +243,8 @@ export default function PaymentWithdrawalTable() {
 
       {/* Filters */}
       <div className="mb-2">
-        <h3 className="text-lg font-semibold text-foreground mb-2">Filter Requests</h3>
-        <div className="flex flex-wrap items-center gap-4">
+        <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">Filter Requests</h3>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4">
           <div className="relative flex-1 min-w-[200px] max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
@@ -259,7 +260,7 @@ export default function PaymentWithdrawalTable() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="appearance-none bg-background border border-border rounded-lg px-4 py-2 pr-8 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="appearance-none bg-background border border-border rounded-lg px-4 py-2 pr-8 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full sm:w-auto"
             >
               <option value="All Statuses">All Statuses</option>
               <option value="approved">Approved</option>
@@ -275,7 +276,7 @@ export default function PaymentWithdrawalTable() {
       {/* Table */}
       <div className="flex-1 bg-card rounded-lg border border-border overflow-hidden mt-1">
         <div className="max-h-[500px] overflow-y-auto overflow-x-auto scrollbar-hide">
-          <table className="w-full">
+          <table className="w-full min-w-[1200px]">
             <thead className="bg-muted/50 border-b border-border">
               <tr>
                 <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">WITHDRAWAL ID</th>

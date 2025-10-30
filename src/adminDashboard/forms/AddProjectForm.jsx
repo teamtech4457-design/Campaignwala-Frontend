@@ -99,6 +99,36 @@ export default function AddOffersForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+    // Special handling for commission fields - only allow integers, no decimals
+    if (name === 'commission1' || name === 'commission2') {
+      // If empty string, allow it (for clearing the field)
+      if (value === '') {
+        setFormData({ ...formData, [name]: value });
+        return;
+      }
+      
+      // Only allow positive integers (no decimals, no negative numbers)
+      const integerRegex = /^\d+$/;
+      
+      // Check if value matches integer pattern
+      if (!integerRegex.test(value)) {
+        return; // Don't update if not a valid integer
+      }
+      
+      // Convert to number and check minimum value
+      const numValue = parseInt(value, 10);
+      
+      // Don't allow values less than 1
+      if (numValue < 1) {
+        return;
+      }
+      
+      setFormData({ ...formData, [name]: value });
+      return;
+    }
+    
+    // For all other fields, use normal handling
     setFormData({ ...formData, [name]: value });
   };
 
@@ -136,8 +166,8 @@ export default function AddOffersForm() {
       </div>
 
       <div className="flex-1 overflow-y-auto scrollbar-custom min-h-0">
-      <form onSubmit={handleSubmit} className="bg-card rounded-lg border border-border p-4 sm:p-6 max-w-4xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="bg-card rounded-lg border border-border p-3 sm:p-4 md:p-6 w-full max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">Offer Name</label>
             <input
@@ -145,7 +175,7 @@ export default function AddOffersForm() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-3 sm:px-4 py-2 text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3 py-2 sm:px-4 text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Enter offer name"
               required
             />
@@ -157,36 +187,36 @@ export default function AddOffersForm() {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3 py-2 sm:px-4 text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary truncate"
               required
               disabled={loadingCategories}
             >
               <option value="">
-                {loadingCategories ? "Loading categories..." : "Select Category"}
+                {loadingCategories ? "Loading..." : "Select Category"}
               </option>
               {categories.map((cat) => (
-                <option key={cat._id} value={cat.name}>
-                  {cat.name}
+                <option key={cat._id} value={cat.name} className="truncate">
+                  {cat.name.length > 25 ? cat.name.substring(0, 25) + '...' : cat.name}
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">Link</label>
+            <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">Link</label>
             <input
               type="url"
               name="link"
               value={formData.link}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3 py-2 sm:px-4 text-xs sm:text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="https://example.com"
             />
           </div>
 
           {/* Commission 1 (Mandatory) */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">
               Commission 1 (%) <span className="text-red-500">*</span>
             </label>
             <input
@@ -194,21 +224,24 @@ export default function AddOffersForm() {
               name="commission1"
               value={formData.commission1}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              min="1"
+              step="1"
+              pattern="[1-9]\d*"
+              className="w-full px-3 py-2 sm:px-4 text-xs sm:text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="e.g., 10"
               required
             />
             
             {/* Commission 1 Comment */}
-            <div className="mt-2">
-              <label className="block text-sm font-medium text-muted-foreground mb-1">
+            <div className="mt-1 sm:mt-2">
+              <label className="block text-xs sm:text-sm font-medium text-muted-foreground mb-1">
                 Commission 1 Comment
               </label>
               <textarea
                 name="commission1Comment"
                 value={formData.commission1Comment}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                className="w-full px-3 py-2 sm:px-4 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-xs sm:text-sm resize-none"
                 placeholder="e.g., From Amazon affiliate program offer"
                 rows="2"
               />
@@ -217,7 +250,7 @@ export default function AddOffersForm() {
 
           {/* Commission 2 (Optional) */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">
               Commission 2 (%) <span className="text-gray-400">(optional)</span>
             </label>
             <input
@@ -225,20 +258,23 @@ export default function AddOffersForm() {
               name="commission2"
               value={formData.commission2}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              min="1"
+              step="1"
+              pattern="[1-9]\d*"
+              className="w-full px-3 py-2 sm:px-4 text-xs sm:text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="e.g., 15"
             />
             
             {/* Commission 2 Comment */}
-            <div className="mt-2">
-              <label className="block text-sm font-medium text-muted-foreground mb-1">
+            <div className="mt-1 sm:mt-2">
+              <label className="block text-xs sm:text-sm font-medium text-muted-foreground mb-1">
                 Commission 2 Comment <span className="text-gray-400">(optional)</span>
               </label>
               <textarea
                 name="commission2Comment"
                 value={formData.commission2Comment}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                className="w-full px-3 py-2 sm:px-4 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-xs sm:text-sm resize-none"
                 placeholder="e.g., From Flipkart bonus offer"
                 rows="2"
               />
@@ -246,13 +282,13 @@ export default function AddOffersForm() {
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-foreground mb-2">Offer Description</label>
+            <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">Offer Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              rows={4}
-              className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              rows={3}
+              className="w-full px-3 py-2 sm:px-4 text-xs sm:text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
               placeholder="Enter offer description..."
               required
             />
@@ -260,36 +296,36 @@ export default function AddOffersForm() {
 
           {/* Video Link */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-foreground mb-2">Video Link</label>
+            <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">Video Link</label>
             <input
               type="url"
               name="videoLink"
               value={formData.videoLink}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3 py-2 sm:px-4 text-xs sm:text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="https://youtube.com/watch?v=..."
             />
           </div>
 
           {/* Terms and Conditions */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-foreground mb-2">Terms and Conditions</label>
+            <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">Terms and Conditions</label>
             <textarea
               name="termsAndConditions"
               value={formData.termsAndConditions}
               onChange={handleChange}
-              rows={4}
-              className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              rows={3}
+              className="w-full px-3 py-2 sm:px-4 text-xs sm:text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
               placeholder="Enter terms and conditions..."
             />
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6">
+        <div className="flex flex-wrap gap-3 sm:gap-4 mt-4 sm:mt-6">
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto px-6 py-2 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-semibold whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 sm:px-6 py-2 text-xs sm:text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-semibold whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Adding Offer..." : "Add Offer"}
           </button>
@@ -313,7 +349,7 @@ export default function AddOffersForm() {
               setErrorMessage("");
               setSuccessMessage("");
             }}
-            className="w-full sm:w-auto px-6 py-2 text-sm bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/80 transition-colors whitespace-nowrap"
+            className="px-4 sm:px-6 py-2 text-xs sm:text-sm bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/80 transition-colors whitespace-nowrap"
           >
             Cancel
           </button>

@@ -243,38 +243,38 @@ export default function HotOffersPage() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <header className="border-b border-border bg-card">
-        <div className="mx-auto max-w-6xl px-6 py-6">
+        <div className="mx-auto max-w-6xl px-3 sm:px-6 py-4 sm:py-6">
           <button 
             onClick={() => navigate("/admin/notifications")} 
-            className="inline-flex items-center gap-2 text-[#4406CB] hover:text-[#4406CB]/80 mb-4"
+            className="inline-flex items-center gap-2 text-[#4406CB] hover:text-[#4406CB]/80 mb-3 sm:mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span>Back to Dashboard</span>
+            <span className="text-sm sm:text-base">Back to Dashboard</span>
           </button>
-          <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-[#4406CB]/10 p-3">
-              <Zap className="h-6 w-6 text-[#4406CB]" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="rounded-lg bg-[#4406CB]/10 p-2 sm:p-3">
+              <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-[#4406CB]" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Hot Offers Notifications</h1>
-              <p className="mt-1 text-muted-foreground">Send promotional offers to targeted user segments</p>
+              <h1 className="text-lg sm:text-2xl lg:text-3xl font-bold break-words">Hot Offers Notifications</h1>
+              <p className="mt-1 text-xs sm:text-sm text-muted-foreground">Send promotional offers to targeted user segments</p>
             </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="mx-auto max-w-6xl px-6 py-12">
-        <div className="grid gap-8 lg:grid-cols-3">
+      <main className="mx-auto max-w-6xl px-3 sm:px-6 py-6 sm:py-12">
+        <div className="grid gap-4 sm:gap-8 lg:grid-cols-3">
           {/* Form Section */}
           <div className="lg:col-span-2">
-            <Card className="p-8">
-              <h2 className="text-2xl font-bold mb-6">Create Hot Offer</h2>
+            <Card className="p-4 sm:p-8">
+              <h2 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6">Create Hot Offer</h2>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {/* Offer Title */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Offer Title</label>
+                  <label className="block text-xs sm:text-sm font-medium mb-2">Offer Title</label>
                   <Input
                     placeholder="e.g., Summer Sale - 50% Off"
                     value={offerTitle}
@@ -284,9 +284,9 @@ export default function HotOffersPage() {
                 </div>
 
                 {/* Discount */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Discount</label>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">Discount</label>
                     <div className="flex items-center gap-2">
                       <Input
                         type="number"
@@ -299,7 +299,7 @@ export default function HotOffersPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Expiry Date</label>
+                    <label className="block text-xs sm:text-sm font-medium mb-2">Expiry Date</label>
                     <Input
                       type="date"
                       value={expiryDate}
@@ -311,27 +311,27 @@ export default function HotOffersPage() {
 
                 {/* Description */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Description</label>
+                  <label className="block text-xs sm:text-sm font-medium mb-2">Description</label>
                   <textarea
                     placeholder="Describe the offer details and terms..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full min-h-24 rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="w-full min-h-20 sm:min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
 
                 {/* Target Segments */}
                 <div>
-                  <label className="block text-sm font-medium mb-3 flex items-center gap-2">
+                  <label className="block text-xs sm:text-sm font-medium mb-3 flex items-center gap-2">
                     <Target className="h-4 w-4" />
                     Target User Segments - Bulk Notification
                   </label>
-                  <div className="bg-[#4406CB]/10 border border-[#4406CB]/20 rounded-lg p-4 mb-4">
-                    <p className="text-sm text-[#4406CB] font-medium">
+                  <div className="bg-[#4406CB]/10 border border-[#4406CB]/20 rounded-lg p-3 sm:p-4 mb-4">
+                    <p className="text-xs sm:text-sm text-[#4406CB] font-medium">
                       📱 Bulk Hot Offers - Select multiple segments to send offers to thousands of users simultaneously
                     </p>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
                     {segments.map((segment) => (
                       <button
                         key={segment.id}
@@ -343,8 +343,8 @@ export default function HotOffersPage() {
                         }`}
                       >
                         <div className="flex items-start justify-between mb-2">
-                          <p className="font-medium text-sm">{segment.label}</p>
-                          <span className={`text-lg font-bold ${
+                          <p className="font-medium text-xs sm:text-sm">{segment.label}</p>
+                          <span className={`text-base sm:text-lg font-bold ${
                             selectedSegments.includes(segment.id) ? "text-[#4406CB]" : "text-muted-foreground"
                           }`}>
                             {segment.count.toLocaleString()}
@@ -365,21 +365,23 @@ export default function HotOffersPage() {
                   <div className="flex gap-2 mt-4 flex-wrap">
                     <button
                       onClick={() => setSelectedSegments(segments.map(s => s.id))}
-                      className="px-3 py-1 bg-[#4406CB] text-white rounded-full text-xs font-medium hover:bg-[#4406CB]/90 transition-colors"
+                      className="px-3 py-1.5 bg-[#4406CB] text-white rounded-full text-xs font-medium hover:bg-[#4406CB]/90 transition-colors whitespace-nowrap"
                     >
-                      Select All ({segments.reduce((sum, s) => sum + s.count, 0).toLocaleString()} users)
+                      <span className="hidden sm:inline">Select All ({segments.reduce((sum, s) => sum + s.count, 0).toLocaleString()} users)</span>
+                      <span className="sm:hidden">Select All</span>
                     </button>
                     <button
                       onClick={() => setSelectedSegments([])}
-                      className="px-3 py-1 bg-gray-500 text-white rounded-full text-xs font-medium hover:bg-gray-600 transition-colors"
+                      className="px-3 py-1.5 bg-gray-500 text-white rounded-full text-xs font-medium hover:bg-gray-600 transition-colors whitespace-nowrap"
                     >
                       Clear All
                     </button>
                     <button
                       onClick={() => setSelectedSegments(['active-users', 'premium-users', 'high-earners'])}
-                      className="px-3 py-1 bg-green-500 text-white rounded-full text-xs font-medium hover:bg-green-600 transition-colors"
+                      className="px-3 py-1.5 bg-green-500 text-white rounded-full text-xs font-medium hover:bg-green-600 transition-colors whitespace-nowrap"
                     >
-                      High Value Users
+                      <span className="hidden sm:inline">High Value Users</span>
+                      <span className="sm:hidden">Premium</span>
                     </button>
                   </div>
                 </div>
@@ -453,22 +455,24 @@ export default function HotOffersPage() {
                     </div>
 
                     {/* User Selection Controls */}
-                    <div className="flex items-center gap-3 mt-4">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-4">
                       <button
                         onClick={() => setSelectedUsers(getFilteredUsers().map(u => u.id))}
-                        className="px-3 py-1 bg-[#4406CB] text-white rounded text-xs font-medium hover:bg-[#4406CB]/90"
+                        className="px-3 py-1.5 bg-[#4406CB] text-white rounded text-xs font-medium hover:bg-[#4406CB]/90 whitespace-nowrap"
                       >
-                        Select All Visible ({getFilteredUsers().length})
+                        <span className="hidden sm:inline">Select All Visible ({getFilteredUsers().length})</span>
+                        <span className="sm:hidden">Select All</span>
                       </button>
                       <button
                         onClick={() => setSelectedUsers([])}
-                        className="px-3 py-1 bg-gray-500 text-white rounded text-xs font-medium hover:bg-gray-600"
+                        className="px-3 py-1.5 bg-gray-500 text-white rounded text-xs font-medium hover:bg-gray-600 whitespace-nowrap"
                       >
-                        Clear Selection
+                        <span className="hidden sm:inline">Clear Selection</span>
+                        <span className="sm:hidden">Clear</span>
                       </button>
                       {selectedUsers.length > 0 && (
-                        <span className="text-sm text-muted-foreground">
-                          {selectedUsers.length} users selected for notification
+                        <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
+                          {selectedUsers.length} selected
                         </span>
                       )}
                     </div>
@@ -476,13 +480,13 @@ export default function HotOffersPage() {
                 )}
 
                 {/* Send Button */}
-                <div className="flex gap-3 pt-6 border-t border-border">
+                <div className="flex flex-col sm:flex-row gap-3 pt-4 sm:pt-6 border-t border-border">
                   {getTotalRecipients() > 0 && (
-                    <div className="flex-1 bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-4 mb-4">
-                      <p className="text-sm font-medium text-orange-700 dark:text-orange-300 mb-2">
+                    <div className="flex-1 bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-3 sm:p-4 mb-2 sm:mb-4">
+                      <p className="text-xs sm:text-sm font-medium text-orange-700 dark:text-orange-300 mb-2">
                         🚀 Ready to send bulk notification
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-muted-foreground break-words">
                         This will send hot offer "{offerTitle || 'your offer'}" to {getTotalRecipients().toLocaleString()} users
                         {selectedUsers.length > 0 ? " (individually selected)" : ` across ${selectedSegments.length} segment${selectedSegments.length !== 1 ? 's' : ''}`}
                       </p>
@@ -497,9 +501,9 @@ export default function HotOffersPage() {
                       !description.trim() ||
                       getTotalRecipients() === 0
                     }
-                    className="min-w-48 h-12 text-lg font-bold shadow-lg hover:shadow-xl"
+                    className="w-full sm:min-w-48 sm:w-auto h-10 sm:h-12 text-sm sm:text-lg font-bold shadow-lg hover:shadow-xl justify-center"
                   >
-                    <Send className="h-5 w-5" />
+                    <Send className="h-4 w-4 sm:h-5 sm:w-5" />
                     {isLoading 
                       ? `Sending to ${getTotalRecipients().toLocaleString()}...` 
                       : `Send to ${getTotalRecipients().toLocaleString()} Users`
@@ -560,27 +564,27 @@ export default function HotOffersPage() {
 
           {/* Preview Section */}
           <div>
-            <Card className="p-6 sticky top-6">
-              <h3 className="font-bold mb-4">Offer Preview</h3>
+            <Card className="p-4 sm:p-6 lg:sticky lg:top-6">
+              <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">Offer Preview</h3>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {/* Offer Card Preview */}
-                <div className="rounded-lg border border-orange-500/30 bg-orange-500/5 p-4">
+                <div className="rounded-lg border border-orange-500/30 bg-orange-500/5 p-3 sm:p-4">
                   <div className="flex items-start justify-between mb-2">
-                    <p className="font-bold text-sm">{offerTitle || "Offer Title"}</p>
-                    {discount && <span className="text-lg font-bold text-orange-500">{discount}%</span>}
+                    <p className="font-bold text-xs sm:text-sm break-words flex-1">{offerTitle || "Offer Title"}</p>
+                    {discount && <span className="text-base sm:text-lg font-bold text-orange-500 ml-2">{discount}%</span>}
                   </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed mb-2">
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-2 break-words">
                     {description || "Offer description will appear here..."}
                   </p>
                   {expiryDate && <p className="text-xs text-muted-foreground">Expires: {expiryDate}</p>}
                 </div>
 
                 {/* Recipients Summary */}
-                <div className="rounded-lg bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 p-4">
+                <div className="rounded-lg bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 p-3 sm:p-4">
                   <p className="text-xs text-muted-foreground mb-2">BULK NOTIFICATION REACH</p>
-                  <p className="text-3xl font-bold text-orange-600">{getTotalRecipients().toLocaleString()}</p>
-                  <p className="text-sm font-medium text-orange-700 dark:text-orange-400 mt-1">
+                  <p className="text-2xl sm:text-3xl font-bold text-orange-600">{getTotalRecipients().toLocaleString()}</p>
+                  <p className="text-xs sm:text-sm font-medium text-orange-700 dark:text-orange-400 mt-1">
                     {selectedSegments.length > 0
                       ? `${selectedSegments.length} segment${selectedSegments.length !== 1 ? "s" : ""} selected`
                       : "No segments selected"}
