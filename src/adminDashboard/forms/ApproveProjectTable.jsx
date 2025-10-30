@@ -171,35 +171,36 @@ export default function ApproveOffersTable() {
   return (
     <div className="h-full flex flex-col bg-background">
       {/* Professional Header Section */}
-      <div className="bg-card border-b border-border px-6 py-5">
-        <div className="flex items-center justify-between">
+      <div className="bg-card border-b border-border px-3 sm:px-6 py-4 sm:py-5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-foreground flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground flex items-center gap-2 sm:gap-3">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+                <FileText className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-white" />
               </div>
-              Account Approval Center
+              <span className="break-words">Account Approval Center</span>
             </h1>
-            <p className="text-muted-foreground mt-1 text-sm">
+            <p className="text-muted-foreground mt-1 text-xs sm:text-sm">
               Manage account approvals with Excel/CSV import and individual toggle controls
             </p>
           </div>
           
           {/* Right side with title and toggle */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
             {/* Export Button */}
             <button
               onClick={exportToExcel}
               disabled={loading || offers.length === 0}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-semibold disabled:opacity-50 flex items-center gap-2"
+              className="px-3 sm:px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-semibold disabled:opacity-50 flex items-center gap-2 text-sm whitespace-nowrap"
             >
               <FileText className="w-4 h-4" />
-              Export to CSV
+              <span className="hidden xs:inline">Export to CSV</span>
+              <span className="xs:hidden">Export</span>
             </button>
             
             {/* Bulk Toggle */}
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-foreground">Bulk Approve/Unapprove</span>
+              <span className="text-xs sm:text-sm font-medium text-foreground">Bulk Approve/Unapprove</span>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input 
                   type="checkbox" 
@@ -213,7 +214,7 @@ export default function ApproveOffersTable() {
                     alert('Bulk approval/unapproval will process all offers. This feature requires backend support for bulk operations.');
                   }}
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                <div className="w-10 h-5 sm:w-11 sm:h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 sm:after:h-5 sm:after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
               </label>
             </div>
           </div>
@@ -221,26 +222,26 @@ export default function ApproveOffersTable() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-3 sm:p-6">
 
         {/* Professional Upload Card */}
         <div className="max-w-4xl mx-auto">
-          <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="bg-card rounded-lg sm:rounded-xl border border-border shadow-sm overflow-hidden">
             {/* Card Header */}
-            <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 px-6 py-4 border-b border-border">
-              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <Upload className="w-5 h-5 text-primary" />
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 px-3 sm:px-6 py-3 sm:py-4 border-b border-border">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                <Upload className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 Excel/CSV File Upload
               </h3>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Upload your account data file (.csv, .xlsx, .xls) for bulk processing
               </p>
             </div>
 
             {/* Upload Zone */}
-            <div className="p-6">
+            <div className="p-3 sm:p-6">
               <div
-                className={`relative border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-300 group ${
+                className={`relative border-2 border-dashed rounded-lg sm:rounded-xl p-6 sm:p-12 text-center cursor-pointer transition-all duration-300 group ${
                   uploadStatus === "success" 
                     ? "border-green-400 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20" 
                     : uploadStatus === "error"
@@ -288,41 +289,41 @@ export default function ApproveOffersTable() {
                         <CheckCircle className="h-4 w-4 text-green-600" />
                       </div>
                     </div>
-                    <h4 className="text-xl font-bold text-foreground mb-2">Upload Successful!</h4>
-                    <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-border mb-6 shadow-sm">
-                      <div className="flex items-center gap-3">
-                        <FileText className="h-6 w-6 text-green-600" />
-                        <div>
-                          <p className="text-sm font-semibold text-foreground">{uploadedFile.name}</p>
+                    <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2">Upload Successful!</h4>
+                    <div className="bg-white dark:bg-gray-800 rounded-lg p-3 sm:p-4 border border-border mb-4 sm:mb-6 shadow-sm max-w-sm">
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 flex-shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-xs sm:text-sm font-semibold text-foreground truncate">{uploadedFile.name}</p>
                           <p className="text-xs text-muted-foreground">
                             {(uploadedFile.size / 1024).toFixed(1)} KB • Processed successfully
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-center">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           removeFile();
                         }}
-                        className="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg hover:from-red-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                        className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg hover:from-red-600 hover:to-pink-600 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base whitespace-nowrap w-auto"
                       >
                         Upload Different File
                       </button>
-                      <button className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
+                      <button className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base whitespace-nowrap w-auto">
                         Process Accounts
                       </button>
                     </div>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center">
-                    <h4 className="text-xl font-bold text-foreground mb-8">
+                    <h4 className="text-base sm:text-xl font-bold text-foreground mb-4 sm:mb-8">
                       Choose File Type to Upload
                     </h4>
                     
                     {/* File Type Selection Icons */}
-                    <div className="flex items-center gap-8 mb-8">
+                    <div className="flex items-center gap-4 sm:gap-8 mb-4 sm:mb-8">
                       {/* XLS File Upload */}
                       <div 
                         className="flex flex-col items-center cursor-pointer group"
@@ -334,22 +335,22 @@ export default function ApproveOffersTable() {
                           input.click();
                         }}
                       >
-                        <div className="w-24 h-32 bg-gray-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-200 shadow-lg relative overflow-hidden">
+                        <div className="w-16 h-24 sm:w-24 sm:h-32 bg-gray-600 rounded-lg flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-105 transition-transform duration-200 shadow-lg relative overflow-hidden">
                           {/* File corner fold */}
-                          <div className="absolute top-0 right-0 w-6 h-6 bg-gray-500 transform rotate-45 translate-x-3 -translate-y-3"></div>
-                          <div className="absolute top-0 right-0 w-4 h-4 border-l border-b border-gray-400"></div>
+                          <div className="absolute top-0 right-0 w-4 h-4 sm:w-6 sm:h-6 bg-gray-500 transform rotate-45 translate-x-2 sm:translate-x-3 -translate-y-2 sm:-translate-y-3"></div>
+                          <div className="absolute top-0 right-0 w-3 h-3 sm:w-4 sm:h-4 border-l border-b border-gray-400"></div>
                           
                           {/* XLS text */}
-                          <span className="text-white font-bold text-lg">XLS</span>
+                          <span className="text-white font-bold text-sm sm:text-lg">XLS</span>
                           
                           {/* Upload arrows */}
-                          <div className="absolute right-2 top-8 space-y-1">
+                          <div className="absolute right-1 sm:right-2 top-6 sm:top-8 space-y-1">
                             <div className="w-0 h-0 border-l-2 border-r-2 border-b-3 border-transparent border-b-orange-400"></div>
                             <div className="w-0 h-0 border-l-2 border-r-2 border-b-3 border-transparent border-b-orange-400"></div>
                             <div className="w-0 h-0 border-l-2 border-r-2 border-b-3 border-transparent border-b-orange-400"></div>
                           </div>
                         </div>
-                        <span className="text-sm font-medium text-foreground group-hover:text-primary">Upload Excel File</span>
+                        <span className="text-xs sm:text-sm font-medium text-foreground group-hover:text-primary">Upload Excel File</span>
                       </div>
 
                       {/* CSV File Upload */}
@@ -363,23 +364,23 @@ export default function ApproveOffersTable() {
                           input.click();
                         }}
                       >
-                        <div className="w-24 h-32 bg-slate-600 rounded-lg flex flex-col items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-200 shadow-lg relative">
+                        <div className="w-16 h-24 sm:w-24 sm:h-32 bg-slate-600 rounded-lg flex flex-col items-center justify-center mb-2 sm:mb-3 group-hover:scale-105 transition-transform duration-200 shadow-lg relative">
                           {/* Cloud icon */}
-                          <div className="bg-white rounded-full p-2 mb-2">
-                            <div className="w-8 h-6 bg-slate-600 rounded-t-full relative">
-                              <div className="absolute inset-x-0 top-2 h-2 bg-slate-600 rounded-full"></div>
-                              <div className="absolute left-1/2 transform -translate-x-1/2 top-4 w-0 h-0 border-l-2 border-r-2 border-t-3 border-transparent border-t-slate-600"></div>
+                          <div className="bg-white rounded-full p-1 sm:p-2 mb-1 sm:mb-2">
+                            <div className="w-6 h-4 sm:w-8 sm:h-6 bg-slate-600 rounded-t-full relative">
+                              <div className="absolute inset-x-0 top-1 sm:top-2 h-1 sm:h-2 bg-slate-600 rounded-full"></div>
+                              <div className="absolute left-1/2 transform -translate-x-1/2 top-2 sm:top-4 w-0 h-0 border-l-2 border-r-2 border-t-3 border-transparent border-t-slate-600"></div>
                             </div>
                           </div>
                           
                           {/* CSV text */}
-                          <span className="text-white font-bold text-sm">CSV</span>
+                          <span className="text-white font-bold text-xs sm:text-sm">CSV</span>
                         </div>
-                        <span className="text-sm font-medium text-foreground group-hover:text-primary">Upload CSV File</span>
+                        <span className="text-xs sm:text-sm font-medium text-foreground group-hover:text-primary">Upload CSV File</span>
                       </div>
                     </div>
                     
-                    <p className="text-muted-foreground text-center text-sm max-w-md">
+                    <p className="text-muted-foreground text-center text-xs sm:text-sm max-w-md px-4">
                       Click on Excel (XLS) or CSV icon to upload your account data file. 
                       Maximum file size: 10MB
                     </p>
@@ -390,12 +391,12 @@ export default function ApproveOffersTable() {
 
             {/* Status Messages */}
             {uploadStatus === "success" && (
-              <div className="mx-6 mb-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3 shadow-sm">
-                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                  <CheckCircle className="h-4 w-4 text-white" />
+              <div className="mx-3 sm:mx-6 mb-3 sm:mb-4 p-3 sm:p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-lg sm:rounded-xl flex items-center gap-2 sm:gap-3 shadow-sm">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-green-800 dark:text-green-200">
+                  <p className="text-xs sm:text-sm font-semibold text-green-800 dark:text-green-200">
                     Upload Complete
                   </p>
                   <p className="text-xs text-green-700 dark:text-green-300">
@@ -406,12 +407,12 @@ export default function ApproveOffersTable() {
             )}
 
             {uploadStatus === "error" && (
-              <div className="mx-6 mb-4 p-4 bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-center gap-3 shadow-sm">
-                <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                  <AlertCircle className="h-4 w-4 text-white" />
+              <div className="mx-3 sm:mx-6 mb-3 sm:mb-4 p-3 sm:p-4 bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border border-red-200 dark:border-red-800 rounded-lg sm:rounded-xl flex items-center gap-2 sm:gap-3 shadow-sm">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-red-800 dark:text-red-200">
+                  <p className="text-xs sm:text-sm font-semibold text-red-800 dark:text-red-200">
                     Upload Failed
                   </p>
                   <p className="text-xs text-red-700 dark:text-red-300">
@@ -425,48 +426,48 @@ export default function ApproveOffersTable() {
 
 
           {/* Professional Instructions Card */}
-          <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800 shadow-sm">
-            <div className="p-6">
-              <h4 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <FileSpreadsheet className="w-5 h-5 text-blue-600" />
+          <div className="mt-6 sm:mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg sm:rounded-xl border border-blue-200 dark:border-blue-800 shadow-sm">
+            <div className="p-4 sm:p-6">
+              <h4 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4 flex items-center gap-2">
+                <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                 Excel/CSV Format Requirements
               </h4>
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <h5 className="text-sm font-semibold text-foreground mb-3">Required Columns</h5>
-                  <div className="space-y-2">
+                  <h5 className="text-xs sm:text-sm font-semibold text-foreground mb-2 sm:mb-3">Required Columns</h5>
+                  <div className="space-y-1 sm:space-y-2">
                     <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
                       <span className="font-medium">Lead ID</span>
                       <span className="text-muted-foreground">(Unique identifier)</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-purple-500 rounded-full flex-shrink-0"></div>
                       <span className="font-medium">Offer Name</span>
                       <span className="text-muted-foreground">(Offer name)</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-teal-500 rounded-full flex-shrink-0"></div>
                       <span className="font-medium">Category</span>
                       <span className="text-muted-foreground">(Offer category)</span>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <h5 className="text-sm font-semibold text-foreground mb-3">Additional Fields</h5>
-                  <div className="space-y-2">
+                  <h5 className="text-xs sm:text-sm font-semibold text-foreground mb-2 sm:mb-3">Additional Fields</h5>
+                  <div className="space-y-1 sm:space-y-2">
                     <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
                       <span className="font-medium">Commission 1</span>
                       <span className="text-muted-foreground">(Required)</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0"></div>
                       <span className="font-medium">Commission 2</span>
                       <span className="text-muted-foreground">(Optional)</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0"></div>
                       <span className="font-medium">Customer Contact</span>
                       <span className="text-muted-foreground">(YYYY-MM-DD)</span>
                     </div>

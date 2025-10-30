@@ -274,7 +274,7 @@ export default function KYCReview() {
                         <div className="flex items-center justify-center">
                           <button
                             onClick={() => handleViewDetails(user, "view")}
-                            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm font-medium"
+                            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm font-medium whitespace-nowrap"
                           >
                             <Eye className="w-4 h-4 mr-2" />
                             View Details

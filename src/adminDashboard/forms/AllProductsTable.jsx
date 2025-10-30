@@ -138,7 +138,6 @@ export default function AllOffersTable() {
         'Latest Stage': offer.latestStage,
         'Commission 1': offer.commission1,
         'Commission 2': offer.commission2,
-
         Created: new Date(offer.createdAt).toLocaleDateString()
       }));
 
@@ -208,7 +207,7 @@ export default function AllOffersTable() {
       </div>
 
       {/* Table Container */}
-      <div className="flex-1 overflow-x-auto overflow-y-auto scrollbar-custom min-h-0">
+      <div className="flex-1 overflow-auto scrollbar-custom min-h-0">
         {loading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -237,7 +236,7 @@ export default function AllOffersTable() {
             </p>
           </div>
         ) : (
-          <table className="w-full min-w-max border-collapse text-sm">
+          <table className="w-full border-collapse text-sm">
             <thead className="bg-muted sticky top-0 z-10">
               <tr className="border-b border-border">
                 <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">Image</th>

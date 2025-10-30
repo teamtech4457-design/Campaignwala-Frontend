@@ -232,37 +232,37 @@ export default function IncompleteProfilePage() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <header className="border-b border-border bg-card">
-        <div className="mx-auto max-w-4xl px-6 py-6">
+        <div className="mx-auto max-w-4xl px-3 sm:px-6 py-4 sm:py-6">
           <button 
             onClick={() => navigate("/admin/notifications")} 
-            className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 mb-4"
+            className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 mb-3 sm:mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span>Back to Dashboard</span>
+            <span className="text-sm sm:text-base">Back to Dashboard</span>
           </button>
-          <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-blue-500/10 p-3">
-              <Users className="h-6 w-6 text-blue-500" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="rounded-lg bg-blue-500/10 p-2 sm:p-3">
+              <Users className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Incomplete Profile Notifications</h1>
-              <p className="mt-1 text-muted-foreground">Send reminders to users to complete their profiles</p>
+              <h1 className="text-lg sm:text-2xl lg:text-3xl font-bold break-words">Incomplete Profile Notifications</h1>
+              <p className="mt-1 text-xs sm:text-sm text-muted-foreground">Send reminders to users to complete their profiles</p>
             </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-6 py-8">
-        <div className="grid gap-6 lg:grid-cols-3">
+      <main className="mx-auto max-w-7xl px-3 sm:px-6 py-4 sm:py-8">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
           {/* Users List - Left Side */}
           <div className="lg:col-span-2">
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold">Incomplete Profile Users ({incompleteUsers.length})</h2>
+            <Card className="p-3 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+                <h2 className="text-lg sm:text-xl font-bold">Incomplete Profile Users ({incompleteUsers.length})</h2>
                 <div className="flex items-center gap-2">
                   {selectedUsers.length > 0 && (
-                    <span className="text-sm text-muted-foreground bg-[#4406CB]/10 px-3 py-1 rounded-full">
+                    <span className="text-xs sm:text-sm text-muted-foreground bg-[#4406CB]/10 px-2 sm:px-3 py-1 rounded-full">
                       {selectedUsers.length} selected
                     </span>
                   )}
@@ -270,8 +270,8 @@ export default function IncompleteProfilePage() {
               </div>
 
               {/* Search and Filter Controls */}
-              <div className="flex flex-col md:flex-row gap-4 mb-6">
-                <div className="flex-1 relative">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div className="flex-1 relative w-full sm:w-auto">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Search users..."
@@ -281,12 +281,12 @@ export default function IncompleteProfilePage() {
                   />
                 </div>
                 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-fit">
                   <Filter className="h-4 w-4 text-muted-foreground" />
                   <select 
                     value={filterBy} 
                     onChange={(e) => setFilterBy(e.target.value)}
-                    className="px-3 py-2 border border-input bg-background rounded-md text-sm"
+                    className="px-3 py-2 border border-input bg-background rounded-md text-sm w-fit whitespace-nowrap"
                   >
                     <option value="all">All Users</option>
                     <option value="high">High Priority (&lt;50%)</option>
@@ -298,47 +298,47 @@ export default function IncompleteProfilePage() {
 
               {/* Selection Controls */}
               <div className="flex items-center gap-3 mb-4 p-3 bg-muted/50 rounded-lg">
-                <Button onClick={selectAll} variant="outline" size="sm">
+                <Button onClick={selectAll} variant="outline" size="sm" className="text-xs sm:text-sm w-auto">
                   Select All ({filteredUsers.length})
                 </Button>
-                <Button onClick={clearAll} variant="outline" size="sm">
+                <Button onClick={clearAll} variant="outline" size="sm" className="text-xs sm:text-sm w-auto">
                   Clear All
                 </Button>
               </div>
 
               {/* Users List */}
-              <div className="space-y-3 max-h-96 overflow-y-auto">
+              <div className="space-y-2 sm:space-y-3 max-h-80 sm:max-h-96 overflow-y-auto">
                 {filteredUsers.map((user) => (
                   <div
                     key={user.id}
-                    className={`p-4 border-2 rounded-lg transition-all cursor-pointer ${
+                    className={`p-3 sm:p-4 border-2 rounded-lg transition-all cursor-pointer ${
                       selectedUsers.includes(user.id)
                         ? 'border-[#4406CB] bg-[#4406CB]/5'
                         : 'border-border hover:border-[#4406CB]/50'
                     }`}
                     onClick={() => toggleUserSelection(user.id)}
                   >
-                    <div className="flex items-start gap-3">
+                    <div className="flex items-start gap-2 sm:gap-3">
                       {/* Checkbox */}
-                      <div className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center ${
+                      <div className={`mt-1 w-4 h-4 sm:w-5 sm:h-5 rounded border-2 flex items-center justify-center ${
                         selectedUsers.includes(user.id) 
                           ? 'bg-[#4406CB] border-[#4406CB]' 
                           : 'border-gray-300'
                       }`}>
                         {selectedUsers.includes(user.id) && (
-                          <CheckCircle className="h-3 w-3 text-white" />
+                          <CheckCircle className="h-2 w-2 sm:h-3 sm:w-3 text-white" />
                         )}
                       </div>
 
                       {/* User Info */}
                       <div className="flex-1">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <h3 className="font-semibold">{user.name}</h3>
-                            <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
+                          <div className="flex-1">
+                            <h3 className="text-sm sm:text-base font-semibold">{user.name}</h3>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-xs text-muted-foreground mt-1">
                               <span className="flex items-center gap-1">
                                 <Mail className="h-3 w-3" />
-                                {user.email}
+                                <span className="truncate">{user.email}</span>
                               </span>
                               <span className="flex items-center gap-1">
                                 <Phone className="h-3 w-3" />
@@ -347,7 +347,7 @@ export default function IncompleteProfilePage() {
                             </div>
                           </div>
                           
-                          <div className={`px-2 py-1 rounded text-xs font-medium ${getCompletionBg(user.completionPercent)}`}>
+                          <div className={`px-2 py-1 rounded text-xs font-medium w-fit ${getCompletionBg(user.completionPercent)}`}>
                             <span className={getCompletionColor(user.completionPercent)}>
                               {user.completionPercent}%
                             </span>
@@ -383,14 +383,14 @@ export default function IncompleteProfilePage() {
 
           {/* Notification Form - Right Side */}
           <div>
-            <Card className="p-6 sticky top-6">
-              <h3 className="text-lg font-bold mb-4">Send Notification</h3>
+            <Card className="p-4 sm:p-6 lg:sticky lg:top-6">
+              <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">Send Notification</h3>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {/* Selected Users Count */}
-                <div className="rounded-lg bg-[#4406CB]/10 p-4 border border-[#4406CB]/20">
-                  <p className="text-sm text-muted-foreground mb-1">Selected Users</p>
-                  <p className="text-2xl font-bold text-[#4406CB]">{selectedUsers.length}</p>
+                <div className="rounded-lg bg-[#4406CB]/10 p-3 sm:p-4 border border-[#4406CB]/20">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-1">Selected Users</p>
+                  <p className="text-xl sm:text-2xl font-bold text-[#4406CB]">{selectedUsers.length}</p>
                   <p className="text-xs text-muted-foreground mt-1">
                     {selectedUsers.length === 0 ? "No users selected" : "users will receive notification"}
                   </p>
@@ -398,22 +398,23 @@ export default function IncompleteProfilePage() {
 
                 {/* Title Input */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Title</label>
+                  <label className="block text-xs sm:text-sm font-medium mb-2">Title</label>
                   <Input
                     placeholder="Notification title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    className="text-sm"
                   />
                 </div>
 
                 {/* Message Input */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Message</label>
+                  <label className="block text-xs sm:text-sm font-medium mb-2">Message</label>
                   <textarea
                     placeholder="Notification message..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="w-full min-h-20 sm:min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
 
@@ -421,8 +422,8 @@ export default function IncompleteProfilePage() {
                 <div className="rounded-lg border border-border p-3">
                   <p className="text-xs text-muted-foreground mb-2">PREVIEW</p>
                   <div className="space-y-1">
-                    <p className="font-bold text-sm">{title || "Title"}</p>
-                    <p className="text-xs text-muted-foreground">{message || "Message"}</p>
+                    <p className="font-bold text-xs sm:text-sm">{title || "Title"}</p>
+                    <p className="text-xs text-muted-foreground break-words">{message || "Message"}</p>
                   </div>
                 </div>
 
@@ -430,7 +431,7 @@ export default function IncompleteProfilePage() {
                 <Button
                   onClick={handleSend}
                   disabled={isLoading || !title.trim() || !message.trim() || selectedUsers.length === 0}
-                  className="w-full"
+                  className="w-full justify-center text-xs sm:text-sm"
                 >
                   <Send className="h-4 w-4" />
                   {isLoading ? "Sending..." : `Send to ${selectedUsers.length} Users`}
@@ -439,7 +440,7 @@ export default function IncompleteProfilePage() {
                 {/* Success Message */}
                 {sent && (
                   <div className="rounded-lg bg-green-500/10 border border-green-500/30 p-3 text-green-700">
-                    <p className="font-medium text-sm">✓ Sent to {selectedUsers.length} users!</p>
+                    <p className="font-medium text-xs sm:text-sm">✓ Sent to {selectedUsers.length} users!</p>
                   </div>
                 )}
               </div>
