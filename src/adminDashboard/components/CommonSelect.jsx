@@ -27,7 +27,7 @@ export default function CommonSelect({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
 
-        {/* 👇 always open downward */}
+        {/* 👇 Always open downward */}
         <SelectContent side="bottom">
           {options.map((opt, index) => (
             <SelectItem
