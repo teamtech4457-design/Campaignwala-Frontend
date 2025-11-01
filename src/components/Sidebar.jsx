@@ -47,10 +47,8 @@ export default function Sidebar() {
       >
         <div className="p-6 h-full overflow-y-auto flex flex-col">
           {/* Logo Section */}
-          <div className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/70 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
-              <span className="text-primary-foreground font-bold text-sm">CW</span>
-            </div>
+          <div className="flex items-center gap-3 mb-8">
+            <img src="/logo.jpeg" alt="Logo" className="w-11 h-11 rounded-xl object-contain flex-shrink-0 shadow-xl" />
             <h1 className="text-lg font-bold text-sidebar-foreground text-balance">
               Campaignwala
             </h1>

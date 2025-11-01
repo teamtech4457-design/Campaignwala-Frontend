@@ -200,7 +200,8 @@ export default function ApproveOffersTable() {
             
             {/* Bulk Toggle */}
             <div className="flex items-center gap-2">
-              <span className="text-xs sm:text-sm font-medium text-foreground">Bulk Approve/Unapprove</span>
+              <span className="text-xs sm:text-sm font-medium text-foreground">
+                Unapprove</span>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input 
                   type="checkbox" 
@@ -211,7 +212,7 @@ export default function ApproveOffersTable() {
                     const hasApproved = offers.some(offer => offer.isApproved);
                     // Bulk approval/unapproval could be implemented here
                     // For now, we'll just show a message
-                    alert('Bulk approval/unapproval will process all offers. This feature requires backend support for bulk operations.');
+                    alert('unapproval will process all offers. This feature requires backend support for bulk operations.');
                   }}
                 />
                 <div className="w-10 h-5 sm:w-11 sm:h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 sm:after:h-5 sm:after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
