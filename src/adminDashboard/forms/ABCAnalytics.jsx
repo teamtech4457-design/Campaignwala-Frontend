@@ -14,6 +14,8 @@ import {
   Bar,
 } from "recharts";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import leadService from "../../services/leadService";
+import { getAllCategories } from "../../services/categoryService";
 
 // Simple Card components for the dashboard
 const Card = ({ className = "", children }) => (
@@ -132,124 +134,6 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 
 
-const tlData = {
-  "Abhinandan Shukla": {
-    dateWiseCount: 45,
-    totalCount: 3200,
-    pending: 2800,
-    approved: 350,
-    completed: 50,
-  },
-  "Akshat Kashyap": {
-    dateWiseCount: 38,
-    totalCount: 2900,
-    pending: 2400,
-    approved: 420,
-    completed: 80,
-  },
-  "Aryan Gupta": {
-    dateWiseCount: 52,
-    totalCount: 3500,
-    pending: 3100,
-    approved: 320,
-    completed: 80,
-  },
-  "Tanmoy jana": {
-    dateWiseCount: 31,
-    totalCount: 2591,
-    pending: 2586,
-    approved: 5,
-    completed: 0,
-  },
-  "Ankit Kumar Singh": {
-    dateWiseCount: 42,
-    totalCount: 3100,
-    pending: 2700,
-    approved: 350,
-    completed: 50,
-  },
-  "Suhani Mishra": {
-    dateWiseCount: 48,
-    totalCount: 3400,
-    pending: 2950,
-    approved: 380,
-    completed: 70,
-  },
-  "Sejal sharma": {
-    dateWiseCount: 35,
-    totalCount: 2800,
-    pending: 2500,
-    approved: 250,
-    completed: 50,
-  },
-  "Amit Sahani": {
-    dateWiseCount: 40,
-    totalCount: 3000,
-    pending: 2650,
-    approved: 300,
-    completed: 50,
-  },
-  "Pallivi kumari": {
-    dateWiseCount: 44,
-    totalCount: 3300,
-    pending: 2900,
-    approved: 350,
-    completed: 50,
-  },
-}
-
-const dateWiseData = [
-  { date: "2025-09-25", count: 250 },
-  { date: "2025-09-26", count: 180 },
-  { date: "2025-09-27", count: 320 },
-  { date: "2025-09-28", count: 220 },
-  { date: "2025-09-29", count: 290 },
-  { date: "2025-09-30", count: 150 },
-  { date: "2025-10-01", count: 280 },
-  { date: "2025-10-02", count: 310 },
-  { date: "2025-10-03", count: 200 },
-  { date: "2025-10-04", count: 270 },
-  { date: "2025-10-05", count: 240 },
-  { date: "2025-10-25", count: 190 },
-]
-
-const accountDistribution = [
-  { name: "ANGELONE", value: 8500, color: "#a855f7" },
-  { name: "MSTOCK", value: 6200, color: "#06b6d4" },
-  { name: "GROWW", value: 5800, color: "#3b82f6" },
-  { name: "LEMON", value: 4300, color: "#10b981" },
-  { name: "UPSTOX", value: 3200, color: "#f97316" },
-  { name: "BAJAJ", value: 2100, color: "#84cc16" },
-]
-
-const pendingByAccount = [
-  { name: "ANGELONE", value: 12500, color: "#a855f7" },
-  { name: "MSTOCK", value: 9800, color: "#06b6d4" },
-  { name: "GROWW", value: 7600, color: "#3b82f6" },
-  { name: "LEMON", value: 3200, color: "#10b981" },
-  { name: "UPSTOX", value: 2100, color: "#f97316" },
-  { name: "BAJAJ INSTA", value: 1100, color: "#84cc16" },
-]
-
-const approvedByAccount = [
-  { name: "BAJAJ", value: 1200, color: "#3b82f6" },
-  { name: "ANGELONE", value: 650, color: "#a855f7" },
-  { name: "GROWW", value: 320, color: "#06b6d4" },
-  { name: "LEMON", value: 124, color: "#10b981" },
-]
-
-const tlNames = [
-  "Abhinandan Shukla",
-  "Akshat Kashyap",
-  "Aryan Gupta",
-  "Tanmoy jana",
-  "Ankit Kumar Singh",
-  "Suhani Mishra",
-  "Sejal sharma",
-  "Amit Sahani",
-  "Pallivi kumari",
-]
-
 function Calendar({ month, year, onDateSelect, onMonthChange, startDate, endDate }) {
   const daysInMonth = new Date(year, month + 1, 0).getDate()
   const firstDay = new Date(year, month, 1).getDay()
@@ -317,16 +201,137 @@ function Calendar({ month, year, onDateSelect, onMonthChange, startDate, endDate
 }
 
 export default function AnalyticsDashboard() {
-  const [startDate, setStartDate] = useState(new Date(2025, 8, 25))
-  const [endDate, setEndDate] = useState(new Date(2025, 9, 25))
-  const [calendarMonth, setCalendarMonth] = useState(9)
-  const [calendarYear, setCalendarYear] = useState(2025)
+  // Set initial dates to last 30 days from today
+  const today = new Date()
+  const thirtyDaysAgo = new Date()
+  thirtyDaysAgo.setDate(today.getDate() - 30)
+  
+  const [startDate, setStartDate] = useState(thirtyDaysAgo)
+  const [endDate, setEndDate] = useState(today)
+  const [calendarMonth, setCalendarMonth] = useState(today.getMonth())
+  const [calendarYear, setCalendarYear] = useState(today.getFullYear())
   const [selectedHR, setSelectedHR] = useState("All Categories")
   const [selectedTL, setSelectedTL] = useState("All Users")
   const [showCalendar, setShowCalendar] = useState(false)
-  const [manualStartDate, setManualStartDate] = useState("2025-09-25")
-  const [manualEndDate, setManualEndDate] = useState("2025-10-25")
-  const [chartKey, setChartKey] = useState(0) // Force re-render key
+  const [manualStartDate, setManualStartDate] = useState(thirtyDaysAgo.toISOString().split('T')[0])
+  const [manualEndDate, setManualEndDate] = useState(today.toISOString().split('T')[0])
+  const [chartKey, setChartKey] = useState(0)
+  
+  // API Data States
+  const [analyticsData, setAnalyticsData] = useState(null)
+  const [categories, setCategories] = useState([])
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  // Fetch categories on mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        console.log('🏷️ [FRONTEND] Fetching categories...')
+        const response = await getAllCategories({ status: 'active', limit: 1000 })
+        console.log('🏷️ [FRONTEND] Categories response:', response)
+        if (response.success) {
+          console.log('🏷️ [FRONTEND] Categories count:', response.data.categories?.length)
+          setCategories(response.data.categories || [])
+        }
+      } catch (err) {
+        console.error('❌ [FRONTEND] Error fetching categories:', err)
+      }
+    }
+    fetchCategories()
+  }, [])
+
+  // Fetch users on mount
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        console.log('👥 [FRONTEND] Fetching users...')
+        const response = await leadService.getAllUsers()
+        console.log('👥 [FRONTEND] Users response:', response)
+        if (response.success) {
+          console.log('👥 [FRONTEND] Users count:', response.data?.length)
+          setUsers(response.data || [])
+        }
+      } catch (err) {
+        console.error('❌ [FRONTEND] Error fetching users:', err)
+      }
+    }
+    fetchUsers()
+  }, [])
+
+  // Fetch analytics data when filters change
+  useEffect(() => {
+    console.log('🔄 [FRONTEND] Filters changed, fetching analytics...')
+    console.log('🔄 [FRONTEND] Users available:', users.length)
+    if (users.length > 0 || selectedTL === 'All Users') {
+      fetchAnalyticsData()
+    } else {
+      console.log('⏳ [FRONTEND] Waiting for users to load...')
+    }
+  }, [startDate, endDate, selectedHR, selectedTL, users])
+
+  const fetchAnalyticsData = async () => {
+    try {
+      console.log('📊 [FRONTEND] Starting analytics fetch...')
+      setLoading(true)
+      setError(null)
+      
+      // Build params - only add dates if they are set
+      const params = {}
+      
+      if (startDate) {
+        params.startDate = startDate.toISOString().split('T')[0]
+      }
+      
+      if (endDate) {
+        params.endDate = endDate.toISOString().split('T')[0]
+      }
+      
+      console.log('📊 [FRONTEND] Base params:', params)
+      
+      if (selectedHR !== 'All Categories') {
+        params.category = selectedHR
+        console.log('📊 [FRONTEND] Added category filter:', selectedHR)
+      }
+      
+      if (selectedTL !== 'All Users') {
+        const selectedUser = users.find(u => u.name === selectedTL)
+        console.log('📊 [FRONTEND] Selected user:', selectedUser)
+        if (selectedUser) {
+          params.hrUserId = selectedUser._id
+          console.log('📊 [FRONTEND] Added user filter:', selectedUser._id)
+        }
+      }
+      
+      console.log('📊 [FRONTEND] Final API params:', params)
+      console.log('📊 [FRONTEND] Params will fetch:', 
+        Object.keys(params).length === 0 ? 'ALL LEADS (no filter)' : 
+        `Filtered leads with: ${JSON.stringify(params)}`
+      )
+      
+      const response = await leadService.getLeadAnalytics(params)
+      
+      console.log('📊 [FRONTEND] API response:', response)
+      
+      if (response.success) {
+        console.log('✅ [FRONTEND] Analytics data received:', response.data)
+        console.log('✅ [FRONTEND] Metrics:', response.data.metrics)
+        console.log('✅ [FRONTEND] Date-wise data length:', response.data.dateWiseData?.length)
+        setAnalyticsData(response.data)
+      } else {
+        console.error('❌ [FRONTEND] Response not successful:', response)
+        setError('Failed to fetch analytics data')
+      }
+    } catch (err) {
+      console.error('❌ [FRONTEND] Error fetching analytics:', err)
+      console.error('❌ [FRONTEND] Error details:', err.response?.data || err.message)
+      setError(err.message || 'Failed to fetch analytics data')
+    } finally {
+      console.log('🏁 [FRONTEND] Analytics fetch completed, loading=false')
+      setLoading(false)
+    }
+  }
 
   // Listen for theme changes and force chart re-render
   useEffect(() => {
@@ -407,27 +412,62 @@ export default function AnalyticsDashboard() {
   const dateRangeText = endDate ? `${formatDate(startDate)} ~ ${formatDate(endDate)}` : `${formatDate(startDate)}`
 
   const getMetrics = () => {
-    if (selectedTL === "All Users") {
+    console.log('📊 [METRICS] Getting metrics, analyticsData:', analyticsData)
+    
+    if (!analyticsData || !analyticsData.metrics) {
+      console.log('⚠️ [METRICS] No analytics data available')
       return [
-        { label: "DateWise Count", value: "31", icon: "📅" },
-        { label: "Total Count", value: "2591", icon: "📊", subtext: "Database" },
-        { label: "Pending", value: "2586", icon: "⏳" },
-        { label: "Approved", value: "5", icon: "✓" },
+        { label: "DateWise Count", value: "0", icon: "📅" },
+        { label: "Total Count", value: "0", icon: "📊", subtext: "Database" },
+        { label: "Pending", value: "0", icon: "⏳" },
+        { label: "Approved", value: "0", icon: "✓" },
         { label: "Completed", value: "0", icon: "✓" },
       ]
     }
 
-    const data = tlData[selectedTL]
+    const { metrics } = analyticsData
+    console.log('✅ [METRICS] Using metrics:', metrics)
+    
     return [
-      { label: "DateWise Count", value: data.dateWiseCount.toString(), icon: "📅" },
-      { label: "Total Count", value: data.totalCount.toString(), icon: "📊", subtext: "Database" },
-      { label: "Pending", value: data.pending.toString(), icon: "⏳" },
-      { label: "Approved", value: data.approved.toString(), icon: "✓" },
-      { label: "Completed", value: data.completed.toString(), icon: "✓" },
+      { label: "DateWise Count", value: metrics.dateWiseCount.toString(), icon: "📅" },
+      { label: "Total Count", value: metrics.totalCount.toString(), icon: "📊", subtext: "Database" },
+      { label: "Pending", value: metrics.pending.toString(), icon: "⏳" },
+      { label: "Approved", value: metrics.approved.toString(), icon: "✓" },
+      { label: "Completed", value: metrics.completed.toString(), icon: "✓" },
     ]
   }
 
   const metrics = getMetrics()
+
+  // Prepare chart data
+  const dateWiseData = analyticsData?.dateWiseData || []
+  console.log('📈 [CHARTS] Date-wise data:', dateWiseData)
+  
+  // Add colors to distribution data
+  const colorPalette = ["#a855f7", "#06b6d4", "#3b82f6", "#10b981", "#f97316", "#84cc16", "#ef4444", "#8b5cf6"]
+  
+  const accountDistribution = (analyticsData?.categoryDistribution || []).map((item, idx) => ({
+    ...item,
+    color: colorPalette[idx % colorPalette.length]
+  }))
+  console.log('📊 [CHARTS] Account distribution:', accountDistribution)
+  
+  const pendingByAccount = (analyticsData?.pendingByCategory || []).map((item, idx) => ({
+    ...item,
+    color: colorPalette[idx % colorPalette.length]
+  }))
+  console.log('📊 [CHARTS] Pending by account:', pendingByAccount)
+  
+  const approvedByAccount = (analyticsData?.approvedByCategory || []).map((item, idx) => ({
+    ...item,
+    color: colorPalette[idx % colorPalette.length]
+  }))
+  console.log('📊 [CHARTS] Approved by account:', approvedByAccount)
+
+  // Calculate totals for chart titles
+  const totalPending = pendingByAccount.reduce((sum, item) => sum + item.value, 0)
+  const totalApproved = approvedByAccount.reduce((sum, item) => sum + item.value, 0)
+  console.log('📊 [CHARTS] Total pending:', totalPending, 'Total approved:', totalApproved)
 
   return (
     <div className="h-full flex flex-col p-3 sm:p-4 lg:p-6 bg-background">
@@ -438,6 +478,24 @@ export default function AnalyticsDashboard() {
           <p className="text-sm sm:text-base text-muted-foreground">Account management and performance metrics</p>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded-lg mb-6">
+            <p className="font-semibold">Error loading analytics data</p>
+            <p className="text-sm">{error}</p>
+          </div>
+        )}
+
+        {/* Content - Only show when not loading */}
+        {!loading && (
+          <>
         {/* Filters */}
         <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div className="relative">
@@ -564,12 +622,11 @@ export default function AnalyticsDashboard() {
               className="px-2 sm:px-4 py-1.5 sm:py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none text-xs sm:text-base w-auto min-w-[100px] sm:min-w-[150px] flex-shrink-0"
             >
               <option>All Categories</option>
-              <option>DEMAT Account</option>
-              <option>Bank Account</option>
-              <option>Credit Card</option>
-              <option>Personal Loan</option>
-              <option>Insurance</option>
-              <option>Mutual Fund</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
             </select>
 
             <select
@@ -578,9 +635,9 @@ export default function AnalyticsDashboard() {
               className="px-2 sm:px-4 py-1.5 sm:py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none text-xs sm:text-base w-auto min-w-[90px] sm:min-w-[150px] flex-shrink-0"
             >
               <option>All Users</option>
-              {tlNames.map((name) => (
-                <option key={name} value={name}>
-                  {name}
+              {users.map((user) => (
+                <option key={user._id} value={user.name}>
+                  {user.name}
                 </option>
               ))}
             </select>
@@ -698,7 +755,7 @@ export default function AnalyticsDashboard() {
           {/* Total Pending Account */}
           <Card className="bg-card border-border">
             <CardHeader className="p-3 sm:p-4">
-              <CardTitle className="text-foreground text-base sm:text-lg">Total Pending Account 36296</CardTitle>
+              <CardTitle className="text-foreground text-base sm:text-lg">Total Pending Account {totalPending}</CardTitle>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm">Account breakdown</CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center p-2 sm:p-4 touch-manipulation">
@@ -739,7 +796,7 @@ export default function AnalyticsDashboard() {
           {/* Total Approved Account */}
           <Card className="bg-card border-border">
             <CardHeader className="p-3 sm:p-4">
-              <CardTitle className="text-foreground text-base sm:text-lg">Total Approved Account 2294</CardTitle>
+              <CardTitle className="text-foreground text-base sm:text-lg">Total Approved Account {totalApproved}</CardTitle>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm">Approved accounts distribution</CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center p-2 sm:p-4 touch-manipulation">
@@ -789,6 +846,8 @@ export default function AnalyticsDashboard() {
             ))}
           </div>
         </div>
+        </>
+        )}
       </div>
     </div>
   )

@@ -80,6 +80,34 @@ const leadService = {
     } catch (error) {
       throw error.response?.data || error;
     }
+  },
+
+  // Get analytics data
+  getLeadAnalytics: async (params = {}) => {
+    try {
+      console.log('🔌 [API SERVICE] Calling /leads/analytics with params:', params);
+      const response = await api.get('/leads/analytics', { params });
+      console.log('🔌 [API SERVICE] Analytics response received:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ [API SERVICE] Analytics error:', error);
+      console.error('❌ [API SERVICE] Error response:', error.response?.data);
+      throw error.response?.data || error;
+    }
+  },
+
+  // Get all users for dropdown
+  getAllUsers: async () => {
+    try {
+      console.log('🔌 [API SERVICE] Calling /leads/users');
+      const response = await api.get('/leads/users');
+      console.log('🔌 [API SERVICE] Users response received:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ [API SERVICE] Users error:', error);
+      console.error('❌ [API SERVICE] Error response:', error.response?.data);
+      throw error.response?.data || error;
+    }
   }
 };
 
