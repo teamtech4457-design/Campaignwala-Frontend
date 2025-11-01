@@ -104,22 +104,32 @@ const DematAccount = ({ darkMode }) => {
 
   return (
     <div
-      className={`min-h-screen pt-24 pb-20 px-4 sm:px-6 md:px-10 transition-all duration-300 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      className={`min-h-screen pt-12 pb-16 transition-all duration-300 ${
+        darkMode ? "bg-gradient-to-br from-gray-900 to-gray-800 text-white" : "bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-900"
       }`}
     >
       {/* Header */}
-      <h2 className="text-2xl sm:text-3xl font-semibold mb-8 text-center md:text-left">
+      <h2 className="text-2xl sm:text-3xl font-semibold mb-3 text-center md:text-left bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
         Browse Available Offers
       </h2>
 
+      {/* 🔙 Back Button */}
+      <div className="flex justify-center md:justify-start mb-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="px-4 sm:px-6 py-2 mb-2 rounded-full text-xs sm:text-sm font-medium border bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 transition transform hover:scale-105"
+        >
+          ← Back
+        </button>
+      </div>
+
       {/* Tabs */}
-      <div className="flex justify-center md:justify-start mb-10">
+      <div className="flex justify-center md:justify-start mb-4">
         <button
           className={`px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-medium border ${
             darkMode
-              ? "bg-gray-800 border-gray-700 text-white"
-              : "bg-gray-100 border-gray-200 text-gray-800"
+              ? "bg-blue-900 border-blue-700 text-white"
+              : "bg-blue-100 border-blue-200 text-blue-800"
           }`}
         >
           {categoryName}
@@ -128,46 +138,48 @@ const DematAccount = ({ darkMode }) => {
 
       {/* Loading State */}
       {loading && (
-        <div className="text-center py-12">
+        <div className="text-center py-6">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4">Loading offers...</p>
+          <p className="mt-3">Loading offers...</p>
         </div>
       )}
 
       {/* Cards Section - Backend Data */}
       {!loading && offers.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-10 max-w-6xl mx-auto w-full">
-          {offers.map((offer) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4 w-full">
+          {offers.map((offer, index) => (
             <div
               key={offer._id}
-              className={`rounded-xl border shadow-sm p-6 sm:p-8 flex flex-col justify-between transition hover:shadow-lg ${
-                darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+              className={`rounded-xl border shadow-sm p-3 sm:p-4 flex flex-col justify-between transition hover:shadow-lg hover:scale-105 ${
+                darkMode 
+                  ? "bg-gray-800 border-blue-800" 
+                  : "bg-white border-blue-200"
               }`}
             >
               <div>
                 <h3
-                  className={`text-lg sm:text-xl font-semibold mb-3 ${
+                  className={`text-lg sm:text-xl font-semibold mb-1 ${
                     darkMode ? "text-white" : "text-gray-900"
                   }`}
                 >
                   {offer.name}
                 </h3>
                 <p
-                  className={`text-sm sm:text-base mb-4 leading-relaxed ${
+                  className={`text-sm sm:text-base mb-2 leading-relaxed ${
                     darkMode ? "text-gray-400" : "text-gray-600"
                   }`}
                 >
                   {offer.description || "No description available"}
                 </p>
-                <p className="text-sm sm:text-base text-green-600 font-medium mb-6">
-                  Earn {offer.commission1 || "₹500 per lead"}
+                <p className="text-sm sm:text-base text-green-600 font-medium mb-3">
+                  💰 Earn {offer.commission1 || "₹500 per lead"}
                 </p>
               </div>
               <button
                 onClick={() => handleShare(offer._id)}
-                className="w-full py-2 sm:py-3 bg-green-500 text-white font-medium rounded-md hover:bg-green-600 transition"
+                className="w-full py-2 sm:py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-md hover:from-green-600 hover:to-emerald-600 transition transform hover:scale-105"
               >
-                Share
+                📤 Share Offer
               </button>
             </div>
           ))}
@@ -176,15 +188,15 @@ const DematAccount = ({ darkMode }) => {
 
       {/* No Offers State */}
       {!loading && offers.length === 0 && (
-        <div className="text-center py-12">
-          <p className={`text-lg mb-4 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-            No offers available in {categoryName} at the moment.
+        <div className="text-center py-6">
+          <p className={`text-lg mb-3 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+            📭 No offers available in {categoryName} at the moment.
           </p>
           <button
             onClick={() => navigate('/user/dashboard')}
-            className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-md hover:from-blue-600 hover:to-purple-600 transition transform hover:scale-105"
           >
-            Back to Dashboard
+            ← Back to Dashboard
           </button>
         </div>
       )}

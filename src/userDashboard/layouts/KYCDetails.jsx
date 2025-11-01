@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import userService from "../../services/userService";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const KYCDetails = ({ darkMode }) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -316,11 +318,11 @@ const KYCDetails = ({ darkMode }) => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen pt-24 pb-20 px-4 sm:px-6 transition-all duration-300 ${
+        className={`min-h-screen pt-20 pb-20 px-0 transition-all duration-300 ${
           darkMode ? "bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-900"
         }`}
       >
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto px-4">
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
             <p className="mt-4 text-gray-500">Loading KYC details...</p>
@@ -360,11 +362,27 @@ const KYCDetails = ({ darkMode }) => {
 
   return (
     <div
-      className={`min-h-screen pt-24 pb-20 px-4 sm:px-6 transition-all duration-300 ${
+      className={`min-h-screen pt-16 pb-20 px-0 transition-all duration-300 ${
         darkMode ? "bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-900"
       }`}
     >
-      <div className="max-w-5xl mx-auto">
+      {/* ✅ Changed max-w-5xl to max-w-full and removed mx-auto to push to left */}
+      <div className="max-w-full px-4">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className={`flex items-center gap-2 mb-4 px-4 py-2 rounded-lg transition duration-200 ${
+            darkMode 
+              ? "bg-gray-800 hover:bg-gray-700 text-gray-300" 
+              : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+          }`}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back
+        </button>
+
         {/* Header */}
         <h2 className="text-xl font-bold mb-2">KYC/Personal Details</h2>
         <div className="mb-6">
