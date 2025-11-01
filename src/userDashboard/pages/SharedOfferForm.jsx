@@ -20,6 +20,7 @@ const SharedOfferForm = ({ darkMode }) => {
   });
 
   const [formErrors, setFormErrors] = useState({});
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
 
   useEffect(() => {
     fetchOfferDetails();
@@ -249,6 +250,25 @@ const SharedOfferForm = ({ darkMode }) => {
                 )}
               </div>
 
+              {/* Terms and Conditions Checkbox */}
+              <div className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  id="termsCheckbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500 focus:ring-2 cursor-pointer"
+                />
+                <label 
+                  htmlFor="termsCheckbox" 
+                  className={`text-xs cursor-pointer ${
+                    darkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
+                >
+                  By submitting, you agree to our terms and conditions
+                </label>
+              </div>
+
               {/* Submit Button */}
               <button
                 type="submit"
@@ -274,20 +294,13 @@ const SharedOfferForm = ({ darkMode }) => {
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clipRule="evenodd"/>
                     </svg>
-                    CLAIM NOW
+                    CONTINUE
                   </>
                 )}
               </button>
             </form>
           </div>
         </div>
-
-        {/* Footer Note */}
-        <p className={`text-center text-xs mt-4 ${
-          darkMode ? "text-gray-400" : "text-white/80"
-        }`}>
-          By submitting, you agree to our terms and conditions
-        </p>
       </div>
     </div>
   );
