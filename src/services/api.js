@@ -20,6 +20,8 @@ const api = axios.create({
  */
 api.interceptors.request.use(
   (config) => {
+    console.log('🌐 [API] Request:', config.method.toUpperCase(), config.url, config.params);
+    
     // Get auth token from localStorage
     const token = localStorage.getItem('accessToken');
     
@@ -33,6 +35,7 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.error('❌ [API] Request error:', error);
     return Promise.reject(error);
   }
 );
@@ -46,6 +49,7 @@ api.interceptors.response.use(
     if (response.config.metadata) {
       response.config.metadata.endTime = new Date();
       response.duration = response.config.metadata.endTime - response.config.metadata.startTime;
+      console.log('✅ [API] Response:', response.config.url, `(${response.duration}ms)`, response.data);
     }
     
     return response;
