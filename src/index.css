@@ -195,3 +195,27 @@
 		display: none;
 	}
 }
+
+
+
+/* Remove focus outline from recharts chart container and SVG */
+.recharts-layer:focus,
+.recharts-cartesian-grid:focus,
+.recharts-surface:focus,
+.recharts-wrapper:focus,
+.recharts-responsive-container:focus,
+.recharts-pie:focus,
+.recharts-pie-sector:focus,
+svg:focus,
+.recharts-layer recharts-pie-sector:focus,
+.recharts-layer recharts-pie-sector path:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove focus outline and color from recharts pie sectors */
+.recharts-sector:focus {
+  outline: none !important;
+  outline-color: transparent !important;
+  box-shadow: none !important;
+}

@@ -10,6 +10,8 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  BarChart,
+  Bar,
 } from "recharts";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 
@@ -97,25 +99,24 @@ const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, p
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div 
-        className="bg-card border border-border rounded-lg p-3 shadow-lg"
-        style={{ 
-          backgroundColor: "hsl(var(--card))", 
-          border: "1px solid hsl(var(--border))",
+      <div
+        className="rounded-lg p-3"
+        style={{
+          background: "rgba(0,0,0,0)",
+          boxShadow: "none",
+          border: "none",
           color: "hsl(var(--foreground))"
         }}
       >
-        {/* Show label if it exists (for LineChart) */}
         {label && (
-          <div className="text-foreground font-medium mb-2 border-b border-border pb-1">
+          <div className="text-foreground font-medium mb-2 pb-1">
             {label}
           </div>
         )}
-        
         {payload.map((entry, index) => (
           <div key={index} className="flex items-center gap-2">
-            <div 
-              className="w-3 h-3 rounded-full" 
+            <div
+              className="w-3 h-3 rounded-full"
               style={{ backgroundColor: entry.color }}
             ></div>
             <span className="text-foreground font-medium">
@@ -321,7 +322,7 @@ export default function AnalyticsDashboard() {
   const [calendarMonth, setCalendarMonth] = useState(9)
   const [calendarYear, setCalendarYear] = useState(2025)
   const [selectedHR, setSelectedHR] = useState("All Categories")
-  const [selectedTL, setSelectedTL] = useState("All Customers")
+  const [selectedTL, setSelectedTL] = useState("All Users")
   const [showCalendar, setShowCalendar] = useState(false)
   const [manualStartDate, setManualStartDate] = useState("2025-09-25")
   const [manualEndDate, setManualEndDate] = useState("2025-10-25")
@@ -406,7 +407,7 @@ export default function AnalyticsDashboard() {
   const dateRangeText = endDate ? `${formatDate(startDate)} ~ ${formatDate(endDate)}` : `${formatDate(startDate)}`
 
   const getMetrics = () => {
-    if (selectedTL === "All Customers") {
+    if (selectedTL === "All Users") {
       return [
         { label: "DateWise Count", value: "31", icon: "📅" },
         { label: "Total Count", value: "2591", icon: "📊", subtext: "Database" },
@@ -556,11 +557,11 @@ export default function AnalyticsDashboard() {
           </div>
 
           {/* Dropdowns */}
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 sm:ml-auto">
+          <div className="flex flex-row gap-2 sm:gap-3 sm:ml-auto overflow-x-auto">
             <select
               value={selectedHR}
               onChange={(e) => setSelectedHR(e.target.value)}
-              className="px-2 sm:px-4 py-1.5 sm:py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-xs sm:text-base w-auto min-w-[130px] sm:min-w-[150px]"
+              className="px-2 sm:px-4 py-1.5 sm:py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none text-xs sm:text-base w-auto min-w-[100px] sm:min-w-[150px] flex-shrink-0"
             >
               <option>All Categories</option>
               <option>DEMAT Account</option>
@@ -574,9 +575,9 @@ export default function AnalyticsDashboard() {
             <select
               value={selectedTL}
               onChange={(e) => setSelectedTL(e.target.value)}
-              className="px-2 sm:px-4 py-1.5 sm:py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-xs sm:text-base w-auto min-w-[130px] sm:min-w-[150px]"
+              className="px-2 sm:px-4 py-1.5 sm:py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none text-xs sm:text-base w-auto min-w-[90px] sm:min-w-[150px] flex-shrink-0"
             >
-              <option>All Customers</option>
+              <option>All Users</option>
               {tlNames.map((name) => (
                 <option key={name} value={name}>
                   {name}
@@ -603,48 +604,49 @@ export default function AnalyticsDashboard() {
         </div>
 
         {/* Charts Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6 dark:bg-background [&_.recharts-surface]:touch-auto [&_.recharts-tooltip-wrapper]:pointer-events-auto"
+             style={{
+               '--chart-touch': 'manipulation'
+             }}>
           {/* Date Wise Account Created */}
-          <div className="bg-card border border-border rounded-lg">
-            <div className="p-3 sm:p-4 border-b border-border">
+          <div className="bg-card border border-border rounded-lg w-full max-w-full">
+            <div className="p-3 sm:p-4 border-b border-border" style={{ background: "transparent" }}>
               <h3 className="text-base sm:text-lg font-semibold text-foreground">Date Wise Account Created</h3>
               <p className="text-muted-foreground text-xs sm:text-sm">Account creation trend over time</p>
             </div>
-            <div className="p-2 sm:p-4">
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={dateWiseData} key={chartKey}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={getChartColors().gridStroke} />
-                  <XAxis 
-                    dataKey="date" 
+            <div className="p-2 sm:p-4 touch-manipulation">
+              <ResponsiveContainer width="100%" height={400} style={{ background: "transparent" }}>
+                <BarChart
+                  data={dateWiseData}
+                  key={chartKey}
+                  margin={{ top: 20, right: 40, left: 10, bottom: 20 }}
+                  style={{ background: "transparent" }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke={getChartColors().gridStroke} fill="none" />
+                  <XAxis
+                    dataKey="date"
                     stroke={getChartColors().axisText}
-                    tick={{ fill: getChartColors().axisText, fontSize: 12 }}
-                    style={{ fontSize: "12px" }} 
+                    tick={{ fill: getChartColors().axisText, fontSize: 14 }}
+                    style={{ fontSize: "14px" }}
                   />
-                  <YAxis 
+                  <YAxis
                     stroke={getChartColors().axisText}
-                    tick={{ fill: getChartColors().axisText, fontSize: 12 }}
-                    style={{ fontSize: "12px" }} 
+                    tick={{ fill: getChartColors().axisText, fontSize: 14 }}
+                    style={{ fontSize: "14px" }}
                   />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Line
-                    type="monotone"
+                  <Tooltip
+                    content={<CustomTooltip />}
+                    trigger="hover"
+                    animationDuration={200}
+                    allowEscapeViewBox={{ x: false, y: false }}
+                  />
+                  <Bar
                     dataKey="count"
-                    stroke="hsl(var(--primary))"
-                    strokeWidth={3}
-                    dot={{ 
-                      fill: getChartColors().dotFill, 
-                      stroke: getChartColors().dotStroke,
-                      strokeWidth: 2,
-                      r: 6 
-                    }}
-                    activeDot={{ 
-                      fill: getChartColors().dotFill, 
-                      stroke: getChartColors().dotStroke,
-                      strokeWidth: 2,
-                      r: 8 
-                    }}
+                    fill={getChartColors().dotFill}
+                    radius={[8, 8, 0, 0]}
+                    background={false}
                   />
-                </LineChart>
+                </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
@@ -655,7 +657,7 @@ export default function AnalyticsDashboard() {
               <CardTitle className="text-foreground text-base sm:text-lg">Pending By Account</CardTitle>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm">Distribution by account type</CardDescription>
             </CardHeader>
-            <CardContent className="flex justify-center p-2 sm:p-4">
+            <CardContent className="flex justify-center p-2 sm:p-4 touch-manipulation">
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart key={`pie1-${chartKey}`}>
                   <Pie
@@ -668,12 +670,23 @@ export default function AnalyticsDashboard() {
                     dataKey="value"
                     label={renderCustomLabel}
                     labelLine={false}
+                    onMouseEnter={(data, index) => {
+                      // Enable hover effect on desktop and touch devices
+                    }}
+                    onTouchStart={(data, index) => {
+                      // Enable touch hover effect on mobile
+                    }}
                   >
                     {pendingByAccount.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip content={<CustomTooltip />} />
+                  <Tooltip 
+                    content={<CustomTooltip />} 
+                    allowEscapeViewBox={{ x: false, y: false }}
+                    trigger="hover"
+                    animationDuration={200}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -688,7 +701,7 @@ export default function AnalyticsDashboard() {
               <CardTitle className="text-foreground text-base sm:text-lg">Total Pending Account 36296</CardTitle>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm">Account breakdown</CardDescription>
             </CardHeader>
-            <CardContent className="flex justify-center p-2 sm:p-4">
+            <CardContent className="flex justify-center p-2 sm:p-4 touch-manipulation">
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart key={`pie2-${chartKey}`}>
                   <Pie
@@ -701,12 +714,23 @@ export default function AnalyticsDashboard() {
                     dataKey="value"
                     label={renderCustomLabel}
                     labelLine={false}
+                    onMouseEnter={(data, index) => {
+                      // Enable hover effect on desktop and touch devices
+                    }}
+                    onTouchStart={(data, index) => {
+                      // Enable touch hover effect on mobile
+                    }}
                   >
                     {pendingByAccount.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip content={<CustomTooltip />} />
+                  <Tooltip 
+                    content={<CustomTooltip />} 
+                    allowEscapeViewBox={{ x: false, y: false }}
+                    trigger="hover"
+                    animationDuration={200}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -718,7 +742,7 @@ export default function AnalyticsDashboard() {
               <CardTitle className="text-foreground text-base sm:text-lg">Total Approved Account 2294</CardTitle>
               <CardDescription className="text-muted-foreground text-xs sm:text-sm">Approved accounts distribution</CardDescription>
             </CardHeader>
-            <CardContent className="flex justify-center p-2 sm:p-4">
+            <CardContent className="flex justify-center p-2 sm:p-4 touch-manipulation">
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart key={`pie3-${chartKey}`}>
                   <Pie
@@ -731,12 +755,23 @@ export default function AnalyticsDashboard() {
                     dataKey="value"
                     label={renderCustomLabel}
                     labelLine={false}
+                    onMouseEnter={(data, index) => {
+                      // Enable hover effect on desktop and touch devices
+                    }}
+                    onTouchStart={(data, index) => {
+                      // Enable touch hover effect on mobile
+                    }}
                   >
                     {approvedByAccount.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip content={<CustomTooltip />} />
+                  <Tooltip 
+                    content={<CustomTooltip />} 
+                    allowEscapeViewBox={{ x: false, y: false }}
+                    trigger="hover"
+                    animationDuration={200}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
