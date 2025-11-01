@@ -129,7 +129,7 @@ export default function LoginPage() {
                 pattern="[0-9]{10}"
                 maxLength="10"
               />
-              <p className="text-xs text-muted-foreground mt-1">Admin: 9876543210 | User: 9876543211</p>
+              <p className="text-xs text-muted-foreground mt-1"> </p>
             </div>
 
             {/* Password */}
@@ -159,7 +159,7 @@ export default function LoginPage() {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Admin: admin123 | User: user123</p>
+              <p className="text-xs text-muted-foreground mt-1"> </p>
             </div>
 
             {/* Forgot Password */}
