@@ -73,6 +73,8 @@ import UserQueryForm from "../userDashboard/pages/UserQueryForm";
 import ProtectedRoute from "./ProtectedRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
 import Loader from "../components/Loader";
+import SettingsPage from "../adminDashboard/pages/SettingsPage";
+import LogoutPage from "../adminDashboard/pages/LogoutPage";
 
 /**
  * Main Application Router
@@ -155,6 +157,8 @@ export default function AppRouter() {
           <Route path="admin-logs" element={<AdminLogsTable />} />
           <Route path="user-queries" element={<UserQueriesTable />} />
           <Route path="kyc-review" element={<KYCReview />} />
+          {/* Settings and Logout routes */}
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
 
         {/* ✅ User Dashboard */}

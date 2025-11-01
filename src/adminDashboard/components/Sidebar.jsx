@@ -147,9 +147,7 @@ export default function Sidebar() {
       >
         <div className="p-6 h-full overflow-y-auto scrollbar-hide flex flex-col">
           <div className="flex items-center gap-3 mb-10 pb-6 border-b border-sidebar-border/30">
-            <div className="w-11 h-11 bg-gradient-to-br from-primary via-primary/90 to-primary/70 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xl">
-              <span className="text-primary-foreground font-bold text-lg">CW</span>
-            </div>
+            <img src="/logo.jpeg" alt="Logo" className="w-11 h-11 rounded-xl object-contain flex-shrink-0 shadow-xl" />
             <h1 className="text-xl font-bold text-sidebar-foreground tracking-tight">Campaignwala</h1>
           </div>
           <nav className="space-y-1 flex-1">
