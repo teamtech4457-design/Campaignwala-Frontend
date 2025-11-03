@@ -102,7 +102,7 @@ export default function AddCategoryForm() {
         
         // Navigate back after 1.5 seconds
         setTimeout(() => {
-          navigate('/admin/categories');
+          navigate('/admin/all-categories');
         }, 1500);
       } else {
         throw new Error(response.message || "Operation failed");
@@ -324,7 +324,7 @@ export default function AddCategoryForm() {
           <button
             type="button"
             disabled={loading}
-            onClick={() => navigate('/admin/categories')}
+            onClick={() => navigate('/admin/all-categories')}
             className="px-6 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/80 transition-colors disabled:opacity-50"
           >
             Cancel
