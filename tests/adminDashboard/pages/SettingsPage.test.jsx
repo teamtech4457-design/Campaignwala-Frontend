@@ -3,23 +3,27 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import SettingsPage from '../../../src/adminDashboard/pages/SettingsPage';
+import { vi } from 'vitest';
 
 // Mock useNavigate
-const mockedNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockedNavigate,
-}));
+const mockedNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockedNavigate,
+  };
+});
 
 describe('SettingsPage', () => {
   beforeEach(() => {
     mockedNavigate.mockClear();
     // Mock localStorage
-    Storage.prototype.getItem = jest.fn(() => 'false');
-    Storage.prototype.setItem = jest.fn();
+    Storage.prototype.getItem = vi.fn(() => 'false');
+    Storage.prototype.setItem = vi.fn();
   });
 
-  test('renders the settings page correctly', () => {
+  it('renders the settings page correctly', () => {
     render(<SettingsPage />, { wrapper: MemoryRouter });
 
     expect(screen.getByText('Account Settings')).toBeInTheDocument();
@@ -30,7 +34,7 @@ describe('SettingsPage', () => {
     expect(screen.getByText('Change Password')).toBeInTheDocument();
   });
 
-  test('toggles email notifications', () => {
+  it('toggles email notifications', () => {
     render(<SettingsPage />, { wrapper: MemoryRouter });
 
     const emailToggle = screen.getAllByRole('checkbox')[0];
@@ -43,7 +47,7 @@ describe('SettingsPage', () => {
     expect(emailToggle.checked).toBe(true);
   });
 
-  test('toggles dark mode and updates localStorage', () => {
+  it('toggles dark mode and updates localStorage', () => {
     render(<SettingsPage />, { wrapper: MemoryRouter });
 
     const darkModeToggle = screen.getAllByRole('checkbox')[1];
@@ -58,7 +62,7 @@ describe('SettingsPage', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith('darkMode', 'false');
   });
 
-  test('navigates to the reset password page when "Change" is clicked', () => {
+  it('navigates to the reset password page when "Change" is clicked', () => {
     render(<SettingsPage />, { wrapper: MemoryRouter });
 
     const changePasswordButton = screen.getByRole('button', { name: 'Change' });
