@@ -27,7 +27,9 @@ export default function LoginPage() {
       <div className="hidden md:flex md:w-1/2 bg-muted/30 flex-col items-center justify-center p-8">
         <div className="max-w-md text-center">
           <div className="flex flex-col items-center justify-center gap-2 mb-8">
-            <img src="/logo.jpeg" alt="Logo" className="h-14 w-14 rounded-lg object-contain mb-2" />
+            <span className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-card border-2 border-primary overflow-hidden mb-2">
+              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-cover" />
+            </span>
             <h2 className="text-3xl font-bold text-foreground">Campaign Waala</h2>
           </div>
 
@@ -65,7 +67,9 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           {/* Mobile Header */}
           <div className="md:hidden text-center mb-8">
-            <img src="/logo.jpeg" alt="Logo" className="h-14 w-14 rounded-lg object-contain mx-auto mb-4" />
+            <span className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-card border-2 border-primary overflow-hidden mx-auto mb-4">
+              <img src="/logo.jpeg" alt="Logo" className="h-full w-full object-cover" />
+            </span>
             <h1 className="text-3xl font-bold text-foreground mb-2">
               Campaign Waala
             </h1>
