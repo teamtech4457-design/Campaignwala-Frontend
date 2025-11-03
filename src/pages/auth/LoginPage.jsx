@@ -63,7 +63,7 @@ export default function LoginPage() {
       </div>
 
       {/* ---------- RIGHT SECTION (Login Form) ---------- */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10 bg-background">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10 bg-background mb-16">
         <div className="w-full max-w-md">
           {/* Mobile Header */}
           <div className="md:hidden text-center mb-8">
@@ -109,7 +109,7 @@ export default function LoginPage() {
                 pattern="[0-9]{10}"
                 maxLength="10"
               />
-              <p className="text-xs text-muted-foreground mt-1">Admin: 9876543210 | User: 9876543211</p>
+             
             </div>
 
             {/* Password */}
@@ -139,7 +139,7 @@ export default function LoginPage() {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Admin: admin123 | User: user123</p>
+              
             </div>
 
             {/* Forgot Password */}
