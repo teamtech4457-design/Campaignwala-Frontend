@@ -47,14 +47,14 @@ const Sidebar = ({ darkMode, isSidebarOpen, toggleSidebar }) => {
       </div>
 
       {/* Menu */}
-      <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100%-64px)] md:h-[calc(100%-64px)]">
+      <nav className="p-2 space-y-1 overflow-y-auto h-[calc(100%-64px)] md:h-[calc(100%-64px)]">
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
             <button
               key={item.path}
               onClick={() => handleItemClick(item.path)}
-              className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 
+              className={`w-full flex items-center justify-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 
                 ${
                   isActive
                     ? darkMode
