@@ -1,26 +1,26 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from '../../../src/redux/store';
 import AppRouter from '../../../src/routes/AppRouter';
 import { ThemeProvider } from '../../../src/context-api/ThemeContext';
+import { vi } from 'vitest';
 
 // Mock ReactDOM.createRoot
-jest.mock('react-dom/client', () => ({
-  createRoot: jest.fn().mockReturnValue({
-    render: jest.fn(),
+vi.mock('react-dom/client', () => ({
+  createRoot: vi.fn().mockReturnValue({
+    render: vi.fn(),
   }),
 }));
 
 describe('main.jsx', () => {
-  it('should render the application without crashing', () => {
+  it('should render the application without crashing', async () => {
     const rootElement = document.createElement('div');
     rootElement.id = 'root';
     document.body.appendChild(rootElement);
 
     // Import main.jsx to trigger the render call
-    require('../../../src/main.jsx');
+    await import('../../../src/main.jsx');
 
     // Check if createRoot was called with the #root element
     expect(ReactDOM.createRoot).toHaveBeenCalledWith(rootElement);

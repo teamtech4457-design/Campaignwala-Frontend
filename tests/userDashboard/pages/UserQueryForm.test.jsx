@@ -1,25 +1,28 @@
-
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import UserQueryForm from '../../../src/userDashboard/pages/UserQueryForm';
+import { vi } from 'vitest';
 
 // Mock useNavigate
-const mockedNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockedNavigate,
-}));
+const mockedNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockedNavigate,
+  };
+});
 
 describe('UserQueryForm', () => {
   beforeEach(() => {
     // Reset mocks before each test
     mockedNavigate.mockClear();
     // Mock alert
-    window.alert = jest.fn();
+    window.alert = vi.fn();
   });
 
-  test('renders the form correctly', () => {
+  it('renders the form correctly', () => {
     render(<UserQueryForm darkMode={false} />, { wrapper: MemoryRouter });
 
     expect(screen.getByText('Submit Your Query')).toBeInTheDocument();
@@ -30,7 +33,7 @@ describe('UserQueryForm', () => {
     expect(screen.getByRole('button', { name: 'Submit Query' })).toBeInTheDocument();
   });
 
-  test('handles user input correctly', () => {
+  it('handles user input correctly', () => {
     render(<UserQueryForm darkMode={false} />, { wrapper: MemoryRouter });
 
     fireEvent.change(screen.getByPlaceholderText('Enter your full name'), { target: { value: 'John Doe' } });
@@ -44,7 +47,7 @@ describe('UserQueryForm', () => {
     expect(screen.getByPlaceholderText('Write your message here...').value).toBe('This is a test message.');
   });
 
-  test('shows an error message if required fields are empty on submission', () => {
+  it('shows an error message if required fields are empty on submission', () => {
     render(<UserQueryForm darkMode={false} />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByRole('button', { name: 'Submit Query' }));
@@ -52,7 +55,7 @@ describe('UserQueryForm', () => {
     expect(screen.getByText('Please fill in all required fields.')).toBeInTheDocument();
   });
 
-  test('submits the form successfully with valid data', async () => {
+  it('submits the form successfully with valid data', async () => {
     render(<UserQueryForm darkMode={false} />, { wrapper: MemoryRouter });
 
     fireEvent.change(screen.getByPlaceholderText('Enter your full name'), { target: { value: 'Jane Doe' } });
@@ -75,7 +78,7 @@ describe('UserQueryForm', () => {
     });
   });
 
-  test('navigates back when the back button is clicked', () => {
+  it('navigates back when the back button is clicked', () => {
     render(<UserQueryForm darkMode={false} />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByText('← Back'));
