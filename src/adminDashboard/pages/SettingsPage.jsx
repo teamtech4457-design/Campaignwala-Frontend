@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 export default function SettingsPage() {
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
@@ -19,8 +18,12 @@ export default function SettingsPage() {
     document.body.classList.toggle("dark", e.target.checked);
   };
 
+  const handleChangePassword = () => {
+    navigate("/admin/reset-password");
+  };
+
   return (
-    <div className="w-full p-8 bg-card shadow-2xl border border-border" style={{marginBottom:0,borderRadius:0}}>
+  <div className="w-full p-8 bg-card shadow-2xl border border-border" style={{marginBottom:0,borderRadius:0}}>
       <div className="flex items-center gap-5 mb-8">
         <img src={profile.avatar} alt="Avatar" className="w-16 h-16 rounded-full object-cover border-2 border-primary" />
         <div>
@@ -61,7 +64,7 @@ export default function SettingsPage() {
           <span className="text-base text-foreground font-medium">Change Password</span>
           <button
             className="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-semibold hover:opacity-90 transition"
-            onClick={() => navigate("/admin/reset-password")}
+            onClick={handleChangePassword}
           >
             Change
           </button>

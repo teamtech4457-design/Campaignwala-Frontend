@@ -64,11 +64,6 @@ import KYCDetails from "../userDashboard/layouts/KYCDetails";
 import TotalBalance from "../userDashboard/layouts/TotalBalance";
 import NotificationsPage from "../userDashboard/layouts/NotificationPage";
 import SharedOfferForm from "../userDashboard/pages/SharedOfferForm";
-import UserQueryForm from "../userDashboard/pages/UserQueryForm";
-
-
-
-
 // Route Components
 import ProtectedRoute from "./ProtectedRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
@@ -187,9 +182,6 @@ export default function AppRouter() {
           <Route path="kyc-details" element={<KYCDetails darkMode={darkMode} />} />
           <Route path="total-balance" element={<TotalBalance darkMode={darkMode} />} />
           <Route path="notification-page" element={<NotificationsPage darkMode={darkMode} />} />
-          <Route path="query" element={<UserQueryForm darkMode={darkMode} />} />
-
-
         </Route>
 
         {/* Fallback Route */}

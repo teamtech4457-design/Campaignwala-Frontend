@@ -34,7 +34,7 @@ export default function ProfileMenu() {
         <User className="w-5 h-5" />
       </button>
       {isOpen && (
-  <div className="absolute right-0 mt-3 w-60 bg-card/95 backdrop-blur-lg border border-border/50 rounded-xl shadow-2xl z-50 overflow-hidden" style={{marginBottom:0,paddingBottom:0}}>
+        <div className="absolute right-0 mt-3 w-60 bg-card/95 backdrop-blur-lg border border-border/50 rounded-xl shadow-2xl z-50 overflow-hidden">
           <div className="p-4 border-b border-border/30 bg-muted/10">
             <p className="text-sm font-bold text-foreground">Admin User</p>
             <p className="text-xs text-muted-foreground mt-1">admin@freelancer.com</p>
