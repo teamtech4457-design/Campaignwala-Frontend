@@ -238,7 +238,7 @@ useEffect(() => {
       </section>
 
       {/* Banner Section - Horizontal Sliding Swiper */}
-<section className="relative z-10 rounded-2xl mb-6 overflow-hidden border-4 border-green-400 dark:border-green-600 shadow-2xl ring-2 ring-blue-300 dark:ring-blue-700">
+<section className="relative z-10 rounded-2xl mb-6 overflow-hidden  shadow-2xl ring-2 ring-blue-300 dark:ring-blue-200">
         <div className="relative overflow-hidden h-48 md:h-56 lg:h-64">
           <style>{`
             @keyframes slideCarousel {
@@ -258,7 +258,7 @@ useEffect(() => {
           ) : slides.length > 0 ? (
             <div className="relative w-full h-full">
               <div 
-                className="flex h-full transition-transform duration-8500 ease-in-out"
+                className="flex h-full transition-transform duration-3500 ease-in-out"
                 style={{ 
                   transform: `translateX(-${currentSlide * (100 / (slides.length + 7))}%)`,
                   width: `${(slides.length + 7) * 100}%`
