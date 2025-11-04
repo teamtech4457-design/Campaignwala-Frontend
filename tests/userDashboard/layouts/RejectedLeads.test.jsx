@@ -62,11 +62,11 @@ describe('RejectedLeads Component', () => {
       </MemoryRouter>
     );
 
-    const pendingTab = screen.getByText('Pending Leads');
-    fireEvent.click(pendingTab);
-    expect(mockedNavigate).toHaveBeenCalledWith('/user/pending-leads');
+    const pendingTab = screen.getByText(/Pending Leads/i);
+    fireEvent.click(pendingTab);
+    expect(mockedNavigate).toHaveBeenCalledWith('/user/pending-leads');
 
-    const approvedTab = screen.getByText('Approved Leads');
+    const approvedTab = screen.getByText(/Approved Leads/i);
     fireEvent.click(approvedTab);
     expect(mockedNavigate).toHaveBeenCalledWith('/user/approved-leads');
   });
