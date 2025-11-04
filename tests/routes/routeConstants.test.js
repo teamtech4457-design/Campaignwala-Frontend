@@ -1,5 +1,4 @@
-
-import * as routeConstants from '../../../src/routes/routeConstants';
+import * as routeConstants from '@/routes/routeConstants';
 
 describe('routeConstants', () => {
   it('should have PUBLIC_ROUTES defined', () => {

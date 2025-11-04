@@ -2,8 +2,8 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useSelector } from 'react-redux';
-import { useNavigation } from '../../../src/hooks/useNavigation';
-import { NAVIGATION_MENU } from '../../../src/routes/routeConstants';
+import { useNavigation } from '@/hooks/useNavigation';
+import { NAVIGATION_MENU } from '@/routes/routeConstants';
 
 // Mock Redux
 vi.mock('react-redux', async () => {
@@ -15,7 +15,7 @@ vi.mock('react-redux', async () => {
 });
 
 // Mock routeConstants
-vi.mock('../../../src/routes/routeConstants', () => ({
+vi.mock('@/routes/routeConstants', () => ({
   NAVIGATION_MENU: {
     ADMIN: [
       { key: 'dashboard', label: 'Dashboard' },

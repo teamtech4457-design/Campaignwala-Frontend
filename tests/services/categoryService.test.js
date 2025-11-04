@@ -1,18 +1,18 @@
-
-import categoryService, { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory, getCategoryStats, convertImageToBase64 } from '../../../src/services/categoryService';
-import api from '../../../src/services/api';
+import categoryService, { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory, getCategoryStats, convertImageToBase64 } from '@/services/categoryService';
+import api from '@/services/api';
+import { vi } from 'vitest';
 
 // Mock the api module
-jest.mock('../../../src/services/api', () => ({
-  get: jest.fn(),
-  post: jest.fn(),
-  put: jest.fn(),
-  delete: jest.fn(),
+vi.mock('@/services/api', () => ({
+  get: vi.fn(),
+  post: vi.fn(),
+  put: vi.fn(),
+  delete: vi.fn(),
 }));
 
 describe('categoryService', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('getAllCategories', () => {

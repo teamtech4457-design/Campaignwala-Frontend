@@ -1,18 +1,18 @@
-
-import leadService from '../../../src/services/leadService';
-import api from '../../../src/services/api';
+import leadService from '@/services/leadService';
+import api from '@/services/api';
+import { vi } from 'vitest';
 
 // Mock the api module
-jest.mock('../../../src/services/api', () => ({
-  get: jest.fn(),
-  post: jest.fn(),
-  put: jest.fn(),
-  delete: jest.fn(),
+vi.mock('@/services/api', () => ({
+  get: vi.fn(),
+  post: vi.fn(),
+  put: vi.fn(),
+  delete: vi.fn(),
 }));
 
 describe('leadService', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('getAllLeads', () => {

@@ -2,7 +2,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import ProtectedRoute from '../../../src/routes/ProtectedRoute';
+import ProtectedRoute from '@/routes/ProtectedRoute';
 import { useSelector } from 'react-redux';
 
 // Mock Redux's useSelector
