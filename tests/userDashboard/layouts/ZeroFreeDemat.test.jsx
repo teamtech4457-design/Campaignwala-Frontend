@@ -30,8 +30,7 @@ const mockOffer = {
   commission1Comment: 'Instant credit',
   commission2: 'Bonus ₹200',
   commission2Comment: 'After 5 trades',
-  termsAndConditions: '1. Must be 18+
-2. PAN card required',
+  termsAndConditions: '1. Must be 18+\n2. PAN card required',
 };
 
 describe('ZeroFeeDemat', () => {
@@ -66,8 +65,8 @@ describe('ZeroFeeDemat', () => {
     });
 
     expect(screen.getByText('₹700 per trade')).toBeInTheDocument();
-    expect(screen.getByText('1. Must be 18+
-2. PAN card required')).toBeInTheDocument();
+    expect(screen.getByText('1. Must be 18+')).toBeInTheDocument();
+    expect(screen.getByText('2. PAN card required')).toBeInTheDocument();
     expect(offerService.getOfferById).toHaveBeenCalledWith('offer456');
   });
 

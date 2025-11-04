@@ -98,7 +98,7 @@ describe('DematAccount (Offers Page) Layout', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/user/zerofee-demat/offer1');
   });
 
-  it('should use fallback fetching when categoryId is 'fallback'', async () => {
+  it('should use fallback fetching when categoryId is \'fallback\'', async () => {
     useParams.mockReturnValue({ categoryId: 'fallback' });
     useLocation.mockReturnValue({ state: { categoryName: 'Demat' } });
     const allOffers = {
