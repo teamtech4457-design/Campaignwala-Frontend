@@ -3,15 +3,7 @@ import api, { apiHelpers } from '@/services/api';
 import { vi } from 'vitest';
 
 // Mock axios and localStorage
-vi.mock('axios', () => ({
-  create: vi.fn(() => ({
-    interceptors: {
-      request: { use: vi.fn() },
-      response: { use: vi.fn() },
-    },
-    defaults: { headers: { common: {} } },
-  })),
-}));
+
 
 const localStorageMock = (() => {
   let store = {};
