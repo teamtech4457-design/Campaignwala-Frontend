@@ -70,7 +70,7 @@ describe('User Dashboard Sidebar Component', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/user/profile-overview');
   });
 
-  it('should apply active styles to the current route's menu item', () => {
+  it('should apply active styles to the current route\'s menu item', () => {
     mockUseLocation.mockReturnValue({ pathname: '/user/wallet-withdrawl' });
     renderComponent();
     const walletButton = screen.getByRole('button', { name: /wallet/i });

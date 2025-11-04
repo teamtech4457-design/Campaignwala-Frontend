@@ -86,7 +86,7 @@ describe('UserPageWrapper Component', () => {
     });
   });
 
-  it('should redirect to login if userType is not 'user'', async () => {
+  it('should redirect to login if userType is not \'user\'', async () => {
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('userType', 'admin');
 
