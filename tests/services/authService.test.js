@@ -1,12 +1,12 @@
-
-import authService from '../../../src/services/authService';
-import api from '../../../src/services/api';
+import authService from '@/services/authService';
+import api from '@/services/api';
+import { vi } from 'vitest';
 
 // Mock api and localStorage
-jest.mock('../../../src/services/api', () => ({
-  post: jest.fn(),
-  get: jest.fn(),
-  put: jest.fn(),
+vi.mock('@/services/api', () => ({
+  post: vi.fn(),
+  get: vi.fn(),
+  put: vi.fn(),
 }));
 
 const localStorageMock = (() => {
@@ -23,7 +23,7 @@ Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 describe('authService', () => {
   beforeEach(() => {
     localStorage.clear();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('login', () => {

@@ -15,5 +15,10 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './tests/setupTests.js',
+    include: ['tests/components/Button.test.jsx'],
+    moduleNameMapper: {
+      '\\.(css|less)$': '<rootDir>/tests/styleMock.js',
+      '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/tests/fileMock.js',
+    },
   },
 })

@@ -1,8 +1,8 @@
-
-import adminLogService from '../../../src/services/adminLogService';
+import adminLogService from '@/services/adminLogService';
+import { vi } from 'vitest';
 
 // Mock fetch and localStorage
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 const localStorageMock = (() => {
   let store = {};
   return {

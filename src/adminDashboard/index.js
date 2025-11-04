@@ -1,7 +1,7 @@
 // Admin Dashboard - Pages Export
 export { default as DashboardPage } from './pages/DashboardPage';
 export { default as UsersPage } from './pages/UsersPage';
-export { default as OffersPage } from './pages/OffersPage';
+// export { default as OffersPage } from './pages/OffersPage';
 
 // Admin Dashboard - Components Export
 export { default as AdminSidebar } from './components/AdminSidebar';

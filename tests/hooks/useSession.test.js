@@ -2,8 +2,8 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSession } from '../../../src/hooks/useSession';
-import { forceLogout, updateLastActivity } from '../../../src/redux/slices/authSlice';
+import { useSession } from '@/hooks/useSession';
+import { forceLogout, updateLastActivity } from '@/redux/slices/authSlice';
 
 // Mock Redux
 vi.mock('react-redux', async () => {

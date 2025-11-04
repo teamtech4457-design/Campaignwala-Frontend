@@ -3,15 +3,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
-import App from '../../../src/App';
-import { updateLastActivity } from '../../../src/redux/slices/authSlice';
+import App from '../src/App';
+import { updateLastActivity } from '../src/redux/slices/authSlice';
 
 // Mock child components
-vi.mock('../../../src/adminDashboard/components/Sidebar', () => ({
+vi.mock('../src/adminDashboard/components/Sidebar', () => ({
   default: () => <aside>Sidebar</aside>,
 }));
 
-vi.mock('../../../src/adminDashboard/components/Header', () => ({
+vi.mock('../src/adminDashboard/components/Header', () => ({
   default: ({ onThemeToggle }) => (
     <header>
       <button onClick={onThemeToggle}>Toggle Theme</button>

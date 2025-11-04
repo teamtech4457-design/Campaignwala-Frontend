@@ -1,4 +1,3 @@
-
 import {
   DashboardPage,
   UsersPage,
@@ -7,17 +6,17 @@ import {
   AdminHeader,
   StatsCard,
   ActivityFeed,
-} from '../../../src/adminDashboard/index';
+} from '@/adminDashboard/index';
 
-import DashboardPageSrc from '../../../src/adminDashboard/pages/DashboardPage';
-import UsersPageSrc from '../../../src/adminDashboard/pages/UsersPage';
+import DashboardPageSrc from '@/adminDashboard/pages/DashboardPage';
+import UsersPageSrc from '@/adminDashboard/pages/UsersPage';
 // Assuming OffersPage is in pages, adjust if necessary
-// import OffersPageSrc from '../../../src/adminDashboard/pages/OffersPage';
+// import OffersPageSrc from '@/adminDashboard/pages/OffersPage';
 
-import AdminSidebarSrc from '../../../src/adminDashboard/components/AdminSidebar';
-import AdminHeaderSrc from '../../../src/adminDashboard/components/AdminHeader';
-import StatsCardSrc from '../../../src/adminDashboard/components/StatsCard';
-import ActivityFeedSrc from '../../../src/adminDashboard/components/ActivityFeed';
+import AdminSidebarSrc from '@/adminDashboard/components/AdminSidebar';
+import AdminHeaderSrc from '@/adminDashboard/components/AdminHeader';
+import StatsCardSrc from '@/adminDashboard/components/StatsCard';
+import ActivityFeedSrc from '@/adminDashboard/components/ActivityFeed';
 
 describe('adminDashboard index', () => {
   it('should export DashboardPage correctly', () => {
