@@ -2,8 +2,8 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useSelector, useDispatch } from 'react-redux';
-import { usePermissions } from '../../../src/hooks/usePermissions';
-import { setPermissions } from '../../../src/redux/slices/authSlice';
+import { usePermissions } from '@/hooks/usePermissions';
+import { setPermissions } from '@/redux/slices/authSlice';
 
 // Mock Redux
 vi.mock('react-redux', async () => {

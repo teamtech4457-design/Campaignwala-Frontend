@@ -1,4 +1,3 @@
-
 import {
   ProtectedRoute,
   PublicRoute,
@@ -9,14 +8,14 @@ import {
   ModeratorRouteLayout,
   AuthenticatedRouteLayout,
   AppRouter,
-} from '../../../src/routes/index';
+} from '@/routes/index';
 
-import ProtectedRouteSrc from '../../../src/routes/ProtectedRoute';
-import PublicRouteSrc from '../../../src/routes/PublicRoute';
-import PrivateRouteSrc from '../../../src/routes/PrivateRoute';
-import RoleBasedRouteSrc from '../../../src/routes/RoleBasedRoute';
-import { AdminRouteLayout as AdminRouteLayoutSrc, UserRouteLayout as UserRouteLayoutSrc, ModeratorRouteLayout as ModeratorRouteLayoutSrc, AuthenticatedRouteLayout as AuthenticatedRouteLayoutSrc } from '../../../src/routes/RouteLayouts';
-import AppRouterSrc from '../../../src/routes/AppRouter';
+import ProtectedRouteSrc from '@/routes/ProtectedRoute';
+import PublicRouteSrc from '@/routes/PublicRoute';
+import PrivateRouteSrc from '@/routes/PrivateRoute';
+import RoleBasedRouteSrc from '@/routes/RoleBasedRoute';
+import { AdminRouteLayout as AdminRouteLayoutSrc, UserRouteLayout as UserRouteLayoutSrc, ModeratorRouteLayout as ModeratorRouteLayoutSrc, AuthenticatedRouteLayout as AuthenticatedRouteLayoutSrc } from '@/routes/RouteLayouts';
+import AppRouterSrc from '@/routes/AppRouter';
 
 describe('routes index', () => {
   it('should export ProtectedRoute correctly', () => {

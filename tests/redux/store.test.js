@@ -1,6 +1,5 @@
-
-import { store } from '../../../src/redux/store';
-import authReducer from '../../../src/redux/slices/authSlice';
+import { store } from '@/redux/store';
+import authReducer from '@/redux/slices/authSlice';
 
 describe('Redux store', () => {
   it('should be a valid Redux store', () => {

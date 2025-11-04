@@ -1,13 +1,13 @@
-
 import axios from 'axios';
-import api, { apiHelpers } from '../../../src/services/api';
+import api, { apiHelpers } from '@/services/api';
+import { vi } from 'vitest';
 
 // Mock axios and localStorage
-jest.mock('axios', () => ({
-  create: jest.fn(() => ({
+vi.mock('axios', () => ({
+  create: vi.fn(() => ({
     interceptors: {
-      request: { use: jest.fn() },
-      response: { use: jest.fn() },
+      request: { use: vi.fn() },
+      response: { use: vi.fn() },
     },
     defaults: { headers: { common: {} } },
   })),
@@ -27,7 +27,7 @@ Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 describe('api service', () => {
   beforeEach(() => {
     localStorage.clear();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('request interceptor', () => {

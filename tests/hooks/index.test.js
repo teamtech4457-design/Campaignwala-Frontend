@@ -1,16 +1,15 @@
-
 import {
   useAuth,
   useNavigation,
   usePermissions,
   useSession,
   useAuthentication,
-} from '../../../src/hooks/index';
+} from '@/hooks/index';
 
-import { useAuth as useAuthSrc } from '../../../src/hooks/useAuth';
-import useNavigationSrc from '../../../src/hooks/useNavigation';
-import usePermissionsSrc from '../../../src/hooks/usePermissions';
-import useSessionSrc from '../../../src/hooks/useSession';
+import { useAuth as useAuthSrc } from '@/hooks/useAuth';
+import useNavigationSrc from '@/hooks/useNavigation';
+import usePermissionsSrc from '@/hooks/usePermissions';
+import useSessionSrc from '@/hooks/useSession';
 
 describe('hooks index', () => {
   it('should export useAuth correctly', () => {

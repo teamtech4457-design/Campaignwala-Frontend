@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { store } from '../../../src/redux/store';
-import AppRouter from '../../../src/routes/AppRouter';
-import { ThemeProvider } from '../../../src/context-api/ThemeContext';
+import { store } from '@/redux/store';
+import AppRouter from '@/routes/AppRouter';
+import { ThemeProvider } from '@/context-api/ThemeContext';
 import { vi } from 'vitest';
 
 // Mock ReactDOM.createRoot
@@ -20,7 +20,7 @@ describe('main.jsx', () => {
     document.body.appendChild(rootElement);
 
     // Import main.jsx to trigger the render call
-    await import('../../../src/main.jsx');
+    await import('@/main.jsx');
 
     // Check if createRoot was called with the #root element
     expect(ReactDOM.createRoot).toHaveBeenCalledWith(rootElement);
