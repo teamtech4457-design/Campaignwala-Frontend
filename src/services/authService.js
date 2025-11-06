@@ -196,6 +196,34 @@ class AuthService {
   }
 
   /**
+   * Send Email OTP for verification
+   * @param {string} purpose - Purpose of OTP (e.g., 'profile-update', 'login')
+   * @returns {Promise<Object>} - OTP send response
+   */
+  async sendEmailOTP(purpose = 'verification') {
+    try {
+      const response = await api.post('/users/send-email-otp', { purpose });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  /**
+   * Verify Email OTP
+   * @param {string} otp - OTP code to verify
+   * @returns {Promise<Object>} - Verification response
+   */
+  async verifyEmailOTP(otp) {
+    try {
+      const response = await api.post('/users/verify-email-otp', { otp });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  /**
    * Get current user role
    * @returns {string|null} - User role
    */

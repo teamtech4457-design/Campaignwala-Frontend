@@ -20,16 +20,9 @@ const Navbar = ({ darkMode, setDarkMode, toggleSidebar }) => {
         const userData = localStorage.getItem('user');
         console.log('🟢 Raw user data from localStorage:', userData);
         
-        if (userData) {
+        if (userData && userData !== 'undefined' && userData !== 'null') {
           const user = JSON.parse(userData);
           console.log('🟢 Parsed user object:', user);
-          
-          // Debug: Check all possible name fields
-          console.log('🟢 firstName:', user.firstName);
-          console.log('🟢 lastName:', user.lastName);
-          console.log('🟢 name:', user.name);
-          console.log('🟢 username:', user.username);
-          console.log('🟢 email:', user.email);
           
           // Get first letter - prioritize firstName, then name, then email
           let name = '';

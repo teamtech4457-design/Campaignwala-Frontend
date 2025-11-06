@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
-const API_TIMEOUT = 30000; // 30 seconds
+const API_TIMEOUT = 90000; // 60 seconds (increased for email OTP operations)
 
 /**
  * Create axios instance with default configuration
