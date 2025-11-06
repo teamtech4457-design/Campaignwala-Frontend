@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserQueryForm = ({ darkMode }) => {
+const UserQueryForm = ({ darkMode: propDarkMode }) => {
   const navigate = useNavigate();
+  
+  // Use prop if available, otherwise read from localStorage
+  const [darkMode, setDarkMode] = useState(() => {
+    if (propDarkMode !== undefined) return propDarkMode;
+    const savedTheme = localStorage.getItem('userTheme') || localStorage.getItem('theme');
+    return savedTheme === 'dark';
+  });
+
+  // Sync with prop changes
+  useEffect(() => {
+    if (propDarkMode !== undefined) {
+      setDarkMode(propDarkMode);
+    }
+  }, [propDarkMode]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -82,7 +97,7 @@ const UserQueryForm = ({ darkMode }) => {
 
         {submitted ? (
           <p className="text-center text-green-500 font-semibold text-base sm:text-lg">
-            Thank you for your query! We’ll get back to you soon.
+            Thank you for your query! We'll get back to you soon.
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5">

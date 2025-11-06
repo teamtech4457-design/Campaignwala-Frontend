@@ -29,7 +29,7 @@ const Sidebar = ({ darkMode, isSidebarOpen, toggleSidebar }) => {
     <aside
       className={`fixed top-[64px] z-40 h-[calc(100%-64px)] transition-all duration-300 ease-in-out 
       ${isSidebarOpen ? "left-0 w-52" : "-left-full md:left-0 md:w-16"} 
-      ${darkMode ? "bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 border-gray-700" : "bg-gradient-to-b from-blue-50 via-white to-purple-50 border-gray-200"} 
+      ${darkMode ? "bg-gray-900 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 border-gray-700" : "bg-gradient-to-b from-blue-50 via-white to-purple-50 border-gray-200"} 
       border-r shadow-lg`}
     >
       {/* Collapse Button - Hidden on mobile */}
@@ -58,8 +58,8 @@ const Sidebar = ({ darkMode, isSidebarOpen, toggleSidebar }) => {
                 ${
                   isActive
                     ? darkMode
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/50"
-                      : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-300/50"
+                      ? "border-blue-600 bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/50"
+                      : "border-blue-600 bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-300/50"
                     : darkMode
                     ? "text-gray-300 hover:bg-gradient-to-r hover:from-gray-800 hover:to-gray-700"
                     : "text-gray-700 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100"

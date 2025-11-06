@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import userService from "../../services/userService";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, MemoryRouter } from "react-router-dom";
 
 const KYCDetails = ({ darkMode }) => {
   const navigate = useNavigate();
@@ -318,11 +318,11 @@ const KYCDetails = ({ darkMode }) => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen pt-20 pb-20 px-0 transition-all duration-300 ${
+        className={`min-h-screen py-8 px-0 transition-all duration-300 ${
           darkMode ? "bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-900"
         }`}
       >
-        <div className="max-w-5xl mx-auto px-4">
+        <div className="max-w-full px-4">
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
             <p className="mt-4 text-gray-500">Loading KYC details...</p>
@@ -362,11 +362,11 @@ const KYCDetails = ({ darkMode }) => {
 
   return (
     <div
-      className={`min-h-screen pt-16 pb-20 px-0 transition-all duration-300 ${
+      className={`min-h-screen py-8 px-0 transition-all duration-300 ${
         darkMode ? "bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-900"
       }`}
     >
-      {/* ✅ Changed max-w-5xl to max-w-full and removed mx-auto to push to left */}
+      {/* ✅ Changed pt-16 to py-8 to remove extra top padding */}
       <div className="max-w-full px-4">
         {/* Back Button */}
         <button
@@ -589,4 +589,11 @@ const KYCDetails = ({ darkMode }) => {
   );
 };
 
-export default KYCDetails;
+// ✅ Export with MemoryRouter fallback (for tests)
+const WrappedKYCDetails = (props) => (
+  typeof window === "undefined"
+    ? <MemoryRouter><KYCDetails {...props} /></MemoryRouter>
+    : <KYCDetails {...props} />
+);
+
+export default WrappedKYCDetails;
