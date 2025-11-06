@@ -116,7 +116,7 @@ const RejectedLeads = ({ darkMode }) => {
           <h1
             className={`text-2xl sm:text-3xl font-semibold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent`}
           >
-            ❌ Rejected Leads
+            Rejected Leads
           </h1>
           <p className={`text-sm mt-2 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
             Leads that were not approved and require attention
@@ -196,7 +196,7 @@ const RejectedLeads = ({ darkMode }) => {
 
           <input
             type="text"
-            placeholder="🔍 Search by name, offer, or contact..."
+            placeholder="Search by name, offer, or contact..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={`px-4 py-2 rounded-md border-2 text-sm sm:text-base w-full sm:w-1/3 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200 ${

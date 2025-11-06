@@ -142,14 +142,17 @@ const PendingLeads = ({ darkMode }) => {
           {/* Custom Category Dropdown */}
           <div className="w-full sm:w-1/3 relative" ref={dropdownRef}>
             <button
-              type="button"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className={`flex justify-between items-center w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-md border-2 text-xs sm:text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
-                darkMode
-                  ? "bg-gray-800 border-purple-500 text-gray-200 hover:border-purple-400"
-                  : "bg-white border-blue-300 text-gray-800 hover:border-blue-400"
-              }`}
-            >
+  type="button"
+  role="combobox"
+  aria-expanded={isDropdownOpen}
+  aria-controls="category-options"
+  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+  className={`flex justify-between items-center w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-md border-2 text-xs sm:text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ${
+    darkMode
+      ? "bg-gray-800 border-purple-500 text-gray-200 hover:border-purple-400"
+      : "bg-white border-blue-300 text-gray-800 hover:border-blue-400"
+  }`}
+>
               <span className="truncate">🏷️ {categoryFilter}</span>
               <svg
                 className={`h-4 w-4 transition-transform ${isDropdownOpen ? "rotate-180" : ""} ${
@@ -169,6 +172,7 @@ const PendingLeads = ({ darkMode }) => {
 
             {isDropdownOpen && (
               <div
+              id="category-options"
                 className={`absolute z-50 w-full mt-1 rounded-md shadow-lg border-2 max-h-60 overflow-y-auto ${
                   darkMode
                     ? "bg-gray-800 border-purple-500"
@@ -304,7 +308,7 @@ const PendingLeads = ({ darkMode }) => {
                     <td colSpan="6" className="text-center py-6 sm:py-8 text-gray-500">
                       <div className="flex justify-center items-center gap-2">
                         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-yellow-600"></div>
-                        Loading pending leads...
+                        Loading leads...
                       </div>
                     </td>
                   </tr>
@@ -344,7 +348,7 @@ const PendingLeads = ({ darkMode }) => {
                     >
                       <div className="flex flex-col items-center gap-2">
                         <div className="text-4xl">📭</div>
-                        <p>No pending leads found.</p>
+                        <p>No leads found</p>
                         <p className="text-sm">All your leads have been processed or try adjusting your filters.</p>
                       </div>
                     </td>
@@ -360,7 +364,7 @@ const PendingLeads = ({ darkMode }) => {
               <div className="text-center py-6 sm:py-8 text-gray-500">
                 <div className="flex justify-center items-center gap-2">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-yellow-600"></div>
-                  Loading pending leads...
+                  Loading  leads...
                 </div>
               </div>
             ) : filteredLeads.length > 0 ? (
@@ -421,7 +425,7 @@ const PendingLeads = ({ darkMode }) => {
               <div className="text-center text-sm py-6 text-gray-500 dark:text-gray-400">
                 <div className="flex flex-col items-center gap-2">
                   <div className="text-4xl">📭</div>
-                  <p>No pending leads found.</p>
+                  <p>No leads found.</p>
                   <p className="text-xs">Try adjusting your search or filters.</p>
                 </div>
               </div>

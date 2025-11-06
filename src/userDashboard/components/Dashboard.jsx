@@ -45,15 +45,13 @@ const Dashboard = ({ darkMode }) => {
   }, []);
 
   // Auto-slide effect with smooth transition - Only show 3 slides
- // Auto-slide effect (carousel) for only first 3 slides
-useEffect(() => {
-  const totalSlides = 3; // Only cycle through first 3 slides
-  const timer = setInterval(() => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  }, 9500); // 5 seconds per slide
-  return () => clearInterval(timer);
-}, []);
-
+  useEffect(() => {
+    const totalSlides = 3; // Only cycle through first 3 slides
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    }, 9500); // 5 seconds per slide
+    return () => clearInterval(timer);
+  }, []);
 
   const fetchUserProfile = async () => {
     try {
@@ -155,27 +153,27 @@ useEffect(() => {
 
   return (
     <div
-      className={`transition-all duration-300 ${
+      className={`min-h-screen p-4 sm:p-6 md:p-8 transition-all duration-300 ${
         darkMode ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100' : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 text-gray-900'
       }`}
     >
       {/* Animated Background Elements */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-      <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      <div className="absolute top-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+      <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div className="absolute -bottom-8 left-10 sm:left-20 w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
 
       {/* Welcome Section - UPDATED TEXT */}
-      <section className="relative z-10 mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent text-center">
+      <section className="relative z-10 mb-6 sm:mb-8 px-2">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent text-center">
           Welcome Back, <span className="capitalize font-semibold">{userName}</span>! 🌟
         </h2>
-        <p className="text-sm md:text-base text-gray-500 text-center max-w-2xl mx-auto">
+        <p className="text-xs sm:text-sm md:text-base text-gray-500 text-center max-w-2xl mx-auto px-4">
           Here's a quick overview of your campaign performance and available opportunities.
         </p>
       </section>
 
       {/* Stats Cards */}
-      <section className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+      <section className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
         {[
           {
             title: 'Current Balance',
@@ -214,22 +212,22 @@ useEffect(() => {
               if (card.title === "Current Balance") {
                 navigate("/user/wallet-withdrawl");
               } else if (card.title === "Total Earnings") {
-                navigate("/user/wallet-withdrawl");
+                navigate("/user/total-balance");
               } else if (card.title === "Total Leads") {
                 navigate("/user/all-leads");
               }
             }}
-            className={`rounded-xl p-4 border-2 cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 ${
+            className={`rounded-xl p-3 sm:p-4 border-2 cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 ${
               darkMode 
                 ? `bg-gradient-to-br ${card.bgGradient} border-gray-600 text-white` 
                 : `bg-white ${card.borderColor}`
             }`}
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-300">{card.title}</span>
-              <span className="text-xl">{card.icon}</span>
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <span className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300">{card.title}</span>
+              <span className="text-lg sm:text-xl">{card.icon}</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold mb-2">{card.amount}</div>
+            <div className="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2 break-words">{card.amount}</div>
             <div className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full inline-block">
               {card.change}
             </div>
@@ -238,8 +236,8 @@ useEffect(() => {
       </section>
 
       {/* Banner Section - Horizontal Sliding Swiper */}
-<section className="relative z-10 rounded-2xl mb-6 overflow-hidden  shadow-2xl ring-2 ring-blue-300 dark:ring-blue-200">
-        <div className="relative overflow-hidden h-48 md:h-56 lg:h-64">
+      <section className="relative z-10 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 overflow-hidden shadow-2xl ring-2 ring-blue-300 dark:ring-blue-200">
+        <div className="relative overflow-hidden h-40 sm:h-48 md:h-56 lg:h-64">
           <style>{`
             @keyframes slideCarousel {
               0% {
@@ -253,7 +251,7 @@ useEffect(() => {
           
           {slidesLoading ? (
             <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+              <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-blue-600"></div>
             </div>
           ) : slides.length > 0 ? (
             <div className="relative w-full h-full">
@@ -275,15 +273,15 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/80 to-purple-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">
                         Earn More & More!!
                       </h3>
-                      <p className="text-white/90 text-sm md:text-lg">
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">
                         Grow your skills and earnings with our exclusive programs!
                       </p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         
                       </div>
@@ -302,15 +300,15 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-600/80 to-red-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">
                         Big Offers Coming Soon!!
                       </h3>
-                      <p className="text-white/90 text-sm md:text-lg">
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">
                         Get ready for amazing deals and exclusive benefits!
                       </p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                       </div>
                     </div>
@@ -328,15 +326,15 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-green-600/80 to-teal-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">
                         Saving Offers Are Live Going On!
                       </h3>
-                      <p className="text-white/90 text-sm md:text-lg">
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">
                         Don't miss out on exclusive savings account benefits!
                       </p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                       </div>
                     </div>
@@ -354,15 +352,15 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-600/80 to-purple-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">
                         Demat Offers Going On!
                       </h3>
-                      <p className="text-white/90 text-sm md:text-lg">
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">
                         Exclusive deals on demat accounts - Limited time only!
                       </p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         Explore Now
                       </div>
@@ -381,15 +379,15 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-600/80 to-orange-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">
                         Credit Card Offers Live!
                       </h3>
-                      <p className="text-white/90 text-sm md:text-lg">
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">
                         Get amazing rewards and cashback on premium credit cards!
                       </p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         Apply Now
                       </div>
@@ -408,15 +406,15 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-red-600/80 to-pink-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">
                         Personal Loan Offers!
                       </h3>
-                      <p className="text-white/90 text-sm md:text-lg">
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">
                         Low interest rates and instant approval available now!
                       </p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         Get Loan
                       </div>
@@ -435,15 +433,15 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/80 to-green-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">
                         Investment Offers Live!
                       </h3>
-                      <p className="text-white/90 text-sm md:text-lg">
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">
                         Start your investment journey with exclusive bonuses!
                       </p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         Invest Now
                       </div>
@@ -451,10 +449,6 @@ useEffect(() => {
                   </div>
                 </div>
               </div>
-              
-             
-              
-              {/* Navigation Arrows REMOVED */}
             </div>
           ) : (
             // Fallback when no slides from backend - Show seven slides
@@ -468,11 +462,11 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/80 to-purple-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">Earn More Learn More!!</h3>
-                      <p className="text-white/90 text-sm md:text-lg">Grow your skills and earnings!</p>
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">Earn More Learn More!!</h3>
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">Grow your skills and earnings!</p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         Start Now
                       </div>
@@ -488,11 +482,11 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-600/80 to-red-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">Big Offers Comingg!!</h3>
-                      <p className="text-white/90 text-sm md:text-lg">Amazing deals are live now!</p>
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">Big Offers Comingg!!</h3>
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">Amazing deals are live now!</p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         Discover Now
                       </div>
@@ -508,18 +502,17 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-green-600/80 to-teal-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">Saving Offers Are Live!</h3>
-                      <p className="text-white/90 text-sm md:text-lg">Amazing deals available now!</p>
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">Saving Offers Are Live!</h3>
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">Amazing deals available now!</p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         Grab Offer
                       </div>
                     </div>
                   </div>
                 </div>
-
 
                 {/* Seventh Slide - Investment Offers (NEW) */}
                 <div className="flex-shrink-0 w-1/7 h-full">
@@ -529,11 +522,11 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/80 to-green-600/80 flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <h3 className="text-white text-2xl md:text-4xl font-bold mb-2">Investment Offers!</h3>
-                      <p className="text-white/90 text-sm md:text-lg">Start investing with bonuses!</p>
+                    <div className="text-center px-3 sm:px-4">
+                      <h3 className="text-white text-lg sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2">Investment Offers!</h3>
+                      <p className="text-white/90 text-xs sm:text-sm md:text-lg">Start investing with bonuses!</p>
                       <div 
-                        className="mt-4 bg-gray-400 text-gray-600 px-6 py-2 rounded-full font-semibold cursor-not-allowed"
+                        className="mt-2 sm:mt-4 bg-gray-400 text-gray-600 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold cursor-not-allowed text-xs sm:text-base"
                       >
                         Invest Now
                       </div>
@@ -541,18 +534,18 @@ useEffect(() => {
                   </div>
                 </div>
               </div>
-              
             </div>
           )}
         </div>
       </section>
-{/* Product Cards */}
-      <section className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
+      {/* Product Cards */}
+      <section className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
         {loading ? (
           // Loading state
-          <div className="col-span-full text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-500">Loading categories...</p>
+          <div className="col-span-full text-center py-8 sm:py-12">
+            <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-500 text-sm sm:text-base">Loading categories...</p>
           </div>
         ) : categories.length > 0 ? (
           // Categories from backend
@@ -570,33 +563,33 @@ useEffect(() => {
                 });
               }}
               className={`rounded-xl border-3 overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 shadow-md ring-1 ring-gray-200 dark:ring-gray-600 ${
-  darkMode ? 'bg-orange-800 border-orange-500' : 'bg-white border-orange-400'
-}`}
+                darkMode ? 'bg-orange-800 border-orange-500' : 'bg-white border-orange-400'
+              }`}
             >
               <div
-                className={`bg-gradient-to-br ${categoryColors[index % categoryColors.length]} h-24 sm:h-28 md:h-32 flex items-center justify-center relative overflow-hidden`}
+                className={`bg-gradient-to-br ${categoryColors[index % categoryColors.length]} h-20 sm:h-24 md:h-28 lg:h-32 flex items-center justify-center relative overflow-hidden`}
               >
                 <div className="absolute inset-0 bg-black opacity-10"></div>
-                <div className="text-white text-lg font-bold text-center px-2 relative z-10">
+                <div className="text-white text-base sm:text-lg font-bold text-center px-2 relative z-10">
                   {category.name?.split(' ')[0] || 'Category'}
                 </div>
               </div>
-              <div className="p-4">
+              <div className="p-3 sm:p-4">
                 <h3
-                  className={`font-semibold mb-2 ${
+                  className={`font-semibold mb-1 sm:mb-2 text-sm sm:text-base ${
                     darkMode ? 'text-white' : 'text-gray-800'
                   }`}
                 >
                   {category.name}
                 </h3>
                 <p
-                  className={`text-sm ${
+                  className={`text-xs sm:text-sm ${
                     darkMode ? 'text-gray-400' : 'text-gray-600'
                   }`}
                 >
                   {category.description || 'Available offers'}
                 </p>
-                <div className="mt-3 text-xs text-blue-600 dark:text-blue-400 font-medium">
+                <div className="mt-2 sm:mt-3 text-xs text-blue-600 dark:text-blue-400 font-medium">
                   View Offers →
                 </div>
               </div>
@@ -658,29 +651,29 @@ useEffect(() => {
               }`}
             >
               <div
-                className={`bg-gradient-to-br ${card.color} h-24 sm:h-28 md:h-32 flex items-center justify-center relative overflow-hidden`}
+                className={`bg-gradient-to-br ${card.color} h-20 sm:h-24 md:h-28 lg:h-32 flex items-center justify-center relative overflow-hidden`}
               >
                 <div className="absolute inset-0 bg-black opacity-10"></div>
-                <div className="text-white text-lg font-bold text-center px-2 relative z-10">
+                <div className="text-white text-base sm:text-lg font-bold text-center px-2 relative z-10">
                   {card.title.split(' ')[0]}
                 </div>
               </div>
-              <div className="p-4">
+              <div className="p-3 sm:p-4">
                 <h3
-                  className={`font-semibold mb-2 ${
+                  className={`font-semibold mb-1 sm:mb-2 text-sm sm:text-base ${
                     darkMode ? 'text-white' : 'text-gray-800'
                   }`}
                 >
                   {card.title}
                 </h3>
                 <p
-                  className={`text-sm ${
+                  className={`text-xs sm:text-sm ${
                     darkMode ? 'text-gray-400' : 'text-gray-600'
                   }`}
                 >
                   {card.reward}
                 </p>
-                <div className="mt-3 text-xs text-blue-600 dark:text-blue-400 font-medium">
+                <div className="mt-2 sm:mt-3 text-xs text-blue-600 dark:text-blue-400 font-medium">
                   View Offers →
                 </div>
               </div>
@@ -710,4 +703,5 @@ useEffect(() => {
     </div>
   );
 };
+
 export default Dashboard;

@@ -227,8 +227,11 @@ const WalletAndWithdrawl = ({ darkMode }) => {
   return (
     <div
       className={`min-h-screen transition-all duration-300 ${
-        darkMode ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white" : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 text-gray-900"
-      }`}
+  darkMode 
+    ? "bg-gray-900 text-white bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+    : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 text-gray-900"
+}`}
+
       style={{ paddingTop: "2.5rem", paddingBottom: "4rem" }}
     >
       {/* Animated Background Elements */}
@@ -238,12 +241,14 @@ const WalletAndWithdrawl = ({ darkMode }) => {
 
       <div className="relative z-10 space-y-8">
         {/* Balance Card */}
-        <div
-          className={`border-2 rounded-2xl p-6 sm:p-8 shadow-lg text-center sm:text-left relative overflow-hidden ${
-            darkMode 
-              ? "bg-gradient-to-br from-gray-800 to-gray-700 border-purple-500" 
-              : "bg-gradient-to-br from-white to-blue-50 border-blue-200"
-          }`}
+<div
+  className={`border-2 rounded-2xl p-6 sm:p-8 shadow-lg text-center sm:text-left relative overflow-hidden
+  ${darkMode
+    ? "bg-gradient-to-br from-gray-800 to-gray-700 border-purple-500 text-white"
+    : "bg-white border-gray-200 text-gray-900"
+  }`}
+
+
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full -translate-y-16 translate-x-16 opacity-20"></div>
           <p className="text-sm text-gray-500 mb-1 relative z-10">Current Available Balance</p>
