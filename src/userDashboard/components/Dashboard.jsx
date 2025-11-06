@@ -66,15 +66,18 @@ const Dashboard = ({ darkMode }) => {
 
   const fetchWalletData = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-      if (user._id) {
-        const response = await walletService.getWalletByUserId(user._id);
-        if (response.success) {
-          setWalletData({
-            balance: response.data.balance || 0,
-            totalEarned: response.data.totalEarned || 0,
-            totalWithdrawn: response.data.totalWithdrawn || 0
-          });
+      const userData = localStorage.getItem('user');
+      if (userData && userData !== 'undefined' && userData !== 'null') {
+        const user = JSON.parse(userData);
+        if (user._id) {
+          const response = await walletService.getWalletByUserId(user._id);
+          if (response.success) {
+            setWalletData({
+              balance: response.data.balance || 0,
+              totalEarned: response.data.totalEarned || 0,
+              totalWithdrawn: response.data.totalWithdrawn || 0
+            });
+          }
         }
       }
     } catch (error) {
@@ -84,16 +87,19 @@ const Dashboard = ({ darkMode }) => {
 
   const fetchLeadsStats = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-      if (user._id) {
-        const response = await leadService.getLeadStats(user._id);
-        if (response.success) {
-          setLeadsStats({
-            total: response.data.total || 0,
-            pending: response.data.pending || 0,
-            approved: response.data.approved || 0,
-            rejected: response.data.rejected || 0
-          });
+      const userData = localStorage.getItem('user');
+      if (userData && userData !== 'undefined' && userData !== 'null') {
+        const user = JSON.parse(userData);
+        if (user._id) {
+          const response = await leadService.getLeadStats(user._id);
+          if (response.success) {
+            setLeadsStats({
+              total: response.data.total || 0,
+              pending: response.data.pending || 0,
+              approved: response.data.approved || 0,
+              rejected: response.data.rejected || 0
+            });
+          }
         }
       }
     } catch (error) {

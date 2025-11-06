@@ -132,7 +132,14 @@ export const logoutUser = createAsyncThunk(
 
 // Initial state
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  user: (() => {
+    try {
+      const userStr = localStorage.getItem('user');
+      return userStr && userStr !== 'undefined' ? JSON.parse(userStr) : null;
+    } catch (e) {
+      return null;
+    }
+  })(),
   accessToken: localStorage.getItem('accessToken') || null,
   isAuthenticated: localStorage.getItem('isLoggedIn') === 'true',
   role: localStorage.getItem('userType') || USER_ROLES.GUEST,
