@@ -2,6 +2,29 @@ import React, { useState } from "react";
 
 const Footer = ({ darkMode }) => {
   const [showPolicy, setShowPolicy] = useState(false);
+  const [showContactEmail, setShowContactEmail] = useState(false);
+
+  const handleContactClick = () => {
+    setShowContactEmail(true);
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText("Support@campaignwala.in")
+      .then(() => {
+        alert("Email address copied to clipboard!");
+      })
+      .catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = "Support@campaignwala.in";
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        alert("Email address copied to clipboard!");
+      });
+    setShowContactEmail(false);
+  };
 
   return (
     <>
@@ -17,13 +40,17 @@ const Footer = ({ darkMode }) => {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 text-sm flex-wrap">
             {/* Left Links */}
             <div className="flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-6">
-              <a href="#" className="hover:text-blue-600 transition-colors flex flex-col items-center gap-1">
+              <button
+                onClick={handleContactClick}
+                className="hover:text-blue-600 transition-colors flex flex-col items-center gap-1"
+              >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
                 </svg>
                 Contact Us
-              </a>
+              </button>
+              
               <button
                 onClick={() => setShowPolicy(true)}
                 className="hover:text-blue-600 transition-colors flex flex-col items-center gap-1"
@@ -35,11 +62,17 @@ const Footer = ({ darkMode }) => {
               </button>
             </div>
 
-            {/* Right Icons */}
-            <div className="flex justify-center sm:justify-end gap-5 text-lg">
-              <a href="#" className="hover:text-blue-600 transition-colors">🌐</a>
-              <a href="#" className="hover:text-blue-600 transition-colors">📷</a>
-              <a href="#" className="hover:text-blue-600 transition-colors">💼</a>
+            {/* Right Icons - Only Instagram */}
+            <div className="flex justify-center sm:justify-end">
+              <a 
+                href="https://www.instagram.com/campaign_wala?igsh=Z3FyY2pxZGthMTFu" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 transition-colors text-2xl"
+                title="Follow us on Instagram"
+              >
+                📷
+              </a>
             </div>
           </div>
 
@@ -48,6 +81,60 @@ const Footer = ({ darkMode }) => {
           </div>
         </div>
       </footer>
+
+      {/* Contact Email Popup */}
+      {showContactEmail && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowContactEmail(false);
+          }}
+        >
+          <div
+            className={`rounded-lg p-6 max-w-md w-full mx-4 shadow-lg relative transition-all duration-300 ${
+              darkMode ? "bg-gray-900 text-gray-200" : "bg-white text-gray-800"
+            }`}
+          >
+            <h2 className="text-xl font-semibold mb-4 text-center">
+              Contact Us
+            </h2>
+            <div className="text-center space-y-4">
+              <p className="text-sm">
+                For any queries or support, please reach out to us at:
+              </p>
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-lg">📧</span>
+                <span className={`text-lg font-mono ${
+                  darkMode ? "text-blue-400" : "text-blue-600"
+                }`}>
+                  Support@campaignwala.in
+                </span>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Click the button below to copy the email address
+              </p>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setShowContactEmail(false)}
+                className={`flex-1 px-4 py-2 rounded transition ${
+                  darkMode 
+                    ? "bg-gray-700 hover:bg-gray-600 text-gray-200" 
+                    : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                }`}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={copyToClipboard}
+                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              >
+                Copy Email
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Privacy Policy Popup */}
       {showPolicy && (
@@ -164,7 +251,9 @@ const Footer = ({ darkMode }) => {
               <p>
                 If you have questions or concerns, contact us at:
                 <br />
-                📧 <span className="text-blue-500">support@campaignwala.com</span>
+                📧 <span className={`${darkMode ? "text-blue-400" : "text-blue-600"}`}>
+                  Support@campaignwala.in
+                </span>
                 <br />
                 Grievance Officer: [Enter Name Here]
                 <br />

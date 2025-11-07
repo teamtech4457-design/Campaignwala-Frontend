@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import userService from "../../services/userService";
+import authService from "../../services/authService";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import OtpModal from "../../components/OtpModal";
 
 const KYCDetails = ({ darkMode }) => {
   const navigate = useNavigate();
@@ -37,6 +39,11 @@ const KYCDetails = ({ darkMode }) => {
   const [submitting, setSubmitting] = useState(false);
   const [kycStatus, setKycStatus] = useState('not_submitted');
   const [rejectionReason, setRejectionReason] = useState('');
+  
+  // OTP Modal states
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null); // 'personal', 'kyc', 'bank'
+  const [userEmail, setUserEmail] = useState('');
 
   // Fetch KYC details on mount
   useEffect(() => {
@@ -81,6 +88,7 @@ const KYCDetails = ({ darkMode }) => {
         // Set KYC status
         setKycStatus(user.kycDetails?.kycStatus || 'not_submitted');
         setRejectionReason(user.kycDetails?.kycRejectionReason || '');
+        setUserEmail(user.email || '');
         console.log('✅ KYC Status:', user.kycDetails?.kycStatus);
       } else {
         console.error('❌ API returned success: false');
@@ -121,6 +129,30 @@ const KYCDetails = ({ darkMode }) => {
       return;
     }
 
+    // Trigger OTP verification before saving
+    try {
+      console.log('🔐 Requesting OTP for Personal Details update...');
+      const response = await authService.sendEmailOTP('profile-update');
+      
+      if (response.success) {
+        setPendingAction('personal');
+        setShowOtpModal(true);
+        
+        // Show static OTP in development
+        if (response.data?.otp) {
+          console.log('🔑 Development OTP:', response.data.otp);
+          toast.success(`OTP sent! Use: ${response.data.otp}`);
+        }
+      } else {
+        toast.error(response.message || 'Failed to send OTP');
+      }
+    } catch (error) {
+      console.error('❌ Error sending OTP:', error);
+      toast.error(error.message || 'Failed to send OTP');
+    }
+  };
+
+  const savePersonalDetails = async () => {
     try {
       console.log('🌐 Saving Personal Details...');
       setSubmitting(true);
@@ -165,6 +197,30 @@ const KYCDetails = ({ darkMode }) => {
       return;
     }
 
+    // Trigger OTP verification before saving
+    try {
+      console.log('🔐 Requesting OTP for KYC Documents update...');
+      const response = await authService.sendEmailOTP('profile-update');
+      
+      if (response.success) {
+        setPendingAction('kyc');
+        setShowOtpModal(true);
+        
+        // Show static OTP in development
+        if (response.data?.otp) {
+          console.log('🔑 Development OTP:', response.data.otp);
+          toast.success(`OTP sent! Use: ${response.data.otp}`);
+        }
+      } else {
+        toast.error(response.message || 'Failed to send OTP');
+      }
+    } catch (error) {
+      console.error('❌ Error sending OTP:', error);
+      toast.error(error.message || 'Failed to send OTP');
+    }
+  };
+
+  const saveKYCDetails = async () => {
     try {
       console.log('🌐 Saving KYC Documents...');
       setSubmitting(true);
@@ -202,6 +258,30 @@ const KYCDetails = ({ darkMode }) => {
       return;
     }
 
+    // Trigger OTP verification before saving
+    try {
+      console.log('🔐 Requesting OTP for Bank Details update...');
+      const response = await authService.sendEmailOTP('profile-update');
+      
+      if (response.success) {
+        setPendingAction('bank');
+        setShowOtpModal(true);
+        
+        // Show static OTP in development
+        if (response.data?.otp) {
+          console.log('🔑 Development OTP:', response.data.otp);
+          toast.success(`OTP sent! Use: ${response.data.otp}`);
+        }
+      } else {
+        toast.error(response.message || 'Failed to send OTP');
+      }
+    } catch (error) {
+      console.error('❌ Error sending OTP:', error);
+      toast.error(error.message || 'Failed to send OTP');
+    }
+  };
+
+  const saveBankDetails = async () => {
     try {
       console.log('🌐 Saving Bank Details...');
       setSubmitting(true);
@@ -234,6 +314,59 @@ const KYCDetails = ({ darkMode }) => {
       toast.error(error.message || 'Failed to update bank details');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  // OTP Verification Handler
+  const handleVerifyOTP = async (otp) => {
+    try {
+      console.log('🔐 Verifying OTP for action:', pendingAction);
+      const response = await authService.verifyEmailOTP(otp);
+      
+      if (response.success) {
+        console.log('✅ OTP verified successfully');
+        toast.success('OTP verified successfully');
+        setShowOtpModal(false);
+        
+        // Execute the pending action
+        if (pendingAction === 'personal') {
+          await savePersonalDetails();
+        } else if (pendingAction === 'kyc') {
+          await saveKYCDetails();
+        } else if (pendingAction === 'bank') {
+          await saveBankDetails();
+        }
+        
+        setPendingAction(null);
+      } else {
+        toast.error(response.message || 'Invalid OTP');
+      }
+    } catch (error) {
+      console.error('❌ Error verifying OTP:', error);
+      toast.error(error.message || 'Failed to verify OTP');
+    }
+  };
+
+  // Resend OTP Handler
+  const handleResendOTP = async () => {
+    try {
+      console.log('🔄 Resending OTP...');
+      const response = await authService.sendEmailOTP('profile-update');
+      
+      if (response.success) {
+        toast.success('OTP sent successfully');
+        
+        // Show static OTP in development
+        if (response.data?.otp) {
+          console.log('🔑 Development OTP:', response.data.otp);
+          toast.success(`New OTP: ${response.data.otp}`);
+        }
+      } else {
+        toast.error(response.message || 'Failed to resend OTP');
+      }
+    } catch (error) {
+      console.error('❌ Error resending OTP:', error);
+      toast.error(error.message || 'Failed to resend OTP');
     }
   };
 
@@ -318,11 +451,11 @@ const KYCDetails = ({ darkMode }) => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen pt-20 pb-20 px-0 transition-all duration-300 ${
+        className={`min-h-screen py-8 px-0 transition-all duration-300 ${
           darkMode ? "bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-900"
         }`}
       >
-        <div className="max-w-5xl mx-auto px-4">
+        <div className="max-w-full px-4">
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
             <p className="mt-4 text-gray-500">Loading KYC details...</p>
@@ -362,11 +495,11 @@ const KYCDetails = ({ darkMode }) => {
 
   return (
     <div
-      className={`min-h-screen pt-16 pb-20 px-0 transition-all duration-300 ${
+      className={`min-h-screen py-8 px-0 transition-all duration-300 ${
         darkMode ? "bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-900"
       }`}
     >
-      {/* ✅ Changed max-w-5xl to max-w-full and removed mx-auto to push to left */}
+      {/* ✅ Changed pt-16 to py-8 to remove extra top padding */}
       <div className="max-w-full px-4">
         {/* Back Button */}
         <button
@@ -585,8 +718,29 @@ const KYCDetails = ({ darkMode }) => {
           </button>
         </div>
       </div>
+
+      {/* OTP Verification Modal */}
+      <OtpModal
+        isOpen={showOtpModal}
+        onClose={() => {
+          setShowOtpModal(false);
+          setPendingAction(null);
+        }}
+        onVerify={handleVerifyOTP}
+        onResend={handleResendOTP}
+        email={userEmail}
+        purpose="profile-update"
+        darkMode={true}
+      />
     </div>
   );
 };
 
-export default KYCDetails;
+// ✅ Export with MemoryRouter fallback (for tests)
+const WrappedKYCDetails = (props) => (
+  typeof window === "undefined"
+    ? <MemoryRouter><KYCDetails {...props} /></MemoryRouter>
+    : <KYCDetails {...props} />
+);
+
+export default WrappedKYCDetails;

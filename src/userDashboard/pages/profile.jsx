@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import authService from "../../services/authService";
+import OtpModal from "../../components/OtpModal";
 
 const ProfileOverview = ({ darkMode }) => {
   const navigate = useNavigate();
@@ -11,6 +13,8 @@ const ProfileOverview = ({ darkMode }) => {
   });
   const [kycStatus, setKycStatus] = useState('not_submitted');
   const [loading, setLoading] = useState(true);
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [otpError, setOtpError] = useState('');
 
   useEffect(() => {
     fetchUserProfile();
@@ -82,6 +86,54 @@ const ProfileOverview = ({ darkMode }) => {
 
     // Dynamically return based on actual kycStatus from API
     return statusConfig[kycStatus?.toLowerCase()] || statusConfig['not_submitted'];
+  };
+
+  const handleUpdateProfileClick = async () => {
+    try {
+      // Send OTP to email
+      setOtpError('');
+      const response = await authService.sendEmailOTP('profile-update');
+      
+      if (response.success) {
+        // Show OTP modal
+        setShowOtpModal(true);
+      } else {
+        alert(response.message || 'Failed to send OTP');
+      }
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      alert(error.message || 'Failed to send OTP. Please try again.');
+    }
+  };
+
+  const handleVerifyOTP = async (otp) => {
+    try {
+      const response = await authService.verifyEmailOTP(otp);
+      
+      if (response.success) {
+        // OTP verified successfully, navigate to KYC update page
+        setShowOtpModal(false);
+        navigate("/user/kyc-details");
+      } else {
+        throw new Error(response.message || 'OTP verification failed');
+      }
+    } catch (error) {
+      console.error('OTP verification error:', error);
+      throw error; // Re-throw to be handled by OtpModal
+    }
+  };
+
+  const handleResendOTP = async () => {
+    try {
+      const response = await authService.sendEmailOTP('profile-update');
+      
+      if (!response.success) {
+        throw new Error(response.message || 'Failed to resend OTP');
+      }
+    } catch (error) {
+      console.error('Error resending OTP:', error);
+      throw error; // Re-throw to be handled by OtpModal
+    }
   };
 
   if (loading) {
@@ -170,7 +222,7 @@ const ProfileOverview = ({ darkMode }) => {
         </div>
 
         <button
-          onClick={() => navigate("/user/kyc-details")}
+          onClick={handleUpdateProfileClick}
           className="w-full sm:w-auto px-5 py-2.5 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition text-sm sm:text-base"
         >
           Update Profile / KYC
@@ -204,6 +256,17 @@ const ProfileOverview = ({ darkMode }) => {
           className="w-48 sm:w-60 md:w-72 mx-auto rounded-lg shadow-md"
         />
       </div>
+
+      {/* OTP Modal */}
+      <OtpModal
+        isOpen={showOtpModal}
+        onClose={() => setShowOtpModal(false)}
+        onVerify={handleVerifyOTP}
+        onResend={handleResendOTP}
+        email={userData.email}
+        purpose="profile-update"
+        darkMode={darkMode}
+      />
     </div>
   );
 };
