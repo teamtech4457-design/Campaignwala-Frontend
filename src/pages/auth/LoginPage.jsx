@@ -3,21 +3,127 @@ import { useState } from "react";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import authService from "../../services/authService";
+import OtpModal from "../../components/OtpModal";
 
 export default function LoginPage() {
   const { login, isLoading, error } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [tempLoginData, setTempLoginData] = useState(null);
+  const [sendingOtp, setSendingOtp] = useState(false); // New state for OTP sending
+  const [successMessage, setSuccessMessage] = useState(""); // Success message state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    setSuccessMessage(""); // Clear previous success message
+    setSendingOtp(true); // Start loading
+    
     try {
-      await login({ phoneNumber, password });
-      // Navigation will be handled automatically by useAuth hook
+      // First attempt login - backend will send OTP based on user role
+      const response = await authService.login({ phoneNumber, password });
+      
+      if (response.requireOTP) {
+        // OTP required - show modal
+        const otpType = response.otpType || 'email';
+        
+        if (otpType === 'mobile') {
+          // Admin - Mobile OTP
+          setUserEmail(`your mobile ${response.data?.phoneNumber || 'number'}`);
+          setSuccessMessage("📱 OTP sent to your mobile number!");
+        } else {
+          // User - Email OTP
+          setUserEmail(response.data?.email || 'your registered email');
+          setSuccessMessage("📧 OTP sent to your email!");
+        }
+        
+        setTempLoginData({ phoneNumber, password });
+        setSendingOtp(false); // Stop loading
+        setShowOtpModal(true);
+        
+        // Show OTP in development mode
+        if (response.data?.otp) {
+          console.log('🔑 Development OTP:', response.data.otp);
+          if (otpType === 'mobile') {
+            alert(`Admin Mobile OTP: ${response.data.otp}`);
+          } else {
+            console.log('📧 Check your email for OTP');
+          }
+        }
+      } else if (response.success && response.data) {
+        // Login successful without OTP (backward compatibility)
+        // Store auth data
+        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userType', response.data.user?.role || 'user');
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        
+        setSendingOtp(false); // Stop loading
+        
+        // Redirect based on role
+        if (response.data.user?.role === 'admin') {
+          window.location.href = '/admin';
+        } else {
+          window.location.href = '/user';
+        }
+      }
     } catch (error) {
       // Error is handled by Redux state
+      console.error('Login error:', error);
+      setSendingOtp(false); // Stop loading on error
+    }
+  };
+
+  const handleVerifyOTP = async (otp) => {
+    try {
+      // Login with OTP
+      const response = await authService.login({
+        ...tempLoginData,
+        otp
+      });
+      
+      if (response.success) {
+        // Store auth data and redirect
+        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userType', response.data.user.role);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        
+        setShowOtpModal(false);
+        
+        // Redirect based on role
+        if (response.data.user.role === 'admin') {
+          window.location.href = '/admin';
+        } else {
+          window.location.href = '/user';
+        }
+      } else {
+        throw new Error(response.message || 'OTP verification failed');
+      }
+    } catch (error) {
+      console.error('OTP verification error:', error);
+      throw error; // Re-throw to be handled by OtpModal
+    }
+  };
+
+  const handleResendOTP = async () => {
+    try {
+      // Resend OTP by making login call again
+      const response = await authService.login(tempLoginData);
+      
+      if (!response.requireOTP) {
+        throw new Error('Failed to resend OTP');
+      }
+      
+      // Success message based on OTP type
+      console.log('✅ OTP resent successfully');
+    } catch (error) {
+      console.error('Error resending OTP:', error);
+      throw error; // Re-throw to be handled by OtpModal
     }
   };
 
@@ -90,6 +196,13 @@ export default function LoginPage() {
               </div>
             )}
 
+            {successMessage && (
+              <div className="bg-green-50 border border-green-300 text-green-800 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                <span>✅</span>
+                <span>{successMessage}</span>
+              </div>
+            )}
+
             {/* Phone Number */}
             <div>
               <label
@@ -155,10 +268,22 @@ export default function LoginPage() {
             {/* Login Button */}
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-primary text-primary-foreground font-bold py-3 px-4 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90"
+              disabled={isLoading || sendingOtp}
+              className="w-full bg-primary text-primary-foreground font-bold py-3 px-4 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 flex items-center justify-center gap-2"
             >
-              {isLoading ? "LOGGING IN..." : "LOGIN"}
+              {sendingOtp ? (
+                <>
+                  <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span>SENDING OTP...</span>
+                </>
+              ) : isLoading ? (
+                "LOGGING IN..."
+              ) : (
+                "LOGIN"
+              )}
             </button>
 
             {/* Register Link */}
@@ -176,6 +301,17 @@ export default function LoginPage() {
           </form>
         </div>
       </div>
+
+      {/* OTP Modal */}
+      <OtpModal
+        isOpen={showOtpModal}
+        onClose={() => setShowOtpModal(false)}
+        onVerify={handleVerifyOTP}
+        onResend={handleResendOTP}
+        email={userEmail}
+        purpose="login"
+        darkMode={false}
+      />
     </main>
   );
   

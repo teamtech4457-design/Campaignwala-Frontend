@@ -113,7 +113,7 @@ class SessionManager {
       if (isAuthenticated && timeRemaining <= this.config.warningTime && timeRemaining > 0) {
         this.showSessionWarning(timeRemaining);
       }
-    }, 60000); // Check every minute
+    }, 90000); // Check every minute
   }
 
   /**
@@ -146,7 +146,7 @@ class SessionManager {
    * Show session warning notification
    */
   showSessionWarning(timeRemaining) {
-    const minutes = Math.ceil(timeRemaining / 60000);
+    const minutes = Math.ceil(timeRemaining / 90000);
     
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('Session Warning', {

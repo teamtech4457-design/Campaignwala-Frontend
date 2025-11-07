@@ -106,31 +106,33 @@ function UserDashboardLayout({ darkMode, setDarkMode }) {
   };
 
   return (
-    <div
-      className={`flex ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
+    <div className={`flex ${darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"}`}>
+  <Sidebar
+    darkMode={darkMode}
+    isSidebarOpen={isSidebarOpen}
+    toggleSidebar={toggleSidebar}
+  />
+
+  <div className="flex-1 flex flex-col">
+    {/* Navbar is fixed, full width */}
+    <Navbar
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
+      toggleSidebar={toggleSidebar}
+    />
+
+    {/* Main content shifted only on desktop */}
+    <main
+      className={`p-4 min-h-screen pt-20 transition-all duration-300 ${
+        isSidebarOpen ? "md:ml-52" : "md:ml-16"
       }`}
     >
-      <Sidebar
-        darkMode={darkMode}
-        isSidebarOpen={isSidebarOpen}
-        toggleSidebar={toggleSidebar}
-      />
-      <div
-        className={`flex-1 transition-all duration-300 ${
-          isSidebarOpen ? "md:ml-52" : "md:ml-16"
-        }`}
-      >
-        <Navbar
-          darkMode={darkMode}
-          setDarkMode={setDarkMode}
-          toggleSidebar={toggleSidebar}
-        />
-        <main className="p-4 min-h-screen pt-20">
-          <Outlet /> {/* ✅ Always render Outlet - it handles all child routes including index */}
-        </main>
-        <Footer darkMode={darkMode} />
-      </div>
+      <Outlet />
+    </main>
+
+    <Footer darkMode={darkMode} />
+
+</div>
 
       {/* Notification Popup */}
       {showNotification && currentNotification && (
