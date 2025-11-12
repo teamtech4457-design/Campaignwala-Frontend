@@ -9,7 +9,7 @@ import OtpModal from "../../components/OtpModal";
 export default function LoginPage() {
   const { login, isLoading, error } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
@@ -25,35 +25,26 @@ export default function LoginPage() {
     
     try {
       // First attempt login - backend will send OTP based on user role
-      const response = await authService.login({ phoneNumber, password });
+      const response = await authService.login({ email, password });
+      console.log('Login response:', response);
       
       if (response.requireOTP) {
         // OTP required - show modal
         const otpType = response.otpType || 'email';
         
-        if (otpType === 'mobile') {
-          // Admin - Mobile OTP
-          setUserEmail(`your mobile ${response.data?.phoneNumber || 'number'}`);
-          setSuccessMessage("📱 OTP sent to your mobile number!");
-        } else {
-          // User - Email OTP
+        if (response.requireOTP) {
           setUserEmail(response.data?.email || 'your registered email');
           setSuccessMessage("📧 OTP sent to your email!");
-        }
-        
-        setTempLoginData({ phoneNumber, password });
-        setSendingOtp(false); // Stop loading
-        setShowOtpModal(true);
-        
+          setTempLoginData({ email, password });
+          setSendingOtp(false);
+          setShowOtpModal(true);
+          
         // Show OTP in development mode
         if (response.data?.otp) {
-          console.log('🔑 Development OTP:', response.data.otp);
-          if (otpType === 'mobile') {
-            alert(`Admin Mobile OTP: ${response.data.otp}`);
-          } else {
-            console.log('📧 Check your email for OTP');
-          }
-        }
+    console.log('🔑 Development OTP:', response.data.otp);
+    console.log('📧 Check your email for OTP');
+  }
+}
       } else if (response.success && response.data) {
         // Login successful without OTP (backward compatibility)
         // Store auth data
@@ -203,27 +194,25 @@ export default function LoginPage() {
               </div>
             )}
 
-            {/* Phone Number */}
-            <div>
-              <label
-                htmlFor="phoneNumber"
-                className="block text-sm font-medium text-foreground mb-2"
-              >
-                Phone Number
-              </label>
-              <input
-                id="phoneNumber"
-                type="tel"
-                placeholder="Enter your phone number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition bg-background text-foreground font-medium placeholder:text-muted-foreground"
-                required
-                pattern="[0-9]{10}"
-                maxLength="10"
-              />
-             
-            </div>
+            {/* Email */}
+<div>
+  <label
+    htmlFor="email"
+    className="block text-sm font-medium text-foreground mb-2"
+  >
+    Email
+  </label>
+  <input
+    id="email"
+    type="email"
+    placeholder="Enter your email"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition bg-background text-foreground font-medium placeholder:text-muted-foreground"
+    required
+  />
+</div>
+
 
             {/* Password */}
             <div>

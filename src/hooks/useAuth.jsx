@@ -32,28 +32,30 @@ export const useAuth = () => {
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectIsLoading);
 
-  // Send OTP function
-  const requestOTP = useCallback(async (phoneNumber) => {
-    try {
-      console.log('📱 useAuth requestOTP called with:', phoneNumber);
-      const result = await dispatch(sendOTP(phoneNumber)).unwrap();
-      console.log('✅ useAuth requestOTP result:', result);
-      return result;
-    } catch (error) {
-      console.error('❌ useAuth requestOTP error:', error);
-      throw error;
-    }
-  }, [dispatch]);
+// Send OTP function
+const requestOTP = useCallback(async (email) => {
+  try {
+    console.log('📧 useAuth requestOTP called with:', email);
+    const result = await dispatch(sendOTP(email)).unwrap();
+    console.log('✅ useAuth requestOTP result:', result);
+    return result;
+  } catch (error) {
+    console.error('❌ useAuth requestOTP error:', error);
+    throw error;
+  }
+}, [dispatch]);
 
-  // Verify OTP function
-  const verifyOTPCode = useCallback(async (phoneNumber, otp) => {
-    try {
-      const result = await dispatch(verifyOTP({ phoneNumber, otp })).unwrap();
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  }, [dispatch]);
+// Verify OTP function
+const verifyOTPCode = useCallback(async (email, otp) => {
+  try {
+    const result = await dispatch(verifyOTP({ email, otp })).unwrap();
+    return result;
+  } catch (error) {
+    console.error('❌ useAuth verifyOTPCode error:', error);
+    throw error;
+  }
+}, [dispatch]);
+
 
   // Register function
   const register = useCallback(async ({ phoneNumber, otp, name, email, password }) => {

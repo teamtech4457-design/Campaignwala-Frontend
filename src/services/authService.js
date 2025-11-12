@@ -11,7 +11,7 @@ class AuthService {
    * @param {string} data.phoneNumber - User phone number
    * @returns {Promise<Object>} - OTP response
    */
-  async sendOTP(data) {
+  /**async sendOTP(data) {
     try {
       console.log('🌐 authService.sendOTP called with:', data);
       const response = await api.post('/users/send-otp', data);
@@ -22,11 +22,29 @@ class AuthService {
       throw this.handleError(error);
     }
   }
-
+    */
+   
+/**
+ * Send OTP to email
+ * @param {Object} data - Email data
+ * @param {string} data.email - User email
+ * @returns {Promise<Object>} - OTP response
+ */
+async sendOTP(data) {
+  try {
+    console.log('🌐 authService.sendOTP called with:', data);
+    const response = await api.post('/users/send-otp', { email: data.email });
+    console.log('✅ authService.sendOTP response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('❌ authService.sendOTP error:', error);
+    throw error;
+  }
+}
   /**
    * Verify OTP
    * @param {Object} otpData - OTP verification data
-   * @param {string} otpData.phoneNumber - User phone number
+   * @param {string} otpData.email - User email
    * @param {string} otpData.otp - OTP code
    * @returns {Promise<Object>} - Verification response
    */
@@ -64,7 +82,7 @@ class AuthService {
   /**
    * Login user with credentials
    * @param {Object} credentials - User login credentials
-   * @param {string} credentials.phoneNumber - User phone number
+   * @param {string} credentials.email - User email
    * @param {string} credentials.password - User password
    * @returns {Promise<Object>} - Authentication response
    */
@@ -80,7 +98,7 @@ class AuthService {
   /**
    * Request password reset OTP
    * @param {Object} data - Reset request data
-   * @param {string} data.phoneNumber - User phone number
+   * @param {string} data.email - User email
    * @returns {Promise<Object>} - Reset request response
    */
   async forgotPassword(data) {
@@ -95,7 +113,7 @@ class AuthService {
   /**
    * Reset password with OTP
    * @param {Object} data - Reset data
-   * @param {string} data.phoneNumber - User phone number
+   * @param {string} data.email - User email
    * @param {string} data.otp - OTP code
    * @param {string} data.newPassword - New password
    * @returns {Promise<Object>} - Reset response
@@ -164,6 +182,7 @@ class AuthService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
     localStorage.removeItem('userPhone');
+    localStorage.removeItem('userEmail');
     return Promise.resolve();
   }
 
@@ -257,6 +276,7 @@ class AuthService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
     localStorage.removeItem('userPhone');
+    localStorage.removeItem('userEmail');
   }
 }
 

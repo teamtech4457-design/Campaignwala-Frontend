@@ -13,8 +13,8 @@ export const sendOTP = createAsyncThunk(
   'auth/sendOTP',
   async (phoneNumber, { rejectWithValue }) => {
     try {
-      console.log('🔵 Redux sendOTP thunk called with:', phoneNumber);
-      const response = await authService.sendOTP({ phoneNumber });
+      console.log('🔵 Redux sendOTP thunk called with:', email);
+      const response = await authService.sendOTP({ email });
       console.log('✅ Redux sendOTP response:', response);
       return response.data;
     } catch (error) {
